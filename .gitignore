@@ -9,3 +9,4 @@ __pycache__/
 .pytest_cache/
 .playwright-mcp/
 .try_tool.db
+demo-capture/
