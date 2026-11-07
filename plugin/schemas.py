@@ -89,7 +89,7 @@ PHONE_CLIPBOARD = _schema(
 
 PHONE_PHOTO = _schema(
     "phone_photo",
-    "Take a photo with the phone camera so you can see it (e.g. a sign, ticket or receipt). Always "
+    "Take a photo with the phone camera (e.g. a sign, ticket or receipt) and save it; then use vision_analyze on saved_to. Always "
     "needs the user's approval.",
     {"camera": _enum("Which camera", ["back", "front"], "back")})
 

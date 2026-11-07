@@ -74,8 +74,6 @@ def tool(fn: Callable[[dict], Any] | None = None, *, mask: bool = True):
             except Exception as exc:   # never raise into Hermes; never include message bodies
                 log.warning("phone-senses: %s failed: %s", inner.__name__, type(exc).__name__)
                 result = {"ok": False, "error": "internal", "message": f"unexpected error ({type(exc).__name__})"}
-            if isinstance(result, dict) and result.get("_multimodal"):
-                return result
             if mask:
                 result = otp.mask_obj(result)
             return _dumps(result)
@@ -405,27 +403,6 @@ def _photo_dir() -> Path | None:
     return path
 
 
-def _attach_image(result: dict, path: Path) -> dict | None:
-    """Multimodal result for vision models (same approach as the phone-harness plugin)."""
-    try:
-        from tools.vision_tools import (_EMBED_MAX_DIMENSION, _resize_image_for_vision,
-                                        _should_use_native_vision_fast_path)
-        from tools.vision_tools_history_budget import resolve_embed_target_bytes
-        if not _should_use_native_vision_fast_path():
-            return None
-        data_url = _resize_image_for_vision(path, mime_type="image/jpeg",
-                                            max_base64_bytes=resolve_embed_target_bytes(),
-                                            max_dimension=_EMBED_MAX_DIMENSION, force_jpeg=True)
-        if not isinstance(data_url, str) or not data_url.startswith("data:"):
-            return None
-        text = _dumps(result)
-        return {"_multimodal": True, "text_summary": text, "meta": {"photo_path": str(path)},
-                "content": [{"type": "text", "text": text + "\n\nThe photo is attached."},
-                            {"type": "image_url", "image_url": {"url": data_url}}]}
-    except Exception:
-        return None
-
-
 @tool
 def phone_photo(args: dict) -> dict:
     import base64
@@ -445,10 +422,7 @@ def phone_photo(args: dict) -> dict:
     path = folder / f"photo-{int(time.time())}-{camera}.jpg"
     path.write_bytes(jpeg)
     result["saved_to"] = str(path)
-    attached = _attach_image(result, path)
-    if attached:
-        return attached
-    result["note"] = "To look at the photo, run vision_analyze on saved_to."
+    result["next_step"] = "Run vision_analyze on saved_to to see the photo."
     return result
 
 
