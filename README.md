@@ -71,6 +71,19 @@ Laptop: Hermes + Phone Senses plugin  ──HMAC-signed HTTP (Wi-Fi or Tailscale
 - **The plugin** (`plugin/`) does the smart work: parsing, OTP masking, money tracking, scam scoring,
   watch rules and storage. It talks only to your helper.
 
+## Tested on a real phone
+Every tool was run end to end on a **moto g34 5G (Android 15)** with **Hermes Agent v0.23.0**:
+- Installed with `hermes plugins install …/tree/main/plugin`. `hermes plugins validate` passes,
+  and the security scan reports **safe**.
+- Hermes answered real questions about battery, notifications, missed calls, location, the morning brief,
+  bank SMS, the scam check, spending, UPI income and budgets.
+- Find my phone, speak aloud and clipboard all worked.
+- A watch rule caught a real incoming SMS.
+- The approval panel showed the exact action for photo, SMS and call:
+  - **Deny** sent nothing, and the model did not retry.
+  - **Allow once** sent a real SMS from the SIM and placed a real call.
+- In unattended `-q` mode, the approval-gated tools were refused.
+
 ## Requirements
 - Hermes Agent `0.21.6` or newer, on macOS, Linux or Windows/WSL.
 - An Android phone with **Termux** and **Termux:API** from **F-Droid**. The Play Store builds do not
@@ -98,7 +111,18 @@ Laptop: Hermes + Phone Senses plugin  ──HMAC-signed HTTP (Wi-Fi or Tailscale
    ```
    A notification "Phone Senses helper running" stays visible while it runs.
 
-More detail and troubleshooting: [`docs/06-phone-setup-termux.md`](docs/06-phone-setup-termux.md).
+More detail and troubleshooting: [`docs/06-phone-setup-termux.md`](docs/06-phone-setup-termux.md)
+and [`phone_helper/README.md`](phone_helper/README.md).
+
+**Android 14/15 notes (found on a real phone):**
+- Play Protect warns that Termux "was built for an older version of Android". That is expected for
+  the F-Droid build; the install still goes through.
+- Allow Termux:API location **all the time**. The helper reads location in the background.
+- If text-to-speech ever stops responding, force-stop Termux:API once in Android settings.
+- If Android asks which app should place calls (for example Phone or Zoom), choose **Phone**.
+
+**USB instead of Wi-Fi:** with USB debugging on, `adb forward tcp:8765 tcp:8765` lets the laptop
+reach a helper started with `--host 127.0.0.1`. This is handy for demos when the phone is on mobile data.
 
 ### 2. Hermes
 ```bash
@@ -120,6 +144,14 @@ Then ask Hermes *"what's my phone battery?"* or type `/phone`.
 | `money_enabled` | `true` | Money tracker |
 | `scam_check_enabled` | `true` | Add `scam_risk` to SMS results |
 | `notifications_exclude_apps` | `[]` | Apps to hide from digests |
+
+### Choosing a model
+Any Hermes provider works. On a Nous Portal account without credits, free models such as
+`meituan/longcat-2.5:free` handled every Phone Senses tool in testing:
+```bash
+hermes config set model.provider nous
+hermes config set model.default "meituan/longcat-2.5:free"
+```
 
 ### Alerts on a schedule (cron)
 Watch rules work with Hermes cron. For example, to get alerts on Telegram:

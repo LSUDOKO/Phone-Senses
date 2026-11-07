@@ -82,6 +82,15 @@ Check from the laptop: `curl http://<phone-ip>:8765/v1/ping` should print `{"ok"
 
 Optional: install **Termux:Boot** from F-Droid to start the helper automatically on reboot.
 
+## Real-phone notes (moto g34, Android 15)
+- Play Protect shows "Unsafe app blocked / built for an older version of Android" for Termux. The install still completes.
+- Grant notification access to the component `com.termux.api/com.termux.api.apis.NotificationListAPI$NotificationService`.
+  When granting it with adb, quote the `$`.
+- Location needs background location ("Allow all the time") for Termux:API.
+- If two `termux-tts-speak` calls overlap, the TTS service can jam. The helper now serialises speech.
+  To recover, force-stop Termux:API.
+- Calls may show an app chooser (Phone / Zoom). Pick Phone.
+
 ## Troubleshooting
 | Symptom | Fix |
 |---|---|
