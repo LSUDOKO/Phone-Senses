@@ -35,6 +35,7 @@ HINTS = {
     "timeout": "The phone took too long. A missing Android permission often causes this.",
     "rate_limited": "Too many requests to the phone. Wait a moment and try again.",
     "not_supported": "This phone does not support that feature.",
+    "busy": "The phone is already speaking or ringing. Try again in a few seconds.",
 }
 
 

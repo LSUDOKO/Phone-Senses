@@ -41,6 +41,15 @@ python phone_helper/helper.py --mock --secret-file /tmp/ps-secret --port 8765
 | `--mock` | | Serve fixture data instead of running Termux:API |
 | `--secret-file` | `~/.phone-senses/secret` | Where the pairing secret is stored (mode 600) |
 
+## Troubleshooting
+| Symptom | Fix |
+|---|---|
+| A command times out right after install | Open the Termux:API app once, or force-stop it in Android Settings > Apps > Termux:API |
+| Speaking or ringing never makes a sound | Text-to-speech can jam after an interrupted call: force-stop Termux:API (as above) |
+| Notifications come back empty | Turn on Notification access for Termux:API |
+| Location times out | Allow location "all the time" for Termux:API (Android 10+ needs background location) |
+| Clipboard reads come back empty | Android only lets the foreground app read the clipboard: keep Termux open on screen |
+
 ## Security
 - Requests must be signed: `X-PS-Timestamp`, `X-PS-Nonce`, `X-PS-Signature`
   (HMAC-SHA256 over method, path with query, timestamp, nonce and body hash). The secret is never sent.

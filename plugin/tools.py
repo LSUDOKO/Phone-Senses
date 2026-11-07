@@ -50,6 +50,8 @@ APP_NAMES = {
     "com.slack": "Slack", "com.microsoft.teams": "Teams", "com.linkedin.android": "LinkedIn",
     "com.ubercab": "Uber", "com.olacabs.customer": "Ola", "com.spotify.music": "Spotify",
     "com.google.android.calendar": "Calendar", "com.android.chrome": "Chrome",
+    "com.google.android.googlequicksearchbox": "Google", "com.discord": "Discord",
+    "com.google.android.apps.photos": "Google Photos", "com.truecaller": "Truecaller",
 }
 
 # ---------------------------------------------------------------------------
@@ -124,6 +126,12 @@ def _fmt_time(ts: int | None) -> str | None:
     return dt.datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M") if ts else None
 
 
+def _ssid(value: Any) -> str | None:
+    """Android reports '<unknown ssid>' when not on Wi-Fi (or without location permission)."""
+    text = str(value or "").strip().strip('"')
+    return None if not text or text.lower() == "<unknown ssid>" else text
+
+
 def _rs(paise: int) -> float:
     return round(paise / 100, 2)
 
@@ -150,6 +158,8 @@ def app_name(package: str) -> str:
 
 def _is_noise(n: dict) -> bool:
     pkg = n.get("packageName") or ""
+    if not str(n.get("title") or "").strip() and not str(n.get("content") or "").strip():
+        return True   # empty placeholders (e.g. a search widget) carry no information
     return pkg in SYSTEM_PACKAGES or pkg in MEDIA_PACKAGES or bool(NOISE_TITLES.search(n.get("title") or ""))
 
 
@@ -206,7 +216,7 @@ def phone_status(args: dict) -> dict:
     return _ok(battery_percent=bat.get("percentage"), charging=(bat.get("status") == "CHARGING"
                or (bat.get("plugged") not in (None, "UNPLUGGED", "PLUGGED_NONE"))),
                battery_status=bat.get("status"), temperature_c=bat.get("temperature"),
-               battery_health=bat.get("health"), wifi=(data.get("wifi") or {}).get("ssid"),
+               battery_health=bat.get("health"), wifi=_ssid((data.get("wifi") or {}).get("ssid")),
                device=ping.get("device_model"), helper_version=ping.get("helper_version"),
                mock=ping.get("mock", False), last_seen=_fmt_time(int(time.time())))
 

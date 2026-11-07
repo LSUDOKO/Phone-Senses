@@ -96,6 +96,48 @@
     "channel": "card",
     "category": "food"
    }
+  ],
+  [
+   "D9",
+   "AX-DEMOBK-S",
+   "DEMO Bank Acct XX123 debited for Rs 64.00 on 03-Nov-26; MUSKAN RESTAURA credited. UPI:600000000009. Call 18000000 for dispute. SMS BLOCK 123 to 9000000100.",
+   {
+    "amount_paise": 6400,
+    "account_last4": "123",
+    "counterparty": "MUSKAN RESTAURA",
+    "channel": "upi",
+    "ref": "600000000009",
+    "bank": "DEMOBK",
+    "category": "food"
+   }
+  ],
+  [
+   "D10",
+   "AD-DEMOBK-S",
+   "Rs. 99.18 debited from DEMO Bank Acc XX123 on 29-Oct-26 VIN*NEBIUS   . Bal Rs. 1,400.93. If not you call 18000000 or SMS BLOCK 123 to 9000000100",
+   {
+    "amount_paise": 9918,
+    "counterparty": "VIN*NEBIUS"
+   }
+  ],
+  [
+   "D11",
+   "AX-DEMOBK-S",
+   "Rs 2.00 debited from DEMO Bank Savings Account XX123 on 27-Oct-26 towards Google Cloud for GOOGLE AutoPay Retrieval Ref No.600000000011",
+   {
+    "amount_paise": 200,
+    "counterparty": "Google Cloud",
+    "category": "bills"
+   }
+  ],
+  [
+   "D12",
+   "AX-DEMOBK-S",
+   "DEMO Bank Acct XX123 debited for Rs 900.00 on 21-Oct-26; Manohar garments credited. UPI:600000000012.",
+   {
+    "counterparty": "Manohar garments",
+    "category": "shopping"
+   }
   ]
  ],
  "credits": [
@@ -184,6 +226,11 @@
    "N8",
    "+919000000102",
    "Paid Rs 200 for lunch, will collect later"
+  ],
+  [
+   "N9",
+   "VM-PTNNPS-S",
+   "APY(PRANXX0000) Contribution of Rs.50.00 for Oct-2026 credited to your PRAN. -Protean"
   ]
  ]
 }

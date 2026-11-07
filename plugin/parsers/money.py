@@ -37,6 +37,7 @@ IGNORE = [
     re.compile(r"\b(otp|one[\s-]?time\s+password|verification\s+code)\b", I),
     re.compile(r"\b(failed|declined|unsuccessful|not\s+successful|could\s+not\s+be\s+processed)\b", I),
     re.compile(r"\b(has\s+requested|requested\s+money|collect\s+request|payment\s+request)\b", I),
+    re.compile(r"\bcredited\s+to\s+your\s+pran\b|\bnps\s+contribution\b", I),   # pension contributions
     re.compile(r"\b(will\s+be\s+debited|is\s+due|due\s+on|auto[\s-]?debit\s+of\s+.*\s+scheduled)\b", I),
 ]
 DEBIT = re.compile(r"\b(debited|spent|paid|sent|withdrawn|purchase\s+of|txn\s+of|debit\s+of|deducted)\b", I)
@@ -45,7 +46,12 @@ AMOUNT = re.compile(r"(?:rs\.?|inr|₹)\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)", I)
 AMOUNT_AFTER_VERB = re.compile(r"\b(?:debited|credited)\s+(?:by|with|for)\s+([0-9][0-9,]*(?:\.[0-9]{1,2})?)", I)
 ACCOUNT = re.compile(r"\b(?:a/c|acct|account|card)(?:\s*no\.?)?(?:\s*ending(?:\s*with)?)?\s*[x*]*\s*(\d{3,6})", I)
 VPA = re.compile(r"\b([a-z0-9][a-z0-9.\-_]{1,60}@[a-z][a-z0-9]{1,30})\b", I)
-REF = re.compile(r"\b(?:upi\s*ref(?:\s*no)?|ref\s*no|refno|ref|txn\s*id|utr(?:\s*no)?)\.?\s*:?\s*([0-9A-Z]{6,22})\b", I)
+REF = re.compile(r"\b(?:upi\s*ref(?:\s*no)?|ref\s*no|refno|ref|txn\s*id|utr(?:\s*no)?|upi)\.?\s*:?\s*([0-9A-Z]{6,22})\b", I)
+# ICICI: "debited for Rs 64.00 on 03-Nov-26; MUSKAN RESTAURA credited."
+SEMI_CREDITED = re.compile(r";\s*([a-z][a-z0-9 .&'*\-]{1,40}?)\s+credited\b", I)
+# Card/e-mandate: "debited from ... on 29-Oct-26 VIN*NEBIUS   . Bal"
+TOWARDS = re.compile(r"\btowards\s+([a-z][a-z0-9 .&'\-]{1,40}?)(?=\s+(?:for|via|ref\w*|on)\b|\s*[.,]|\s*$)", I)
+AFTER_DATE = re.compile(r"\bon\s+\d{1,2}[-/][a-z0-9]{2,3}[-/]\d{2,4}\s+(?!on\b)([a-z][a-z0-9*.&' \-]{1,40}?)\s*\.(?:\s|$)", I)
 UPI_PATH = re.compile(r"\bupi/[a-z0-9]+/(\d{6,22})/([a-z0-9][a-z0-9 .&'\-]{1,40}?)(?=[.,]|\s+not\b|\s*$)", I)
 _STOP = r"(?=\s+(?:on|ref\w*|via|avl|not|if|info|at|for|using|upi)\b|\s*[.,(/]|\s*$)"
 NAME = r"([a-z][a-z0-9 .&'\-]{0,40}?)"
@@ -55,13 +61,13 @@ AT_NAME = re.compile(r"\b(?:at|on)\s+" + NAME + r"(?=\s+(?:on|from|for|ref\w*)\b
 NOT_PARTY = re.compile(r"\b(bank|a/c|account|card|your|you|upi|vpa|date|ac)\b|^(mr|ms|rs|inr)$", I)
 
 CATEGORIES = [
-    ("food", r"zomato|swiggy|domino|pizza|mcdonald|kfc|burger|restaurant|cafe|starbucks|eats|biryani|"
+    ("food", r"zomato|swiggy|domino|pizza|mcdonald|kfc|burger|restaura|hotel|dhaba|cafe|starbucks|eats|biryani|"
              r"blinkit|zepto|bigbasket|instamart|grocer|dunzo|chai"),
     ("travel", r"uber|ola\b|rapido|irctc|metro|indigo|air\s?india|vistara|makemytrip|redbus|fuel|petrol|"
                r"hpcl|bpcl|iocl|fastag|parking|cab"),
-    ("shopping", r"amazon|flipkart|myntra|ajio|meesho|nykaa|bigbazaar|dmart|reliance|decathlon|croma|mall|store"),
+    ("shopping", r"amazon|flipkart|myntra|ajio|meesho|nykaa|bigbazaar|dmart|reliance|decathlon|croma|mall|store|garment|fashion|textile|cloth|footwear|shoe|mart|kirana|general\s+store|electronics"),
     ("bills", r"electricity|bescom|tneb|msedcl|recharge|airtel|jio|\bvi\b|bsnl|broadband|dth|tatasky|gas|"
-              r"water|netflix|spotify|prime|hotstar|youtube|insurance|lic\b|emi|rent\b|bill"),
+              r"water|netflix|spotify|prime|hotstar|youtube|insurance|lic\b|emi|rent\b|bill|google\s+cloud|aws|autopay"),
     ("cash", r"\batm\b"),
     ("transfers", r"\btrf\b|transfer|p2p|neft|imps|rtgs"),
 ]
@@ -73,6 +79,7 @@ def bank_from_sender(sender: str) -> str | None:
     s = (sender or "").strip().upper()
     if not s or re.fullmatch(r"\+?\d+", s):
         return None
+    s = re.sub(r"-[SPTG]$", "", s)          # TRAI category suffix: AX-ICICIT-S
     return re.sub(r"^[A-Z]{2}-", "", s)[:12] or None
 
 
@@ -105,6 +112,11 @@ def _counterparty(body: str, direction: str) -> tuple[str | None, str | None]:
     vpa = VPA.search(body)
     if vpa:
         return vpa.group(1).lower(), None
+    if direction == "debit":
+        for rx in (SEMI_CREDITED, TOWARDS, AFTER_DATE):
+            m = rx.search(body)
+            if m and _clean_party(m.group(1)):
+                return _clean_party(m.group(1)), None
     order = (TO_NAME, AT_NAME, FROM_NAME) if direction == "debit" else (FROM_NAME, TO_NAME)
     for rx in order:
         pos = 0

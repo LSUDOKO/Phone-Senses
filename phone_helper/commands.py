@@ -205,9 +205,18 @@ def location(runner, params: dict) -> dict:
     return data
 
 
+# Termux:API's text-to-speech service jams when two calls overlap, so all speech is serialised.
+_tts_lock = threading.Lock()
+
+
 def speak(runner, body: dict) -> dict:
     text = text_param(body.get("text"), "text", SPEAK_MAX)
-    runner.run(["termux-tts-speak"], stdin=text, timeout=60)
+    if not _tts_lock.acquire(timeout=20):
+        raise HelperError("busy", "the phone is already speaking or ringing; try again in a moment", 409)
+    try:
+        runner.run(["termux-tts-speak"], stdin=text, timeout=60)
+    finally:
+        _tts_lock.release()
     return {"spoken": True, "chars": len(text)}
 
 
@@ -302,13 +311,20 @@ def ring_loop(runner, seconds: int, sleep: Callable[[float], None] = time.sleep,
             if stream in previous:
                 runner.run(["termux-volume", stream, str(previous.get(f"{stream}:max", 15))])
         end = clock() + seconds
+        next_speech = clock()
         while clock() < end:
-            for argv, stdin in ((["termux-vibrate", "-f", "-d", "800"], None),
-                                (["termux-torch", "on"], None)):
-                _quiet(runner, argv, stdin)
-            _quiet(runner, ["termux-tts-speak", "-s", "ALARM"], "I am here. Phone Senses.")
+            _quiet(runner, ["termux-vibrate", "-f", "-d", "800"], None)
+            _quiet(runner, ["termux-torch", "on"], None)
+            if clock() >= next_speech and _tts_lock.acquire(blocking=False):
+                try:   # one phrase at a time; never overlap with phone_speak
+                    _quiet(runner, ["termux-tts-speak", "-s", "ALARM"], "I am here. Phone Senses.")
+                finally:
+                    _tts_lock.release()
+                next_speech = clock() + 8
+            else:
+                sleep(0.6)
             _quiet(runner, ["termux-torch", "off"], None)
-            sleep(0.5)
+            sleep(0.4)
     finally:
         _quiet(runner, ["termux-torch", "off"], None)
         for stream in VOLUME_STREAMS:
