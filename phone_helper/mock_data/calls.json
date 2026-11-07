@@ -1,0 +1,7 @@
+[
+  {"name": "Mom", "phone_number": "+919000000104", "type": "MISSED", "date": "@0d 09:12:44", "duration": "00:00", "sim_id": "1"},
+  {"name": "Priya Office", "phone_number": "+919000000105", "type": "MISSED", "date": "@0d 08:40:02", "duration": "00:00", "sim_id": "1"},
+  {"name": "UNKNOWN_CALLER", "phone_number": "+919000012345", "type": "REJECTED", "date": "@1d 19:20:10", "duration": "00:00", "sim_id": "1"},
+  {"name": "Rahul Kumar", "phone_number": "+919000000101", "type": "INCOMING", "date": "@1d 18:05:31", "duration": "04:12", "sim_id": "1"},
+  {"name": "Anita S", "phone_number": "+919000000103", "type": "OUTGOING", "date": "@2d 13:44:00", "duration": "01:03", "sim_id": "1"}
+]

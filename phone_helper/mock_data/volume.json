@@ -1,0 +1,1 @@
+[{"stream": "call", "volume": 5, "max_volume": 7}, {"stream": "system", "volume": 5, "max_volume": 15}, {"stream": "ring", "volume": 6, "max_volume": 15}, {"stream": "music", "volume": 4, "max_volume": 15}, {"stream": "alarm", "volume": 9, "max_volume": 15}, {"stream": "notification", "volume": 6, "max_volume": 15}]

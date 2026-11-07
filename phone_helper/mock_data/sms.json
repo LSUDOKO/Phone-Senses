@@ -1,0 +1,182 @@
+[
+ {
+  "_id": 101,
+  "threadid": 11,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "AX-HDFCBK",
+  "received": "@0d 09:20:11",
+  "body": "Sent Rs.250.00 From HDFC Bank A/C *4321 To ZOMATO LTD On 08/11/26 Ref 512345678901 Not You? Call 1800-000-0001/SMS BLOCK UPI to 9000000101"
+ },
+ {
+  "_id": 102,
+  "threadid": 12,
+  "type": "inbox",
+  "read": false,
+  "sender": null,
+  "number": "VM-DEMOBK",
+  "received": "@0d 09:30:05",
+  "body": "482913 is your OTP for login to DemoBank NetBanking. Do not share it with anyone."
+ },
+ {
+  "_id": 103,
+  "threadid": 13,
+  "type": "inbox",
+  "read": false,
+  "sender": "Mom",
+  "number": "+919000000104",
+  "received": "@0d 09:13:30",
+  "body": "Call me when you are free. Did you eat?"
+ },
+ {
+  "_id": 104,
+  "threadid": 14,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "AX-HDFCBK",
+  "received": "@0d 11:02:40",
+  "body": "Money Received - INR 1,500.00 in your HDFC Bank A/c XX4321 on 08-11-26 from VPA customer123@okaxis (UPI Ref No 612300001111)"
+ },
+ {
+  "_id": 105,
+  "threadid": 15,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-PYTMBK",
+  "received": "@0d 12:10:00",
+  "body": "Received Rs.80 from Anita S on 08-Nov via UPI. Ref 612300003333. -Paytm Payments Bank"
+ },
+ {
+  "_id": 106,
+  "threadid": 16,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "BZ-AXISBK",
+  "received": "@1d 14:02:00",
+  "body": "₹500 debited from A/c no. XX2468 on 08-11-26 at 14:02 for UPI/P2M/631234567890/SWIGGY. Not you? SMS BLOCKUPI to 919000000103 - Axis Bank"
+ },
+ {
+  "_id": 107,
+  "threadid": 17,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-ICICIT",
+  "received": "@1d 08:00:12",
+  "body": "INR 99.00 spent using ICICI Bank Card XX1111 on 08-Nov-26 on NETFLIX. Avl Limit: INR 45,000.00. If not you, call 1800 000 0003/SMS BLOCK 1111 to 9000000102."
+ },
+ {
+  "_id": 108,
+  "threadid": 18,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "VM-SBIINB",
+  "received": "@2d 19:45:00",
+  "body": "Dear UPI user A/C X9876 debited by 1,250.50 on date 07Nov26 trf to RAHUL KUMAR Refno 612398765432. If not u? call 1800-000-0002. -SBI"
+ },
+ {
+  "_id": 109,
+  "threadid": 19,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "AD-KOTAKB",
+  "received": "@3d 10:30:00",
+  "body": "Rs 2000.00 withdrawn at ATM S1AW1234 from Kotak Bank a/c x5555 on 07-11-26. Avl bal Rs 10,500.00"
+ },
+ {
+  "_id": 110,
+  "threadid": 20,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "VM-SBIINB",
+  "received": "@6d 09:00:00",
+  "body": "Dear SBI User, your A/c X9876-credited by Rs.25000 on 01Nov26 transfer from ACME PVT LTD Ref No 612300002222 -SBI"
+ },
+ {
+  "_id": 111,
+  "threadid": 21,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "VM-SBIINB",
+  "received": "@2d 18:00:00",
+  "body": "Your UPI transaction of Rs 300.00 to SHOP@ybl has FAILED. Amount if debited will be reversed."
+ },
+ {
+  "_id": 112,
+  "threadid": 22,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-PHONPE",
+  "received": "@2d 17:00:00",
+  "body": "RAMESH has requested money of Rs 500 from you on PhonePe. Pay only if you know the sender."
+ },
+ {
+  "_id": 113,
+  "threadid": 23,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "AD-BIGBZR",
+  "received": "@1d 12:00:00",
+  "body": "FLAT 50% OFF! Shop above Rs 999 and get Rs 200 cashback. T&C. bit.ly/xyzsale"
+ },
+ {
+  "_id": 114,
+  "threadid": 24,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "AX-HDFCBK",
+  "received": "@1d 07:00:00",
+  "body": "Available balance in A/c XX4321 is Rs 12,345.67 as of 08-Nov-26."
+ },
+ {
+  "_id": 115,
+  "threadid": 25,
+  "type": "inbox",
+  "read": false,
+  "sender": null,
+  "number": "+919000088888",
+  "received": "@0d 08:05:00",
+  "body": "Dear customer your SBI account will be BLOCKED today. Update KYC immediately: http://sbi-kyc-update.co/in"
+ },
+ {
+  "_id": 116,
+  "threadid": 26,
+  "type": "inbox",
+  "read": false,
+  "sender": null,
+  "number": "+919000077777",
+  "received": "@1d 21:10:00",
+  "body": "Electricity power will be disconnected tonight at 9.30 pm because your previous month bill was not updated. Call officer 9000012345"
+ },
+ {
+  "_id": 117,
+  "threadid": 27,
+  "type": "inbox",
+  "read": true,
+  "sender": "Priya Office",
+  "number": "+919000000105",
+  "received": "@1d 16:20:00",
+  "body": "Meeting moved to 3 pm tomorrow. Room 4B."
+ },
+ {
+  "_id": 118,
+  "threadid": 28,
+  "type": "sent",
+  "read": true,
+  "sender": "Rahul Kumar",
+  "number": "+919000000101",
+  "received": "@1d 18:30:00",
+  "body": "Reached home, thanks!"
+ }
+]
