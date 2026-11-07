@@ -85,7 +85,7 @@ Every tool was run end to end on a **moto g34 5G (Android 15)** with **Hermes Ag
 - In unattended `-q` mode, the approval-gated tools were refused.
 
 ## Requirements
-- Hermes Agent `0.21.6` or newer, on macOS, Linux or Windows/WSL.
+- Hermes Agent `0.23.0` or newer, on macOS, Linux or Windows/WSL.
 - An Android phone with **Termux** and **Termux:API** from **F-Droid**. The Play Store builds do not
   work with Termux:API.
 - The laptop and phone on the same Wi-Fi, or both on **Tailscale** (recommended: encrypted, works anywhere).

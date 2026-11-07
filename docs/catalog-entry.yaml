@@ -11,7 +11,7 @@ maintainer: LSUDOKO
 tier: community
 category: tools
 version: "0.1.0"
-requires_hermes: ">=0.21.6"
+requires_hermes: ">=0.23.0"
 docs_url: https://github.com/LSUDOKO/Phone-Senses#readme
 image: https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/<SHA>/plugin/assets/banner.png
 screenshots: []

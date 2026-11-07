@@ -6,7 +6,7 @@ author: Arpit Singh
 license: MIT
 homepage: https://github.com/LSUDOKO/Phone-Senses
 tags: [phone, android, termux, sms, notifications, finance, upi]
-requires_hermes: ">=0.21.6"
+requires_hermes: ">=0.23.0"
 provides_tools:
   - phone_status
   - phone_notifications
