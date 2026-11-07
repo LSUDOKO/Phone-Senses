@@ -1,0 +1,65 @@
+name: phone-senses
+version: 0.1.0
+manifest_version: 2
+description: Give Hermes your Android phone's senses through Termux:API (notifications, SMS, money tracking, scam warnings, find my phone) with approval for every send
+author: Arpit Singh
+license: MIT
+homepage: https://github.com/LSUDOKO/Phone-Senses
+tags: [phone, android, termux, sms, notifications, finance, upi]
+requires_hermes: ">=0.21.6"
+provides_tools:
+  - phone_status
+  - phone_notifications
+  - phone_sms_list
+  - phone_sms_send
+  - phone_calls
+  - phone_contacts
+  - phone_location
+  - phone_ring
+  - phone_speak
+  - phone_clipboard
+  - phone_photo
+  - phone_call
+  - phone_otp_reveal
+  - phone_money_sync
+  - phone_money_summary
+  - phone_budget_set
+  - phone_scam_check
+  - phone_watch_add
+  - phone_watch_list
+  - phone_watch_remove
+  - phone_watch_check
+  - phone_brief
+provides_hooks:
+  - pre_tool_call
+config_schema:
+  helper_url:
+    type: str
+    default: "http://127.0.0.1:8765"
+    label: Phone helper URL
+    description: Address printed by the helper on your phone, e.g. http://192.168.1.23:8765 or your Tailscale IP
+  helper_token:
+    type: secret
+    env: PHONE_SENSES_TOKEN
+    label: Pairing code
+    description: Printed once by 'python phone_helper/helper.py --pair' in Termux
+  allow_otp_reveal:
+    type: bool
+    default: false
+    label: Allow OTP reveal
+    description: Let Hermes read one OTP at a time, only after you approve each request
+  money_enabled:
+    type: bool
+    default: true
+    label: Money tracker
+    description: Parse bank and UPI SMS into transactions (amounts and merchants only, never message text)
+  scam_check_enabled:
+    type: bool
+    default: true
+    label: Scam SMS warnings
+    description: Add a scam risk level to SMS results
+  notifications_exclude_apps:
+    type: list
+    default: []
+    label: Apps to ignore in notification digests
+    description: App names or package names, e.g. instagram or com.instagram.android

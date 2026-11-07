@@ -1,0 +1,179 @@
+{
+ "debits": [
+  [
+   "D1",
+   "AX-HDFCBK",
+   "Sent Rs.250.00 From HDFC Bank A/C *4321 To ZOMATO LTD On 08/11/26 Ref 512345678901 Not You? Call 1800-000-0001/SMS BLOCK UPI to 9000000101",
+   {
+    "amount_paise": 25000,
+    "account_last4": "4321",
+    "counterparty": "ZOMATO LTD",
+    "channel": "upi",
+    "ref": "512345678901",
+    "category": "food",
+    "bank": "HDFCBK"
+   }
+  ],
+  [
+   "D2",
+   "VM-SBIINB",
+   "Dear UPI user A/C X9876 debited by 1,250.50 on date 07Nov26 trf to RAHUL KUMAR Refno 612398765432. If not u? call 1800-000-0002. -SBI",
+   {
+    "amount_paise": 125050,
+    "account_last4": "9876",
+    "counterparty": "RAHUL KUMAR",
+    "channel": "upi",
+    "ref": "612398765432",
+    "category": "transfers"
+   }
+  ],
+  [
+   "D3",
+   "JD-ICICIT",
+   "INR 99.00 spent using ICICI Bank Card XX1111 on 08-Nov-26 on NETFLIX. Avl Limit: INR 45,000.00. If not you, call 1800 000 0003/SMS BLOCK 1111 to 9000000102.",
+   {
+    "amount_paise": 9900,
+    "account_last4": "1111",
+    "counterparty": "NETFLIX",
+    "channel": "card",
+    "category": "bills"
+   }
+  ],
+  [
+   "D4",
+   "BZ-AXISBK",
+   "₹500 debited from A/c no. XX2468 on 08-11-26 at 14:02 for UPI/P2M/631234567890/SWIGGY. Not you? SMS BLOCKUPI to 919000000103 - Axis Bank",
+   {
+    "amount_paise": 50000,
+    "account_last4": "2468",
+    "counterparty": "SWIGGY",
+    "channel": "upi",
+    "ref": "631234567890",
+    "category": "food"
+   }
+  ],
+  [
+   "D5",
+   "AD-KOTAKB",
+   "Rs 2000.00 withdrawn at ATM S1AW1234 from Kotak Bank a/c x5555 on 07-11-26. Avl bal Rs 10,500.00",
+   {
+    "amount_paise": 200000,
+    "account_last4": "5555",
+    "channel": "atm",
+    "category": "cash"
+   }
+  ],
+  [
+   "D6",
+   "VM-DEMOBK",
+   "Rs.1,250.50 paid to UBER INDIA via UPI on 05-11-26. UPI Ref No 600000000006",
+   {
+    "amount_paise": 125050,
+    "counterparty": "UBER INDIA",
+    "channel": "upi",
+    "ref": "600000000006",
+    "category": "travel"
+   }
+  ],
+  [
+   "D7",
+   "AX-DEMOBK",
+   "Your a/c ending 7777 is debited with INR 1,499 for AMAZON PAY on 06-11-26. Ref no 600000000007",
+   {
+    "amount_paise": 149900,
+    "account_last4": "7777",
+    "category": "shopping"
+   }
+  ],
+  [
+   "D8",
+   "VM-DEMOBK",
+   "Rs 349 spent on Card ending 2222 at BLINKIT on 06/11/26.",
+   {
+    "amount_paise": 34900,
+    "account_last4": "2222",
+    "counterparty": "BLINKIT",
+    "channel": "card",
+    "category": "food"
+   }
+  ]
+ ],
+ "credits": [
+  [
+   "C1",
+   "AX-HDFCBK",
+   "Money Received - INR 1,500.00 in your HDFC Bank A/c XX4321 on 08-11-26 from VPA customer123@okaxis (UPI Ref No 612300001111)",
+   {
+    "amount_paise": 150000,
+    "account_last4": "4321",
+    "counterparty": "customer123@okaxis",
+    "channel": "upi",
+    "ref": "612300001111"
+   }
+  ],
+  [
+   "C2",
+   "VM-SBIINB",
+   "Dear SBI User, your A/c X9876-credited by Rs.25000 on 01Nov26 transfer from ACME PVT LTD Ref No 612300002222 -SBI",
+   {
+    "amount_paise": 2500000,
+    "account_last4": "9876",
+    "counterparty": "ACME PVT LTD",
+    "ref": "612300002222"
+   }
+  ],
+  [
+   "C3",
+   "JD-PYTMBK",
+   "Received Rs.80 from Anita S on 08-Nov via UPI. Ref 612300003333. -Paytm Payments Bank",
+   {
+    "amount_paise": 8000,
+    "counterparty": "Anita S",
+    "channel": "upi",
+    "ref": "612300003333"
+   }
+  ],
+  [
+   "C4",
+   "VM-DEMOBK",
+   "INR 2,000.00 credited to your A/c XX3333 on 07-11-26 by NEFT from DEMO TRADERS. Ref UTR000000004",
+   {
+    "amount_paise": 200000,
+    "account_last4": "3333",
+    "counterparty": "DEMO TRADERS"
+   }
+  ]
+ ],
+ "ignored": [
+  [
+   "N1",
+   "AX-HDFCBK",
+   "123456 is your OTP for txn of Rs 250.00 at ZOMATO on HDFC Bank card XX1111. Valid for 5 mins. Do not share."
+  ],
+  [
+   "N2",
+   "VM-SBIINB",
+   "Your UPI transaction of Rs 300.00 to SHOP@ybl has FAILED. Amount if debited will be reversed."
+  ],
+  [
+   "N3",
+   "JD-PHONPE",
+   "RAMESH has requested money of Rs 500 from you on PhonePe. Pay only if you know the sender."
+  ],
+  [
+   "N4",
+   "AD-BIGBZR",
+   "FLAT 50% OFF! Shop above Rs 999 and get Rs 200 cashback. T&C. bit.ly/xyzsale"
+  ],
+  [
+   "N5",
+   "AX-HDFCBK",
+   "Available balance in A/c XX4321 is Rs 12,345.67 as of 08-Nov-26."
+  ],
+  [
+   "N6",
+   "VM-DEMOBK",
+   "Your electricity bill of Rs 1,240 is due on 15-11-26. Pay now to avoid late fee."
+  ]
+ ]
+}

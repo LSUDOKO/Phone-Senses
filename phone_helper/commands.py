@@ -333,7 +333,8 @@ def ring(runner, body: dict, start_thread: bool = True) -> dict:
 
     def _run():
         try:
-            ring_loop(runner, seconds, sleep=getattr(runner, "sleep", time.sleep))
+            ring_loop(runner, seconds, sleep=getattr(runner, "sleep", time.sleep),
+                      clock=getattr(runner, "clock", time.monotonic))
         finally:
             _ring_lock.release()
 

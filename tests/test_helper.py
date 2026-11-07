@@ -142,7 +142,7 @@ def test_mock_shapes(helper, app):
 def test_ring_restores_volume(helper):
     commands = __import__("commands")
     runner = helper.MockRunner()
-    commands.ring(runner, {"seconds": 1}, start_thread=False)
+    commands.ring(runner, {"seconds": 10}, start_thread=False)
     sets = [argv for argv, _ in runner.calls if argv[0] == "termux-volume" and len(argv) == 3]
     assert ["termux-volume", "music", "15"] in sets
     assert sets[-4:] == [["termux-volume", s, v] for s, v in

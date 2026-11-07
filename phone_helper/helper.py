@@ -118,12 +118,27 @@ class MockRunner:
     def sleep(self, seconds: float) -> None:  # ring loop runs instantly in mock mode
         return None
 
+    def clock(self) -> float:   # each look at the clock moves it 5 s, so a ring lasts a few loops
+        self._t = getattr(self, "_t", 0.0) + 5.0
+        return self._t
+
     def _fixture(self, name: str) -> str:
         """Fixture text with relative dates ("@2d 14:02:00" = two days ago) made absolute."""
         text = (self.data_dir / f"{name}.json").read_text(encoding="utf-8")
-        today = datetime.date.today()
-        return re.sub(r'"@(\d+)d (\d\d:\d\d:\d\d)"',
-                      lambda m: f'"{today - datetime.timedelta(days=int(m.group(1)))} {m.group(2)}"', text)
+        now = datetime.datetime.now().replace(microsecond=0)
+        midnight = now.replace(hour=0, minute=0, second=0)
+
+        def absolute(m: re.Match) -> str:
+            days = int(m.group(1))
+            h, mi, se = (int(x) for x in m.group(2).split(":"))
+            secs = h * 3600 + mi * 60 + se
+            if days == 0:   # squeeze "today" into midnight..now so nothing is in the future
+                when = midnight + datetime.timedelta(seconds=int(secs * (now - midnight).total_seconds() / 86400))
+            else:
+                when = midnight - datetime.timedelta(days=days) + datetime.timedelta(seconds=secs)
+            return f'"{when:%Y-%m-%d %H:%M:%S}"'
+
+        return re.sub(r'"@(\d+)d (\d\d:\d\d:\d\d)"', absolute, text)
 
     def run(self, argv: list[str], timeout: float = 15, stdin: str | None = None) -> str:
         self.calls.append((list(argv), stdin))
