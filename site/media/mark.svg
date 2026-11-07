@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Phone Senses mark: a phone frame built from blocks; its top-right corner breaks off as a sensing pixel. -->
+  <g fill="#050507">
+    <rect x="12" y="4" width="10" height="56"/>
+    <rect x="12" y="4" width="22" height="10"/>
+    <rect x="12" y="50" width="38" height="10"/>
+    <rect x="40" y="24" width="10" height="36"/>
+    <rect x="42" y="4" width="10" height="10"/>
+    <rect x="56" y="0" width="6" height="6"/>
+    
+  </g>
+</svg>

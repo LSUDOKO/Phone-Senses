@@ -1,19 +1,74 @@
-# Phone Senses
+<p align="center">
+  <img src="brand/banner.png" alt="Phone Senses — give Hermes your Android phone's senses" width="100%">
+</p>
 
-![Phone Senses](plugin/assets/banner.png)
+<p align="center">
+  <b>Give <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> the senses of your own Android phone.</b><br>
+  Notifications, SMS, UPI money, scam warnings and find my phone, through Termux:API.<br>
+  Hermes asks before it sends anything.
+</p>
 
-**Give [Hermes Agent](https://hermes-agent.nousresearch.com) the senses of your own Android phone.**
-Phone Senses reads your notifications, SMS, calls, location and battery through Android's own APIs
-(via Termux:API). It turns bank and UPI SMS into a money tracker, warns about scam texts, finds your
-phone, and sends SMS from your own SIM, always after you approve.
+<p align="center">
+  <a href="https://phone-senses.pages.dev"><b>Website</b></a> ·
+  <a href="#setup">Install</a> ·
+  <a href="#see-it-work">See it work</a> ·
+  <a href="#privacy-and-disclosures">Privacy</a>
+</p>
 
-> *phone-harness gives Hermes hands on your phone. Phone Senses gives it the phone's senses.*
+---
 
-- **No screen tapping.** Each question is one API call, not 15 screenshots and taps.
+- **No screen tapping.** Each question is one Android API call, not 15 screenshots and taps.
 - **Your own phone, your own SIM.** No cloud phone numbers, no third-party services.
 - **Safe by design.** Signed requests, approval for every send, OTPs hidden, no SMS text stored.
 
----
+> *phone-harness gives Hermes hands on your phone. Phone Senses gives it the phone's senses.*
+
+## See it work
+Every GIF replays a real Hermes Agent 0.23 session with this plugin.
+- **real phone:** ran on a moto g34 (Android 15) over Termux:API.
+- **demo phone:** uses the built-in mock helper, so no one's private messages, bank SMS or location are published.
+
+### What did I miss?
+<table><tr>
+<td width="50%"><img src="site/media/digest.gif" alt="Notifications and missed calls digest"><br><sub><b>demo phone</b> · "Anything important on my phone?"</sub></td>
+<td width="50%"><img src="site/media/brief.gif" alt="Morning brief"><br><sub><b>demo phone</b> · "Give me my morning phone brief."</sub></td>
+</tr></table>
+
+### Money from bank and UPI SMS
+<table><tr>
+<td width="50%"><img src="site/media/money.gif" alt="Spending by category"><br><sub><b>demo phone</b> · "How much did I spend this week?"</sub></td>
+<td width="50%"><img src="site/media/upi.gif" alt="UPI received today"><br><sub><b>demo phone</b> · "How much did I receive by UPI today?"</sub></td>
+</tr><tr>
+<td width="50%"><img src="site/media/budget.gif" alt="Budget set and percent used"><br><sub><b>demo phone</b> · "Set a monthly food budget of 3000 rupees…"</sub></td>
+<td width="50%"><img src="site/media/scam.gif" alt="Scam check"><br><sub><b>demo phone</b> · "Check my recent SMS for scam messages."</sub></td>
+</tr></table>
+
+### It asks before it acts
+Sending an SMS, placing a call, taking a photo and revealing an OTP always open Hermes's approval panel.
+<table><tr>
+<td width="62%"><img src="site/media/sms-allow.gif" alt="SMS approval panel, allowed once"><br><sub><b>real phone</b> · allowed once: sent from the SIM</sub></td>
+<td width="38%"><img src="site/media/phone-sms-arrives.gif" alt="The SMS arriving on the phone"><br><sub><b>real phone</b> · the text arrives</sub></td>
+</tr><tr>
+<td width="62%"><img src="site/media/sms-deny.gif" alt="SMS approval panel, denied"><br><sub><b>real phone</b> · denied: nothing sent, no retry</sub></td>
+<td width="38%"><img src="site/media/phone-helper-log.gif" alt="The phone helper's request log"><br><sub><b>real phone</b> · helper log: paths only, never message text</sub></td>
+</tr><tr>
+<td width="62%"><img src="site/media/call.gif" alt="Call approval panel, allowed once"><br><sub><b>real phone</b> · place a call</sub></td>
+<td width="38%"><img src="site/media/photo.gif" alt="Photo approval panel, allowed once"><br><sub><b>real phone</b> · take a photo</sub></td>
+</tr></table>
+<img src="site/media/unattended.gif" alt="Approval-gated tool refused in unattended mode" width="62%"><br>
+<sub><b>real phone</b> · in unattended mode (cron, or <code>-q</code>) nobody can approve, so the action is refused</sub>
+
+### Find, speak, copy, watch
+<table><tr>
+<td width="50%"><img src="site/media/ring.gif" alt="Find my phone"><br><sub><b>real phone</b> · "Make my phone ring."</sub></td>
+<td width="50%"><img src="site/media/speak.gif" alt="Speak aloud"><br><sub><b>real phone</b> · "Say 'dinner is ready' on my phone."</sub></td>
+</tr><tr>
+<td width="50%"><img src="site/media/clipboard.gif" alt="Clipboard bridge"><br><sub><b>real phone</b> · "Copy this link to my phone."</sub></td>
+<td width="50%"><img src="site/media/watch.gif" alt="Watch rule match"><br><sub><b>real phone</b> · a watch rule catching a new SMS</sub></td>
+</tr><tr>
+<td width="50%"><img src="site/media/status.gif" alt="Battery status"><br><sub><b>real phone</b> · "What's my phone battery?"</sub></td>
+<td width="50%"><img src="site/media/location.gif" alt="Phone location with a Maps link"><br><sub><b>demo phone</b> · "Where is my phone?"</sub></td>
+</tr></table>
 
 ## What you can ask
 | You say | What happens |
@@ -92,6 +147,7 @@ Every tool was run end to end on a **moto g34 5G (Android 15)** with **Hermes Ag
 
 ## Setup
 
+<a id="setup"></a>
 ### 1. Phone (about 15 minutes)
 1. Install **F-Droid**, then **Termux** and **Termux:API** from F-Droid.
 2. In Termux:
@@ -212,11 +268,18 @@ Phone Senses is that API layer for Hermes. It pairs well with screen-driving plu
 
 ## Development
 ```bash
-python -m pytest -q                                  # ~120 tests, no phone needed, about 1 second
+python -m pytest -q                                  # 129 tests, no phone needed, about 1 second
 hermes plugins validate plugin --install-deps        # catalog checks
 ```
 Repository layout: `plugin/` (the Hermes plugin, catalog `subdir`), `phone_helper/` (runs on the phone),
-`tests/`, `scripts/`, and `docs/` (the project plan).
+`site/` (the landing page, deployed to Cloudflare Pages), `brand/` (logo mark and banner), `tests/`,
+`scripts/` (`try_tool.py` to call tools without Hermes, `make_gifs.py` to rebuild the GIFs) and `docs/`
+(the project plan).
+
+## Brand
+Ultramarine `#1F2BFF`, Ink `#050507`, Paper `#F1F1EE`, a chrome gradient for the wordmark;
+[Archivo](https://fonts.google.com/specimen/Archivo) for display and text, [Geist Mono](https://fonts.google.com/specimen/Geist+Mono) for labels.
+The mark is a phone frame built from blocks whose top corner breaks away as a sensing pixel (`brand/mark.svg`).
 
 ## License
 MIT © 2026 Arpit Singh

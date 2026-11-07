@@ -214,3 +214,11 @@ def test_time_parsing(plugin):
     assert dt.datetime.fromtimestamp(ts).strftime("%H:%M:%S") == "09:30:05"
     assert ps.tools._parse_time(1762594205000) == 1762594205
     assert ps.tools._parse_time("garbage") is None
+
+
+def test_mock_timestamps_are_stable_so_sync_dedupes(plugin):
+    ps, _ = plugin
+    first = run(ps, "phone_money_sync", {"days": 30})
+    second = run(ps, "phone_money_sync", {"days": 30})
+    assert first["new"] == 8 and second["new"] == 0
+    assert run(ps, "phone_money_summary", {"period": "today", "direction": "credit"})["total_credit_rs"] == 1580.0

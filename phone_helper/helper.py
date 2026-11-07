@@ -114,6 +114,8 @@ class MockRunner:
         self.data_dir = data_dir
         self.calls: list[tuple[list[str], str | None]] = []   # recorded for tests
         self.sent_sms: list[dict] = []
+        # Pinned at start so fixture timestamps (and transaction ids) are stable across requests.
+        self.started = datetime.datetime.now().replace(microsecond=0)
 
     def sleep(self, seconds: float) -> None:  # ring loop runs instantly in mock mode
         return None
@@ -125,7 +127,7 @@ class MockRunner:
     def _fixture(self, name: str) -> str:
         """Fixture text with relative dates ("@2d 14:02:00" = two days ago) made absolute."""
         text = (self.data_dir / f"{name}.json").read_text(encoding="utf-8")
-        now = datetime.datetime.now().replace(microsecond=0)
+        now = self.started
         midnight = now.replace(hour=0, minute=0, second=0)
 
         def absolute(m: re.Match) -> str:
