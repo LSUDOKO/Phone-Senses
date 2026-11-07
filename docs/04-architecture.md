@@ -22,6 +22,9 @@ Design principles:
 - **Fail clearly.** Every failure becomes a helpful JSON error the agent can explain to the user.
 
 ## Repository layout
+> **As built:** the plugin files below live in `plugin/` (catalog `subdir: plugin`), and
+> `phone_helper/`, `tests/`, `scripts/` and `docs/` sit at the repo root, outside the install tree.
+
 ```
 phone-senses/                    # repo root = plugin root
 ├── plugin.yaml                  # manifest (see 05-hermes-plugin-reference.md)

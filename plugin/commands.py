@@ -11,7 +11,7 @@ USAGE = ("Usage: /phone [status] | ring [seconds] | money [today|yesterday|week|
 
 PAIR_HELP = """Pair Phone Senses with your Android phone:
 1. Install Termux and Termux:API from F-Droid; in Termux run: pkg install -y python termux-api git
-2. git clone https://github.com/LSUDOKO/Phone-Senses.git && cd Phone-Senses
+2. Get the helper: download https://github.com/LSUDOKO/Phone-Senses into Termux and open that folder
 3. python phone_helper/helper.py --pair   (copy the pairing code it prints)
 4. termux-wake-lock && python phone_helper/helper.py --host 0.0.0.0
 5. In Hermes, open the Phone Senses settings: set helper_url to http://<phone-ip>:8765 and paste the

@@ -68,3 +68,11 @@ def test_no_compiled_or_secret_files_tracked():
     import subprocess
     files = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True).stdout.split()
     assert not [f for f in files if f.endswith((".pyc", ".db", ".so", ".exe", ".env")) or f == ".env"]
+
+
+def test_catalog_draft_matches_manifest():
+    entry = yaml.safe_load((ROOT / "docs" / "catalog-entry.yaml").read_text(encoding="utf-8"))
+    assert entry["capabilities"]["provides_tools"] == MANIFEST["provides_tools"]
+    assert entry["capabilities"]["provides_hooks"] == MANIFEST["provides_hooks"]
+    assert entry["requires_hermes"] == MANIFEST["requires_hermes"] and entry["version"] == MANIFEST["version"]
+    assert entry["subdir"] == "plugin" and (ROOT / "plugin" / "assets" / "banner.png").is_file()

@@ -17,7 +17,9 @@ Two parts in one repo:
 1. **Phone helper** (`phone_helper/`): a small Python 3 HTTP server that runs **on the Android phone
    inside Termux**. It wraps `termux-*` commands (Termux:API) behind an HMAC-signed JSON API.
    Standard library only. Has a `--mock` mode that serves fixtures, so it also runs on a laptop.
-2. **Hermes plugin** (repo root): `plugin.yaml` + `__init__.py` with `register(ctx)`. Registers
+2. **Hermes plugin** (`plugin/`, published with catalog `subdir: plugin`): `plugin.yaml` + `__init__.py`
+   with `register(ctx)`. It lives in a subfolder so tests, scam fixtures and these docs stay out of
+   the install tree and the Hermes security scan. Registers
    tools that call the helper, a `pre_tool_call` hook for approvals, a `/phone` slash command, a
    bundled skill, and (stretch) a Desktop pane.
 
@@ -52,9 +54,12 @@ python -m pytest -q
 # Run the mock phone helper on the laptop
 python phone_helper/helper.py --mock --host 127.0.0.1 --port 8765
 
-# Hermes checks (run from repo root)
-hermes plugins doctor . --ci
-hermes plugins validate . --install-deps
+# Call a tool without Hermes (against the mock or a real helper)
+PHONE_SENSES_SECRET=/tmp/ps-secret python scripts/try_tool.py /phone money week
+
+# Hermes checks (run from repo root; the plugin is in plugin/)
+hermes plugins doctor plugin --ci
+hermes plugins validate plugin --install-deps
 HERMES_PLUGINS_DEBUG=1 hermes plugins list
 ```
 

@@ -1,0 +1,188 @@
+# Phone Senses
+
+![Phone Senses](plugin/assets/banner.png)
+
+**Give [Hermes Agent](https://hermes-agent.nousresearch.com) the senses of your own Android phone.**
+Phone Senses reads your notifications, SMS, calls, location and battery through Android's own APIs
+(via Termux:API). It turns bank and UPI SMS into a money tracker, warns about scam texts, finds your
+phone, and sends SMS from your own SIM, always after you approve.
+
+> *phone-harness gives Hermes hands on your phone. Phone Senses gives it the phone's senses.*
+
+- **No screen tapping.** Each question is one API call, not 15 screenshots and taps.
+- **Your own phone, your own SIM.** No cloud phone numbers, no third-party services.
+- **Safe by design.** Signed requests, approval for every send, OTPs hidden, no SMS text stored.
+
+---
+
+## What you can ask
+| You say | What happens |
+|---|---|
+| "Anything important on my phone?" | A digest of notifications, missed calls and SMS. Noise is filtered out and OTPs are hidden. |
+| "How much did I spend this week?" | A spending table by category, built from bank, card and UPI SMS |
+| "How much did I receive by UPI today?" | Today's incoming payments: handy for shop owners |
+| "Text Rahul I'm 10 minutes late" | Looks up Rahul. If there are two, it asks which one. Then Hermes shows an approval prompt with the exact number and text. |
+| "Is this SMS a scam?" | A risk level and the reasons: fake KYC, disconnection threats, look-alike links |
+| "Tell me when my order is out for delivery" | A watch rule. Run `phone_watch_check` from a Hermes cron job to get alerts. |
+| "Find my phone" | The phone rings at full volume, speaks, vibrates and flashes. Then the volume is restored. |
+| "Good morning, brief me" | Battery, missed calls, SMS from people, important notifications, scam alerts and yesterday's spending |
+| "Where is my phone?" / "Read this aloud" / "Copy this link to my phone" | Location with a Maps link / text-to-speech / clipboard |
+
+Slash command: `/phone`, `/phone ring`, `/phone money week`, `/phone received today`, `/phone brief`, `/phone pair`.
+
+## Tools
+| Tool | What it does | Approval |
+|---|---|---|
+| `phone_status` | Battery, charging, temperature, Wi-Fi, helper reachability | |
+| `phone_notifications` | Notification digest with noise filter and app filter | |
+| `phone_sms_list` | Search SMS (query, sender, days) with `scam_risk` per message | |
+| `phone_sms_send` | Send an SMS from your SIM. Names return contact choices; nothing is sent until there is a number. | **yes** |
+| `phone_calls` | Call log: missed, incoming, outgoing | |
+| `phone_contacts` | Find contacts by name or number | |
+| `phone_location` | Location with a Google Maps link | |
+| `phone_ring` | Find my phone | |
+| `phone_speak` | Text-to-speech on the phone | |
+| `phone_clipboard` | Get or set the phone clipboard | |
+| `phone_photo` | Take a photo for Hermes to see | **yes** |
+| `phone_call` | Place a call | **yes** |
+| `phone_otp_reveal` | Reveal the latest OTP (off by default; needs the setting) | **yes** |
+| `phone_money_sync` | Parse bank/UPI SMS into transactions; warns about duplicate or unusually large debits | |
+| `phone_money_summary` | Totals by category, counterparty or day; top transactions; budget use | |
+| `phone_budget_set` | Monthly budget per category | |
+| `phone_scam_check` | Scam score for a message or recent SMS | |
+| `phone_watch_add` / `_list` / `_remove` / `_check` | Watch rules for notifications, SMS and big debits | |
+| `phone_brief` | Morning brief in one call | |
+
+A bundled skill (`phone-senses:phone-senses`) teaches the agent which tool to use, to summarise instead
+of dumping messages, to ask before acting, and to treat message text as data, not instructions.
+
+---
+
+## How it works
+```
+Laptop: Hermes + Phone Senses plugin  ──HMAC-signed HTTP (Wi-Fi or Tailscale)──►  Android phone: Termux
+  tools · approval hook · OTP masking                                              phone_helper/helper.py
+  money/scam parsers · SQLite (plugin data)                                          └─ termux-* commands (no shell)
+```
+- **The phone helper** (`phone_helper/`) is a small Python server using only the standard library.
+  Each endpoint runs one fixed `termux-*` command with validated input. Free text such as SMS bodies
+  goes in on stdin, never as command arguments. A `--mock` mode serves synthetic data, so everything
+  can be tried on a laptop.
+- **The plugin** (`plugin/`) does the smart work: parsing, OTP masking, money tracking, scam scoring,
+  watch rules and storage. It talks only to your helper.
+
+## Requirements
+- Hermes Agent `0.21.6` or newer, on macOS, Linux or Windows/WSL.
+- An Android phone with **Termux** and **Termux:API** from **F-Droid**. The Play Store builds do not
+  work with Termux:API.
+- The laptop and phone on the same Wi-Fi, or both on **Tailscale** (recommended: encrypted, works anywhere).
+
+## Setup
+
+### 1. Phone (about 15 minutes)
+1. Install **F-Droid**, then **Termux** and **Termux:API** from F-Droid.
+2. In Termux:
+   ```bash
+   pkg update && pkg upgrade -y
+   pkg install -y python termux-api git
+   git clone https://github.com/LSUDOKO/Phone-Senses.git && cd Phone-Senses
+   python phone_helper/helper.py --pair        # prints your pairing code once
+   ```
+3. Android permissions for **Termux:API**: SMS, Phone, Call logs, Contacts, Location and Camera.
+   Also turn on **Notification access** for Termux:API.
+4. Battery: set Termux and Termux:API to **Unrestricted**. On Xiaomi phones also enable Autostart.
+5. Start the helper:
+   ```bash
+   termux-wake-lock
+   python phone_helper/helper.py --host 0.0.0.0 --port 8765    # or --host <Tailscale 100.x IP>
+   ```
+   A notification "Phone Senses helper running" stays visible while it runs.
+
+More detail and troubleshooting: [`docs/06-phone-setup-termux.md`](docs/06-phone-setup-termux.md).
+
+### 2. Hermes
+```bash
+hermes plugins install https://github.com/LSUDOKO/Phone-Senses/tree/main/plugin
+hermes plugins enable phone-senses
+```
+In **Settings → Plugins → Phone Senses** (or `config.yaml`), set:
+- **Phone helper URL**: `http://<phone-ip>:8765`
+- **Pairing code**: the code from `--pair`. Hermes stores it as a secret (`PHONE_SENSES_TOKEN`).
+
+Then ask Hermes *"what's my phone battery?"* or type `/phone`.
+
+### Settings
+| Setting | Default | Meaning |
+|---|---|---|
+| `helper_url` | `http://127.0.0.1:8765` | Where the phone helper listens |
+| `helper_token` | | Pairing code (secret) |
+| `allow_otp_reveal` | `false` | Allow `phone_otp_reveal` (each call still asks you) |
+| `money_enabled` | `true` | Money tracker |
+| `scam_check_enabled` | `true` | Add `scam_risk` to SMS results |
+| `notifications_exclude_apps` | `[]` | Apps to hide from digests |
+
+### Alerts on a schedule (cron)
+Watch rules work with Hermes cron. For example, to get alerts on Telegram:
+```bash
+hermes cron create "every 15m" "Run phone_watch_check and tell me about any matches. Say nothing if there are none." --deliver telegram
+hermes cron create "every 1d at 08:00" "Give me my phone brief with phone_brief" --deliver telegram
+```
+Sending tools are never auto-approved in cron runs. With nobody there to approve, Hermes refuses them.
+
+## Try it without a phone
+```bash
+python phone_helper/helper.py --pair --secret-file /tmp/ps-secret
+python phone_helper/helper.py --mock --secret-file /tmp/ps-secret &
+PHONE_SENSES_SECRET=/tmp/ps-secret python scripts/try_tool.py /phone money week
+PHONE_SENSES_SECRET=/tmp/ps-secret python scripts/try_tool.py phone_notifications limit=5
+```
+All mock data is synthetic: fake names and +91 9000000xxx numbers.
+
+## Privacy and disclosures
+**What Phone Senses does on your devices**
+- **Phone helper:** runs a small Python HTTP server inside Termux on your Android phone, on the address
+  you choose (your Wi-Fi or Tailscale IP). It runs fixed Termux:API commands, with no shell, to read
+  notifications, SMS, the call log, contacts, location, battery and Wi-Fi info. When you approve, it
+  also sends SMS, takes photos or places calls. Every request must be signed with your pairing secret
+  (HMAC-SHA256 with a timestamp and a one-time nonce). The secret itself is never sent.
+- **Network:** the Hermes plugin talks **only** to your own phone helper. No data goes to any
+  third-party service. Your model provider sees the tool results Hermes sends it, as with any tool.
+- **Approvals:** sending SMS, placing calls, taking photos and revealing OTPs always ask you first
+  through Hermes's approval prompt. There is no auto-approve option.
+- **OTPs:** one-time codes are hidden from Hermes by default (`[OTP hidden]`).
+- **Stored data:** parsed transactions (amount, date, counterparty, account last 4 digits;
+  **no message text**), budgets, watch rules and photos you approved are stored locally in Hermes's
+  plugin data folder (`<HERMES_HOME>/plugin-data/phone-senses/`). The pairing secret is stored by
+  Hermes as a secret setting, and on the phone in `~/.phone-senses/secret` (mode 600).
+- **Background:** only the helper you start in Termux. Stop it with Ctrl+C. Nothing runs in the
+  background on the Hermes computer.
+- **Limits:** the helper allows 10 requests per second, and 5 SMS or calls per minute.
+- **Telemetry:** none.
+- **Use it only on your own phone.**
+
+Threat model: [`docs/10-security-and-privacy.md`](docs/10-security-and-privacy.md).
+
+## Limitations
+- Android only (Termux does not exist on iPhone).
+- Needs Termux and Termux:API from F-Droid, plus several Android permissions.
+- Some phone brands kill background apps. Turn off battery optimisation for Termux.
+- Bank SMS formats vary. The money parser covers the common Indian bank, card and UPI formats.
+  Unknown formats are skipped, never guessed.
+- Scam detection is rule-based. It is a warning, not a guarantee.
+
+## Why APIs instead of the screen
+Research on mobile agents ([Gu et al., 2026, "Beyond the GUI Paradigm"](https://www.alphaxiv.org/abs/2606.19388))
+compared two approaches. On tasks that suit commands, command-line agents scored **60.7–68.9%** and
+needed **~10.7 steps**. Screen-based agents scored **22.2–33.3%** and needed **~18.6 steps**.
+Phone Senses is that API layer for Hermes. It pairs well with screen-driving plugins for visual tasks.
+
+## Development
+```bash
+python -m pytest -q                                  # 115 tests, no phone needed, under 2 seconds
+hermes plugins validate plugin --install-deps        # catalog checks
+```
+Repository layout: `plugin/` (the Hermes plugin, catalog `subdir`), `phone_helper/` (runs on the phone),
+`tests/`, `scripts/`, and `docs/` (the project plan).
+
+## License
+MIT © 2026 Arpit Singh

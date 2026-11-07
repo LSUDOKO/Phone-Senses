@@ -1,0 +1,46 @@
+# Draft for the catalog PR: copy to plugin-catalog/phone-senses.yaml in a fork of
+# NousResearch/hermes-agent. Replace <SHA> with the 40-char release commit (git rev-parse HEAD)
+# and set requires_hermes to the Hermes version you tested on (same value as plugin/plugin.yaml).
+name: phone-senses
+repo: https://github.com/LSUDOKO/Phone-Senses
+sha: <SHA>
+subdir: plugin
+title: Phone Senses
+description: "Give Hermes your own Android phone's senses through Termux:API: notification and SMS digests, sending SMS from your SIM, a bank and UPI money tracker, scam SMS warnings and find my phone. Disclosure — needs the separately installed Termux and Termux:API apps (F-Droid) and runs the repo's own stdlib-only helper on the phone, which executes fixed termux-* commands (no shell) and serves an HMAC-signed HTTP API on the address you choose; the plugin talks only to that helper; reads notifications, SMS, call log, contacts, location and battery; sending SMS, calls, photos and OTP reveal always go to Hermes's approval prompt; OTPs are masked by default; parsed transactions (no message text), budgets, watch rules and approved photos are stored in the plugin's data directory; no telemetry."
+maintainer: LSUDOKO
+tier: community
+category: tools
+version: "0.1.0"
+requires_hermes: ">=0.21.6"
+docs_url: https://github.com/LSUDOKO/Phone-Senses#readme
+image: https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/<SHA>/plugin/assets/banner.png
+screenshots: []
+platforms: []
+capabilities:
+  provides_tools:
+  - phone_status
+  - phone_notifications
+  - phone_sms_list
+  - phone_sms_send
+  - phone_calls
+  - phone_contacts
+  - phone_location
+  - phone_ring
+  - phone_speak
+  - phone_clipboard
+  - phone_photo
+  - phone_call
+  - phone_otp_reveal
+  - phone_money_sync
+  - phone_money_summary
+  - phone_budget_set
+  - phone_scam_check
+  - phone_watch_add
+  - phone_watch_list
+  - phone_watch_remove
+  - phone_watch_check
+  - phone_brief
+  provides_hooks:
+  - pre_tool_call
+  provides_middleware: []
+  requires_env: []

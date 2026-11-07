@@ -445,7 +445,11 @@ def phone_photo(args: dict) -> dict:
     path = folder / f"photo-{int(time.time())}-{camera}.jpg"
     path.write_bytes(jpeg)
     result["saved_to"] = str(path)
-    return _attach_image(result, path) or result
+    attached = _attach_image(result, path)
+    if attached:
+        return attached
+    result["note"] = "To look at the photo, run vision_analyze on saved_to."
+    return result
 
 
 @tool(mask=False)
