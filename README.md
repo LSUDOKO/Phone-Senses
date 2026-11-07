@@ -116,7 +116,7 @@ Then ask Hermes *"what's my phone battery?"* or type `/phone`.
 |---|---|---|
 | `helper_url` | `http://127.0.0.1:8765` | Where the phone helper listens |
 | `helper_token` | | Pairing code (secret) |
-| `allow_otp_reveal` | `false` | Allow `phone_otp_reveal` (each call still asks you) |
+| `allow_otp_reveal` | `false` | Allow `phone_otp_reveal` (it still goes through the approval prompt) |
 | `money_enabled` | `true` | Money tracker |
 | `scam_check_enabled` | `true` | Add `scam_risk` to SMS results |
 | `notifications_exclude_apps` | `[]` | Apps to hide from digests |
@@ -148,7 +148,9 @@ All mock data is synthetic: fake names and +91 9000000xxx numbers.
 - **Network:** the Hermes plugin talks **only** to your own phone helper. No data goes to any
   third-party service. Your model provider sees the tool results Hermes sends it, as with any tool.
 - **Approvals:** sending SMS, placing calls, taking photos and revealing OTPs always ask you first
-  through Hermes's approval prompt. There is no auto-approve option.
+  through Hermes's approval prompt, which shows the exact number and text. The plugin has no
+  auto-approve option. If you answer *always* in Hermes's prompt, Hermes stops asking for that tool,
+  so choose *once* or *session* if you want to be asked every time.
 - **OTPs:** one-time codes are hidden from Hermes by default (`[OTP hidden]`).
 - **Stored data:** parsed transactions (amount, date, counterparty, account last 4 digits;
   **no message text**), budgets, watch rules and photos you approved are stored locally in Hermes's
@@ -178,7 +180,7 @@ Phone Senses is that API layer for Hermes. It pairs well with screen-driving plu
 
 ## Development
 ```bash
-python -m pytest -q                                  # 115 tests, no phone needed, under 2 seconds
+python -m pytest -q                                  # ~120 tests, no phone needed, about 1 second
 hermes plugins validate plugin --install-deps        # catalog checks
 ```
 Repository layout: `plugin/` (the Hermes plugin, catalog `subdir`), `phone_helper/` (runs on the phone),

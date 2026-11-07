@@ -171,7 +171,7 @@ def sms_list(runner, params: dict) -> list:
     limit = int_param(params.get("limit"), "limit", 20, 1, 500)
     offset = int_param(params.get("offset"), "offset", 0, 0, 100000)
     box = choice_param(params.get("box"), "box", "inbox", SMS_BOXES)
-    argv = ["termux-sms-list", "-l", str(limit), "-o", str(offset), "-t", box]
+    argv = ["termux-sms-list", "-d", "-n", "-l", str(limit), "-o", str(offset), "-t", box]  # -d -n: older builds
     if params.get("from"):
         argv += ["-f", phone_number(params.get("from"))]
     data = _json(runner.run(argv), [])

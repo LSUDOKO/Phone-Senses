@@ -39,7 +39,7 @@ file list and the order of work.
 - Bundled skill stub.
 
 **Checkpoints:**
-- `hermes plugins doctor . --ci` green.
+- `hermes plugins doctor plugin --ci` green.
 - In Hermes: "what's my phone battery?" works against the mock, then the real phone.
 - "Find my phone" makes the real phone ring, vibrate and flash.
 
@@ -81,7 +81,7 @@ spending chart. If the SDK is unclear, **skip it** and spend the time on README 
 - README (install, phone setup, features, screenshots, privacy and disclosure, limitations, research).
 - `assets/banner.png` (1200x600) and 3 to 6 screenshots (from the mock, so no private data).
 - `plugin.yaml`: every tool in `provides_tools`; `requires_hermes` set; version `0.1.0`.
-- `hermes plugins validate . --install-deps` green; read every warning.
+- `hermes plugins validate plugin --install-deps` green; read every warning.
 - Fresh-install test: remove the symlink, install as a user would, follow the README exactly.
 - LICENSE (MIT).
 

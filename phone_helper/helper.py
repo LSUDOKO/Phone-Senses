@@ -147,7 +147,10 @@ class MockRunner:
             return "Mock Phone (Phone Senses)\n"
         if cmd == "termux-sms-list":
             items = json.loads(self._fixture("sms"))
-            opts = dict(zip(argv[1::2], argv[2::2]))
+            opts, rest = {}, argv[1:]
+            while rest:
+                flag = rest.pop(0)
+                opts[flag] = rest.pop(0) if flag in ("-l", "-o", "-t", "-f") and rest else "true"
             box = opts.get("-t", "inbox")
             if box != "all":
                 items = [m for m in items if m.get("type") == box]

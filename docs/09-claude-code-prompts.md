@@ -62,7 +62,7 @@ skills/phone-senses/SKILL.md (stub). Implement phone_status and phone_ring.
 - Handlers never raise and always return JSON strings.
 - plugin.yaml provides_tools must list exactly the registered tools.
 Tests: tests/test_client.py and tests/test_tools.py using a mock helper started in a background
-thread. Run pytest. If hermes is installed, run `hermes plugins doctor . --ci` and fix every issue.
+thread. Run pytest. If hermes is installed, run `hermes plugins doctor plugin --ci` and fix every issue.
 Finally tell me how to enable the plugin in Hermes and what to ask Hermes to test it.
 ```
 
@@ -129,7 +129,7 @@ Build Phase 7 from docs/08-build-plan.md.
    prompts, privacy and disclosures (from docs/10), limitations, research (docs/02), license.
 2. Make sure plugin.yaml lists every registered tool and hook; requires_hermes is set to my Hermes
    version floor; version 0.1.0.
-3. Run `hermes plugins validate . --install-deps`. Fix all failures; show me every warning with your
+3. Run `hermes plugins validate plugin --install-deps`. Fix all failures; show me every warning with your
    opinion on each.
 4. Search the repo for anything that looks like real personal data, secrets or tokens.
 5. Create assets/ placeholders and tell me which screenshots to take (using the mock helper).

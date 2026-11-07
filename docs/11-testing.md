@@ -5,7 +5,7 @@
    storage, watch rules, approval hook, tool handlers with an injected fake client.
 2. **Integration tests** (no phone): start `helper.py --mock` in a background thread on a random
    port; call the real `client.py` and tool handlers against it.
-3. **Hermes checks:** `hermes plugins doctor . --ci` and `hermes plugins validate . --install-deps`.
+3. **Hermes checks:** `hermes plugins doctor plugin --ci` and `hermes plugins validate plugin --install-deps`.
 4. **Manual tests on the real phone** (checklist below).
 
 Target: `python -m pytest -q` runs in under 10 seconds.

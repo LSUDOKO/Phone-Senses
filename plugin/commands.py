@@ -42,10 +42,10 @@ def _money(res: dict, direction: str) -> str:
     return "\n".join(lines)
 
 
-def handle(raw: str = "", **kwargs: Any) -> str:
+def handle(raw_args: str = "", **kwargs: Any) -> str:
     """Entry point for ``/phone <args>``. Always returns text; never raises."""
     try:
-        parts = (raw or "").strip().split()
+        parts = (raw_args or "").strip().split()
         cmd = parts[0].lower() if parts else "status"
         rest = parts[1:]
         if cmd in ("status", ""):

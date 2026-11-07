@@ -151,6 +151,8 @@ def parse(sender: str, ts: int, body: str) -> Transaction | None:
     """Parse one SMS. Returns None for anything that is not a completed debit or credit."""
     if not body or not isinstance(body, str):
         return None
+    if bank_from_sender(sender) is None:   # banks use sender ids (AX-HDFCBK); people's texts are not transactions
+        return None
     if any(rx.search(body) for rx in IGNORE):
         return None
     d, c = DEBIT.search(body), CREDIT.search(body)

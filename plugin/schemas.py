@@ -102,7 +102,7 @@ PHONE_CALL = _schema(
 PHONE_OTP_REVEAL = _schema(
     "phone_otp_reveal",
     "Reveal the most recent one-time code (OTP) received by SMS or notification. Only works when the "
-    "user turned on 'Allow OTP reveal' in settings, and each call needs the user's approval. Use only "
+    "user turned on 'Allow OTP reveal' in settings, and it goes through the user's approval prompt. Use only "
     "when the user asks for the code themselves.",
     {"max_age_minutes": _int("Ignore codes older than this", 10, 1, 60)})
 

@@ -47,7 +47,7 @@ config_schema:
     type: bool
     default: false
     label: Allow OTP reveal
-    description: Let Hermes read one OTP at a time, only after you approve each request
+    description: Let Hermes read the latest OTP. Each request asks you first, unless you answer 'always' in Hermes's approval prompt
   money_enabled:
     type: bool
     default: true

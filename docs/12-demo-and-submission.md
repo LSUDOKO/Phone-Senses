@@ -88,7 +88,7 @@ Demo: <X post link>
 - Background process: only the user-started phone helper; nothing on the Hermes host.
 
 ### Validation
-`hermes plugins validate . --install-deps` passes at the pinned commit (output attached).
+`hermes plugins validate plugin --install-deps` passes at the pinned commit (output attached).
 
 ### Screenshots
 <2–4 images>

@@ -168,3 +168,9 @@ def test_http_round_trip(helper, mock_server):
     req = urllib.request.Request(url + path, headers=headers_for(helper, "GET", path, secret=secret))
     with urllib.request.urlopen(req, timeout=5) as resp:
         assert json.loads(resp.read())["data"]["battery"]["percentage"] == 76
+
+
+def test_sms_list_argv_supports_old_and_new_termux(helper, app):
+    assert call(helper, app, "GET", "/v1/sms?limit=3&box=all&from=%2B919000000104")[0] == 200
+    argv = [a for a, _ in app.runner.calls if a[0] == "termux-sms-list"][-1]
+    assert argv == ["termux-sms-list", "-d", "-n", "-l", "3", "-o", "0", "-t", "all", "-f", "+919000000104"]

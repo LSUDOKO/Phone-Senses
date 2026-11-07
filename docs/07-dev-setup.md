@@ -53,7 +53,7 @@ Hermes discovers plugins in `~/.hermes/plugins/<name>/`. During development, lin
 edits are picked up without copying:
 ```bash
 # macOS / Linux / WSL
-ln -s "$(pwd)" ~/.hermes/plugins/phone-senses
+ln -s "$(pwd)/plugin" ~/.hermes/plugins/phone-senses
 hermes plugins enable phone-senses
 HERMES_PLUGINS_DEBUG=1 hermes plugins list    # should show phone-senses and its tools
 ```
@@ -64,7 +64,7 @@ for a local-path install. Restart Hermes after code changes.
 ```bash
 python -m pytest -q                                   # unit tests
 python phone_helper/helper.py --mock --port 8765 &    # mock phone on the laptop
-hermes plugins doctor . --ci                          # Hermes checks
+hermes plugins doctor plugin --ci                          # Hermes checks
 hermes                                                # try: "what's my phone battery?"
 ```
 
