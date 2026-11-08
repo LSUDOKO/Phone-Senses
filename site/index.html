@@ -11,34 +11,53 @@
 <meta property="og:url" content="https://phone-senses.pages.dev/">
 <meta name="twitter:image" content="https://phone-senses.pages.dev/media/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#050507">
 <link rel="icon" href="media/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/motion@12.23.12/dist/motion.js" defer></script>
+<script>
+  /* Hidden start states only apply while .motion is set. If Motion never arrives, show everything. */
+  (function () {
+    var d = document.documentElement;
+    d.classList.add("js");
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    d.classList.add("motion");
+    setTimeout(function () { if (!window.__psReady) d.classList.remove("motion"); }, 2200);
+  })();
+</script>
 <style>
   :root {
     --ultramarine: #1F2BFF;
+    --ultra-soft: #AEB4FF;
     --ink: #050507;
     --paper: #F1F1EE;
     --mist: #9AA0B4;
     --graphite: #5B5F6E;
     --rule: rgba(5, 5, 7, 0.18);
+    --muted: var(--graphite);
+    --focus: var(--ultramarine);
     --chrome: linear-gradient(180deg, #ffffff 0%, #e4e4e8 47%, #a6a6b0 53%, #d9d9de 100%);
     --display: "Archivo", system-ui, sans-serif;
     --mono: "Geist Mono", ui-monospace, monospace;
-    --measure: 64ch;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.6 var(--display); font-stretch: 100%; -webkit-font-smoothing: antialiased; }
-  img { max-width: 100%; display: block; }
+  body { margin: 0; background: var(--ink); color: var(--ink); font: 400 17px/1.6 var(--display); font-stretch: 100%; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  img { max-width: 100%; height: auto; display: block; }
   a { color: inherit; }
-  :focus-visible { outline: 2px solid var(--ultramarine); outline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
   .wrap { width: min(1180px, 100% - 40px); margin-inline: auto; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-  /* ---------- hero: the one loud thing ---------- */
-  .hero { position: relative; min-height: 100svh; display: grid; place-items: center; overflow: hidden; color: #fff; isolation: isolate; }
-  .hero__field { position: absolute; inset: -20%; z-index: -2;
+  /* ---------- hero: the one loud thing (approved look) ---------- */
+  .hero { position: relative; min-height: 100svh; display: grid; place-items: center; overflow: hidden; color: #fff; isolation: isolate; background: var(--paper); }
+  .hero__parallax { position: absolute; inset: 0; z-index: -2; will-change: transform; }
+  .hero__field { position: absolute; inset: -20%;
     background:
       radial-gradient(38% 30% at 52% 54%, var(--ink) 0 55%, transparent 100%),
       radial-gradient(60% 52% at 48% 50%, var(--ultramarine) 0 45%, transparent 75%),
@@ -46,106 +65,343 @@
     filter: blur(28px); transform: rotate(-16deg);
     animation: drift 22s ease-in-out infinite alternate; }
   @keyframes drift { to { transform: rotate(-9deg) translate3d(2%, -3%, 0) scale(1.05); } }
-  .hero__grain { position: absolute; inset: 0; z-index: -1; opacity: .5; mix-blend-mode: overlay; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .hero__grain { position: absolute; inset: 0; z-index: -1; opacity: .5; mix-blend-mode: overlay; pointer-events: none; background-image: var(--noise); }
   .hero__grid { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
   .hero__grid i { position: absolute; border: 0 dashed rgba(255,255,255,.34); }
-  .hero__grid i:nth-child(1) { left: 25%; top: 0; bottom: 0; border-left-width: 1px; }
-  .hero__grid i:nth-child(2) { left: 75%; top: 0; bottom: 0; border-left-width: 1px; }
-  .hero__grid i:nth-child(3) { top: 42%; left: 0; right: 0; border-top-width: 1px; }
-  .hero__grid i:nth-child(4) { top: 58%; left: 0; right: 0; border-top-width: 1px; }
+  .hero__grid i:nth-child(1) { left: 25%; top: 0; bottom: 0; border-left-width: 1px; transform-origin: top; }
+  .hero__grid i:nth-child(2) { left: 75%; top: 0; bottom: 0; border-left-width: 1px; transform-origin: bottom; }
+  .hero__grid i:nth-child(3) { top: 42%; left: 0; right: 0; border-top-width: 1px; transform-origin: left; }
+  .hero__grid i:nth-child(4) { top: 58%; left: 0; right: 0; border-top-width: 1px; transform-origin: right; }
   .hero__label { position: absolute; font: 500 11px/1.35 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: #fff; mix-blend-mode: difference; margin: 0; }
   .hero__label--a { top: 22%; left: 4%; } .hero__label--b { top: 7%; left: 27%; }
   .hero__label--c { top: 22%; left: 77%; } .hero__label--d { top: 7%; right: 4%; }
   .hero__label--e { bottom: 9%; left: 27%; } .hero__label--f { bottom: 9%; left: 77%; }
   .hero__center { text-align: center; padding: 0 20px; }
   .wordmark { display: inline-flex; align-items: center; gap: .28em; margin: 0; font: 800 clamp(48px, 9.4vw, 136px)/.92 var(--display); font-stretch: 112%; letter-spacing: -.035em; }
-  .wordmark span, .wordmark svg { background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .wordmark > span, .wordmark svg, .chrome { background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .wordmark svg { width: .82em; height: .82em; flex: none; }
   .hero__lede { max-width: 34ch; margin: 28px auto 0; font-size: clamp(18px, 2vw, 22px); line-height: 1.45; color: rgba(255,255,255,.9); }
   .hero__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 34px; }
-  .btn { display: inline-block; padding: 14px 22px; font: 600 15px/1 var(--display); text-decoration: none; border-radius: 2px; transition: background .2s, color .2s; }
-  .btn--solid { background: var(--paper); color: var(--ink); }
-  .btn--solid:hover { background: #fff; }
-  .btn--line { border: 1px solid rgba(255,255,255,.6); color: #fff; }
-  .btn--line:hover { background: rgba(255,255,255,.12); }
   .hero__spark { position: absolute; bottom: 14%; left: 50%; width: 26px; translate: -50% 0; opacity: .9; }
 
-  /* ---------- body ---------- */
-  section { padding: clamp(72px, 10vw, 128px) 0; border-top: 1px dashed var(--rule); }
-  .lead { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: end; margin-bottom: 64px; }
-  h2 { margin: 0; font: 800 clamp(34px, 5vw, 64px)/1 var(--display); font-stretch: 108%; letter-spacing: -.03em; }
-  .lead p { margin: 0; max-width: var(--measure); color: var(--graphite); font-size: 18px; }
-  .feature { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(24px, 4vw, 64px); padding: 44px 0; border-top: 1px dashed var(--rule); }
-  .feature:first-of-type { border-top: 0; }
-  .feature h3 { margin: 0 0 12px; font: 700 26px/1.15 var(--display); font-stretch: 104%; letter-spacing: -.015em; }
-  .feature p { margin: 0 0 14px; max-width: 46ch; color: var(--graphite); }
-  .feature code, .install code { font: 400 .9em var(--mono); }
-  .ask { margin: 18px 0 0; padding: 0; list-style: none; font: 400 14px/1.5 var(--mono); }
-  .ask li { padding: 6px 0; border-top: 1px dashed var(--rule); }
-  .ask li::before { content: "❯ "; color: var(--ultramarine); }
-  .media { display: grid; gap: 14px; align-content: start; }
-  .media--two { grid-template-columns: 1fr 1fr; }
-  figure { margin: 0; }
-  figure img { width: 100%; height: auto; background: var(--ink); border-radius: 6px; }
-  figcaption { margin-top: 8px; font: 400 12px/1.4 var(--mono); color: var(--graphite); }
-  figcaption b { font-weight: 500; color: var(--ultramarine); }
-  .phoneclip { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 14px; align-items: start; }
+  /* word-by-word reveal: JS wraps each word; the gradient moves onto the word */
+  .w { display: inline-block; overflow: clip; padding: .12em .04em .2em; margin: -.12em -.04em -.2em; vertical-align: top; }
+  .wi { display: inline-block; }
+  .is-split { background: none !important; }
+  .wordmark .wi, .chrome.is-split .wi { background: var(--chrome); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-  .dark { background: var(--ink); color: var(--paper); border-top: 0; }
-  .dark .lead p, .dark .feature p { color: var(--mist); }
-  .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1px dashed rgba(241,241,238,.28); margin: 0; padding: 0; list-style: none; }
-  .flow li { padding: 22px 18px 26px; border-left: 1px dashed rgba(241,241,238,.28); }
-  .flow li:first-child { border-left: 0; }
-  .flow b { display: block; font: 700 18px/1.2 var(--display); margin-bottom: 8px; }
-  .flow span { font: 400 13px/1.5 var(--mono); color: var(--mist); }
-  .flow .hot { background: var(--ultramarine); }
-  .flow .hot span { color: #dfe2ff; }
-  .how { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; margin-top: 48px; align-items: start; }
-  .how ul { margin: 0; padding: 0; list-style: none; }
-  .how li { padding: 14px 0; border-top: 1px dashed rgba(241,241,238,.22); color: var(--mist); }
-  .how li strong { color: var(--paper); font-weight: 600; }
+  /* ---------- liquid glass ---------- */
+  .glass { --tint: rgba(255,255,255,.09); --fg: #fff; --hi: .5;
+    position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+    min-height: 50px; padding: 0 26px; border: 0; border-radius: 999px; background: transparent;
+    font: 600 15px/1 var(--display); font-stretch: 104%; letter-spacing: -.005em; color: var(--fg); text-decoration: none; white-space: nowrap; cursor: pointer;
+    box-shadow: 0 1px 2px rgba(5,5,7,.25), 0 14px 34px -14px rgba(5,5,7,.7);
+    transition: scale .45s var(--ease), box-shadow .45s var(--ease);
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  .glass::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(160px 80px at var(--mx, 50%) var(--my, -10%), rgba(255,255,255,calc(var(--hi) * .55)), transparent 70%), var(--tint);
+    -webkit-backdrop-filter: blur(14px) saturate(180%); backdrop-filter: blur(14px) saturate(180%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,var(--hi)), inset 0 -1px 1px rgba(255,255,255,.14), inset 0 0 18px rgba(255,255,255,.06); }
+  .lg-svg .glass::before { -webkit-backdrop-filter: blur(5px) url(#lg-refract) saturate(180%); backdrop-filter: blur(5px) url(#lg-refract) saturate(180%); }
+  .glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; padding: 1px;
+    background: linear-gradient(155deg, rgba(255,255,255,.9), rgba(255,255,255,.2) 28%, rgba(255,255,255,0) 52%, rgba(255,255,255,.12) 74%, rgba(255,255,255,.55));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+  .glass:hover { box-shadow: 0 1px 2px rgba(5,5,7,.25), 0 20px 44px -16px rgba(31,43,255,.55); }
+  .glass:active { scale: .96; transition-duration: .12s; }
+  .glass:focus-visible { outline: 2px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 6px var(--ultramarine), 0 14px 34px -14px rgba(5,5,7,.7); }
+  .glass--light { --tint: linear-gradient(180deg, rgba(255,255,255,.94), rgba(236,236,232,.86)); --fg: var(--ink); --hi: .95; }
+  .glass--ink { --tint: rgba(5,5,7,.86); --fg: var(--paper); }
+  .glass--sm { min-height: 34px; padding: 0 14px; font: 500 12px/1 var(--mono); letter-spacing: .02em; }
 
-  .install ol { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 0; }
-  .install li { counter-increment: step; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 20px; padding: 28px 0; border-top: 1px dashed var(--rule); }
-  .install li::before { content: counter(step, decimal-leading-zero); font: 500 13px/1.9 var(--mono); color: var(--ultramarine); }
-  .install li > div, .feature > div, .media figure { min-width: 0; }
-  .install h3 { margin: 0 0 8px; font: 700 21px/1.25 var(--display); }
-  .install p { margin: 0 0 12px; color: var(--graphite); max-width: var(--measure); }
-  pre { position: relative; margin: 0; padding: 18px 20px; background: var(--ink); color: var(--paper); border-radius: 6px; overflow-x: auto; font: 400 14px/1.6 var(--mono); }
-  pre .c { color: var(--mist); }
-  .copy { position: absolute; top: 10px; right: 10px; padding: 6px 10px; font: 500 12px/1 var(--mono); background: transparent; color: var(--mist); border: 1px solid rgba(241,241,238,.25); border-radius: 2px; cursor: pointer; }
-  .copy:hover { color: var(--paper); border-color: var(--paper); }
+  /* ---------- sticky nav ---------- */
+  .nav { position: fixed; z-index: 50; top: 12px; left: 50%; width: min(1180px, 100% - 24px); translate: -50% -140%; opacity: 0; visibility: hidden;
+    transition: translate .7s var(--ease), opacity .4s, visibility 0s .7s; }
+  .nav.is-on { translate: -50% 0; opacity: 1; visibility: visible; transition: translate .7s var(--ease), opacity .4s, visibility 0s; }
+  .nav__in { display: flex; align-items: center; gap: 24px; padding: 7px 7px 7px 20px; border-radius: 999px; color: var(--paper);
+    background: rgba(5,5,7,.84); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 0 0 1px rgba(255,255,255,.08), 0 18px 40px -20px rgba(5,5,7,.8); --focus: var(--ultra-soft); }
+  .nav__brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 800 17px/1 var(--display); font-stretch: 112%; letter-spacing: -.02em; }
+  .nav__brand svg { width: 22px; height: 22px; }
+  .nav__links { display: flex; gap: 4px; margin: 0 0 0 auto; padding: 0; list-style: none; }
+  .nav__links a { display: block; padding: 10px 12px; border-radius: 999px; font: 500 12px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color .2s, background-color .2s; }
+  .nav__links a:hover { color: #fff; background: rgba(255,255,255,.07); }
+  .nav .glass { min-height: 40px; padding: 0 18px; font-size: 14px; }
 
-  .privacy-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px dashed var(--rule); }
-  .privacy-grid div { padding: 26px 26px 30px 0; border-bottom: 1px dashed var(--rule); }
-  .privacy-grid h3 { margin: 0 0 8px; font: 700 19px/1.3 var(--display); }
-  .privacy-grid p { margin: 0; color: var(--graphite); font-size: 16px; max-width: 34ch; }
+  /* ---------- section shells ---------- */
+  .band, .sheet { position: relative; isolation: isolate; overflow: clip; padding-bottom: clamp(96px, 12vw, 168px); scroll-margin-top: 72px; }
+  .band { color-scheme: dark; background: var(--ink); color: var(--paper); --rule: rgba(241,241,238,.16); --muted: var(--mist); --focus: var(--ultra-soft); }
+  .sheet { background: var(--paper); color: var(--ink); --rule: rgba(5,5,7,.17); --muted: var(--graphite); --focus: var(--ultramarine); }
+  .band::after, .sheet::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background-image: var(--noise); }
+  .band::after { opacity: .1; mix-blend-mode: screen; }
+  .sheet::after { opacity: .32; mix-blend-mode: multiply; }
+  .rails { position: absolute; z-index: -1; top: 0; bottom: 0; left: 50%; width: min(1180px, 100% - 40px); translate: -50% 0; border-inline: 1px dashed var(--rule); pointer-events: none; }
+  .glow { position: absolute; z-index: -1; pointer-events: none; border-radius: 50%; aspect-ratio: 1; background: radial-gradient(closest-side, rgba(31,43,255,.55), rgba(31,43,255,.2) 50%, rgba(31,43,255,0)); }
+  .sheet .glow { background: radial-gradient(closest-side, rgba(31,43,255,.22), rgba(31,43,255,.08) 50%, rgba(31,43,255,0)); }
+  .band + .band::before { content: ""; position: absolute; top: 0; left: 0; right: 0; border-top: 1px dashed var(--rule); }
 
-  footer { padding: 48px 0 64px; border-top: 1px dashed var(--rule); font: 400 13px/1.7 var(--mono); color: var(--graphite); }
-  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; }
-  footer a { color: var(--ink); }
+  .sec-top { display: flex; justify-content: space-between; gap: 24px; padding: 22px 0; margin-bottom: clamp(56px, 8vw, 112px); border-bottom: 1px dashed var(--rule); font: 500 11px/1.35 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .sec-top span { display: inline-flex; align-items: center; gap: 10px; }
+  .sec-top span:last-child { text-align: right; }
+  .spark { width: 12px; height: 12px; flex: none; color: var(--ultramarine); }
+  .band .spark { color: var(--ultra-soft); }
+  .head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px 64px; align-items: end; margin-bottom: clamp(48px, 6vw, 88px); }
+  h2 { margin: 0; font: 800 clamp(42px, 6.2vw, 88px)/.95 var(--display); font-stretch: 110%; letter-spacing: -.04em; text-wrap: balance; }
+  h2.h2--sm { font-size: clamp(36px, 4.6vw, 64px); }
+  .lede { margin: 0; max-width: 46ch; font-size: 18px; line-height: 1.6; color: var(--muted); }
+  .lede b { font-weight: 600; color: var(--paper); }
+  .kicker { margin: 0 0 14px; font: 500 11px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 
+  .tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 8px; border-radius: 4px; font: 500 10.5px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; vertical-align: .1em; }
+  .tag::before { content: ""; width: 6px; height: 6px; background: currentColor; }
+  .tag--real { background: rgba(31,43,255,.24); color: #D3D6FF; box-shadow: inset 0 0 0 1px rgba(80,90,255,.75); }
+  .tag--demo { background: rgba(255,255,255,.06); color: #D5D7E0; box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); }
+  .tag--new { background: var(--ultramarine); color: #fff; }
+
+  /* ---------- features: switcher ---------- */
+  #features .glow--a { width: 900px; top: -280px; right: -360px; }
+  #features .glow--b { width: 700px; bottom: -300px; left: -320px; opacity: .6; }
+  .switch { display: grid; grid-template-columns: minmax(0, 880px); gap: clamp(28px, 4vw, 64px); align-items: start; }
+  .js .switch { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); }
+  .switch__tabs { display: none; position: relative; }
+  .js .switch__tabs { display: flex; flex-direction: column; }
+  .tab { position: relative; z-index: 1; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 4px 10px; width: 100%; padding: 18px 16px; text-align: left; background: none; border: 0; border-bottom: 1px dashed var(--rule); color: var(--mist); font: inherit; cursor: pointer; transition: color .3s; }
+  .tab:first-of-type { border-top: 1px dashed var(--rule); }
+  .tab__n { grid-row: span 2; font: 500 11px/2 var(--mono); letter-spacing: .06em; }
+  .tab__t { font: 700 20px/1.2 var(--display); font-stretch: 106%; letter-spacing: -.015em; }
+  .tab__d { font-size: 14px; line-height: 1.45; color: var(--mist); }
+  .tab:hover { color: var(--paper); }
+  .tab[aria-selected="true"] { color: #fff; }
+  .tab[aria-selected="true"] .tab__n { color: var(--ultra-soft); }
+  .tab:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+  .tab-ind { position: absolute; top: 0; left: 0; z-index: 0; width: 0; height: 0; pointer-events: none;
+    background: linear-gradient(90deg, rgba(31,43,255,.42), rgba(31,43,255,.1) 64%, rgba(31,43,255,0));
+    box-shadow: inset 2px 0 0 var(--ultramarine), inset 18px 0 28px -18px rgba(90,100,255,.9); }
+  .panels { position: relative; min-width: 0; }
+  @media (min-width: 901px) { .js .switch__tabs { position: sticky; top: 104px; } }
+  .panel { min-width: 0; border-radius: 18px; }
+  .panel + .panel { margin-top: 72px; }
+  .js .panel + .panel { margin-top: 0; }
+  .panel:focus-visible { outline-offset: 6px; }
+
+  .stage { position: relative; overflow: hidden; border-radius: 16px; background: #08080D; color: var(--mist);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.1), 0 50px 90px -50px rgba(31,43,255,.7), 0 30px 60px -30px rgba(0,0,0,.9); }
+  .stage__bar { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-bottom: 1px dashed rgba(255,255,255,.12); font: 500 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+  .stage__bar .dots { display: flex; gap: 5px; }
+  .stage__bar .dots i { width: 7px; height: 7px; background: rgba(255,255,255,.2); }
+  .stage__bar .dots i:first-child { background: var(--ultramarine); }
+  .stage__bar .count { margin-left: auto; color: rgba(154,160,180,.75); }
+  .clips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px; border-bottom: 1px dashed rgba(255,255,255,.12); }
+  .clip-btn { padding: 8px 12px; border-radius: 999px; border: 1px dashed rgba(255,255,255,.26); background: transparent; color: #C7CBD8; font: 500 11px/1 var(--mono); letter-spacing: .04em; text-transform: uppercase; cursor: pointer; transition: background-color .25s, color .25s, border-color .25s; }
+  .clip-btn:hover { color: #fff; border-color: rgba(255,255,255,.5); }
+  .clip-btn[aria-pressed="true"] { background: var(--ultramarine); border: 1px solid var(--ultramarine); color: #fff; }
+  .clip { margin: 0; }
+  .clip + .clip { border-top: 1px dashed rgba(255,255,255,.12); }
+  .js .clip + .clip { border-top: 0; }
+  .clip img { width: 100%; height: auto; background: #07070B; }
+  .clip figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 13px 16px; border-top: 1px dashed rgba(255,255,255,.12); font: 400 12.5px/1.4 var(--mono); color: #B4B9C9; }
+  .pair { display: grid; grid-template-columns: minmax(0, 1.514fr) minmax(0, .805fr); gap: 1px; background: rgba(255,255,255,.12); }
+  .panel__copy { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px 40px; margin-top: 32px; }
+  .panel__copy h3 { margin: 0 0 10px; font: 700 26px/1.15 var(--display); font-stretch: 106%; letter-spacing: -.02em; color: var(--paper); }
+  .panel__copy p { margin: 0; color: var(--mist); max-width: 48ch; }
+  .ask { margin: 0; padding: 0; list-style: none; font: 400 13.5px/1.5 var(--mono); }
+  .ask li { display: flex; gap: 10px; padding: 9px 0; border-top: 1px dashed var(--rule); color: var(--paper); }
+  .ask li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: .6em; background: var(--ultramarine); }
+  .sheet .ask li { color: var(--ink); }
+
+  /* ---------- new ---------- */
+  .new-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px dashed var(--rule); border-left: 1px dashed var(--rule); }
+  .new-card { position: relative; display: flex; flex-direction: column; min-height: 280px; padding: 24px 24px 28px; border-right: 1px dashed var(--rule); border-bottom: 1px dashed var(--rule); transition: background-color .5s var(--ease); }
+  .new-card:hover { background: rgba(31,43,255,.08); }
+  .new-card h3 { margin: 40px 0 10px; font: 700 24px/1.15 var(--display); font-stretch: 106%; letter-spacing: -.02em; }
+  .new-card p { margin: 0 0 22px; font-size: 16px; line-height: 1.55; color: var(--mist); }
+  .new-card .q { margin: auto 0 0; display: flex; gap: 10px; font: 400 13px/1.5 var(--mono); color: var(--paper); }
+  .new-card .q::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: .6em; background: var(--ultramarine); }
+
+  #new .glow { width: 760px; bottom: -420px; left: 38%; opacity: .6; }
+
+  /* ---------- how it works ---------- */
+  #how .glow { width: 820px; top: 10%; left: -420px; }
+  .how { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .duo { display: grid; }
+  .duo img { width: 100%; }
+  .duo { position: relative; }
+  .duo figure { margin: 0; transition: scale .6s var(--ease), filter .6s var(--ease); }
+  .duo__laptop { border-radius: 14px; overflow: hidden; background: var(--ink); box-shadow: 0 0 0 1px rgba(5,5,7,.9), 0 40px 70px -36px rgba(31,43,255,.6), 0 24px 48px -28px rgba(5,5,7,.8); }
+  .duo .duo__phone { position: relative; justify-self: end; width: 34%; margin: -170px 4% 0 0; border-radius: 26px; overflow: hidden; background: #000; box-shadow: 0 0 0 7px #121319, 0 0 0 8px rgba(255,255,255,.14), 0 40px 70px -30px rgba(5,5,7,.7); }
+  .duo figcaption { padding: 11px 14px; font: 400 12px/1.4 var(--mono); color: #B4B9C9; background: var(--ink); border-top: 1px dashed rgba(255,255,255,.14); }
+  .duo__laptop figcaption { padding-right: 40%; }
+  .duo__wire { margin: -40px 0 0; max-width: 58%; font: 500 11px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--graphite); display: flex; align-items: center; gap: 10px; transition: color .5s var(--ease); }
+  .duo__wire::before { content: ""; width: 34px; border-top: 1px dashed currentColor; }
+  .stepper-on .duo[data-step="1"] .duo__phone, .stepper-on .duo[data-step="2"] .duo__phone, .stepper-on .duo[data-step="3"] .duo__phone { filter: saturate(.2) brightness(.62); scale: .96; }
+  .stepper-on .duo[data-step="4"] .duo__laptop, .stepper-on .duo[data-step="5"] .duo__laptop { filter: saturate(.3) brightness(.55); scale: .98; }
+  .stepper-on .duo[data-step="3"] .duo__wire { color: var(--ultramarine); }
+  .steps { position: relative; margin: 0; padding: 0; list-style: none; }
+  .rail { position: absolute; left: 20px; top: 20px; bottom: 40px; border-left: 1px dashed var(--rule); }
+  .rail i { position: absolute; left: -1px; top: 0; bottom: 0; width: 2px; background: var(--ultramarine); transform-origin: top; transform: scaleY(0); display: none; }
+  .stepper-on .rail i { display: block; }
+  .step { position: relative; display: grid; grid-template-columns: 41px minmax(0, 1fr); gap: 0 24px; padding-bottom: clamp(48px, 9vh, 112px); }
+  .step:last-child { padding-bottom: 0; }
+  .step__n { position: relative; display: grid; place-items: center; width: 41px; height: 41px; background: var(--paper); box-shadow: inset 0 0 0 1px var(--rule); font: 500 12px/1 var(--mono); color: var(--graphite); transition: background-color .5s var(--ease), color .5s, box-shadow .5s var(--ease); }
+  .step h3 { margin: 6px 0 10px; font: 800 clamp(24px, 2.4vw, 32px)/1.1 var(--display); font-stretch: 108%; letter-spacing: -.025em; transition: color .5s; }
+  .step p { margin: 0 0 14px; color: var(--graphite); max-width: 46ch; }
+  .step code { display: inline-block; max-width: 100%; padding: 8px 12px; border-radius: 8px; background: rgba(5,5,7,.04); box-shadow: inset 0 0 0 1px var(--rule); font: 400 13px/1.5 var(--mono); color: var(--ink); overflow-wrap: anywhere; transition: color .5s, box-shadow .5s; }
+  .stepper-on .step h3 { color: var(--graphite); }
+  .stepper-on .step.is-active h3 { color: var(--ink); }
+  .step.is-active .step__n { background: var(--ultramarine); color: #fff; box-shadow: 0 0 0 6px rgba(31,43,255,.14), 0 10px 26px -6px rgba(31,43,255,.7); }
+  .step.is-active code { color: #1620d6; box-shadow: inset 0 0 0 1px rgba(31,43,255,.5); }
+
+  /* ---------- numbers ---------- */
+  #numbers .glow { width: 1000px; top: -360px; left: 50%; translate: -50% 0; opacity: .7; }
+  .numbers { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .study { padding: 28px; border-radius: 16px; background: rgba(255,255,255,.025); box-shadow: inset 0 0 0 1px rgba(255,255,255,.09); }
+  .cmp { margin: 0 0 30px; }
+  .cmp:last-of-type { margin-bottom: 22px; }
+  .cmp__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 6px 16px; padding: 14px 0 0; }
+  .cmp__row + .cmp__row { margin-top: 10px; }
+  .cmp__label { font: 500 12px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--mist); }
+  .cmp__val { font: 800 clamp(30px, 3.6vw, 48px)/1 var(--display); font-stretch: 108%; letter-spacing: -.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cmp__row--b .cmp__val { color: var(--mist); }
+  .bar { grid-column: 1 / -1; position: relative; height: 10px; background: rgba(255,255,255,.07); }
+  .bar i { position: absolute; inset: 0 auto 0 0; width: calc(var(--hi) * 1%); transform-origin: left;
+    background: linear-gradient(90deg, var(--c) calc(var(--lo) / var(--hi) * 100%), var(--c2) 0); }
+  .cmp__row--a .bar i { --c: var(--ultramarine); --c2: rgba(31,43,255,.42); box-shadow: 0 0 22px rgba(31,43,255,.6); }
+  .cmp__row--b .bar i { --c: #6E7386; --c2: rgba(154,160,180,.32); }
+  .cite { margin: 0; padding-top: 18px; border-top: 1px dashed var(--rule); font: 400 11.5px/1.6 var(--mono); color: var(--mist); }
+  .cite a { color: var(--paper); }
+  .facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px dashed var(--rule); border-left: 1px dashed var(--rule); }
+  .fact { padding: 22px 22px 26px; border-right: 1px dashed var(--rule); border-bottom: 1px dashed var(--rule); }
+  .fact__v { display: inline-block; font: 800 clamp(48px, 4.6vw, 76px)/.95 var(--display); font-stretch: 112%; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+  .fact__l { display: block; margin-top: 12px; font-size: 15px; line-height: 1.45; color: var(--mist); }
+
+  /* ---------- privacy ---------- */
+  #privacy .glow { width: 760px; bottom: -340px; right: -300px; }
+  .guarantees { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px dashed var(--rule); border-left: 1px dashed var(--rule); }
+  .g { position: relative; padding: 26px 28px 32px; border-right: 1px dashed var(--rule); border-bottom: 1px dashed var(--rule); }
+  .g::before { content: ""; position: absolute; left: -1px; right: -1px; top: -1px; height: 2px; background: var(--ultramarine); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease); }
+  .g:hover::before { transform: scaleX(1); }
+  .g__n { display: flex; justify-content: space-between; align-items: center; font: 500 11px/1 var(--mono); letter-spacing: .06em; color: var(--graphite); }
+  .g__n::after { content: ""; width: 8px; height: 8px; background: var(--ultramarine); }
+  .g h3 { margin: 44px 0 10px; font: 700 22px/1.2 var(--display); font-stretch: 106%; letter-spacing: -.015em; }
+  .g p { margin: 0; color: var(--graphite); font-size: 16px; line-height: 1.55; max-width: 34ch; }
+
+  /* ---------- install ---------- */
+  #install .glow { width: 820px; top: 20%; right: -460px; opacity: .8; }
+  .isteps { margin: 0; padding: 0; list-style: none; }
+  .istep { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: 16px 48px; padding: 40px 0 44px; border-top: 1px dashed var(--rule); }
+  .istep__n { font: 800 clamp(44px, 5vw, 72px)/.9 var(--display); font-stretch: 112%; letter-spacing: -.045em; }
+  .istep h3 { margin: 0 0 8px; font: 700 26px/1.2 var(--display); font-stretch: 106%; letter-spacing: -.02em; }
+  .istep p { margin: 0; max-width: 60ch; color: var(--mist); }
+  .istep p code { font: 400 .9em var(--mono); color: var(--paper); }
+  .istep > div { min-width: 0; }
+  .code { margin-top: 20px; border-radius: 14px; overflow: hidden; background: #0B0C14; box-shadow: inset 0 0 0 1px rgba(255,255,255,.09), 0 30px 60px -40px rgba(31,43,255,.6); }
+  .code__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 16px; border-bottom: 1px dashed rgba(255,255,255,.1); font: 500 11px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--mist); }
+  .code pre { margin: 0; padding: 18px 20px 20px; overflow-x: auto; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.22) transparent; font: 400 14px/1.75 var(--mono); color: var(--paper); }
+  .code .ln::before { content: "$ "; color: var(--ultra-soft); user-select: none; }
+  .code .c { color: var(--mist); }
+  html:not(.js) [data-copy] { display: none; }
+  .slash { margin-top: 20px; max-width: 640px; }
+
+  /* ---------- footer ---------- */
+  .foot { padding-bottom: 0; }
+  .foot__field { position: absolute; z-index: -1; left: 50%; bottom: -55%; width: 1500px; aspect-ratio: 1.6; translate: -50% 0; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(5,5,7,1) 30%, rgba(31,43,255,.85) 58%, rgba(31,43,255,.25) 78%, rgba(31,43,255,0)); filter: blur(30px); }
+  .foot__cta { text-align: center; padding: clamp(24px, 4vw, 56px) 0 clamp(72px, 10vw, 140px); }
+  .foot__cta h2 { max-width: 15ch; margin-inline: auto; }
+  .foot__cta .lede { margin: 24px auto 0; color: rgba(241,241,238,.82); text-wrap: balance; }
+  .foot__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
+  .foot__bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px 24px; padding: 22px 0 28px; border-top: 1px dashed rgba(241,241,238,.24); font: 400 12px/1.7 var(--mono); color: rgba(241,241,238,.78); }
+  .foot__bar nav { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+  .foot__bar a { color: #fff; text-underline-offset: 3px; }
+
+  /* ---------- motion start states (only while .motion is on) ---------- */
+  .motion .hero__field { opacity: 0; }
+  .motion .hero__grid i:nth-child(-n+2) { transform: scaleY(0); }
+  .motion .hero__grid i:nth-child(n+3) { transform: scaleX(0); }
+  .motion .hero__label, .motion .hero__lede, .motion .hero__actions > *, .motion .hero__spark { opacity: 0; }
+  .motion .wordmark rect { animation: block .45s ease-out both; }
+  .motion .wordmark rect:nth-child(1) { animation-delay: .30s; } .motion .wordmark rect:nth-child(2) { animation-delay: .37s; }
+  .motion .wordmark rect:nth-child(3) { animation-delay: .44s; } .motion .wordmark rect:nth-child(4) { animation-delay: .51s; }
+  .motion .wordmark rect:nth-child(5) { animation-delay: .58s; } .motion .wordmark rect:nth-child(6) { animation-delay: .80s; }
+  @keyframes block { from { opacity: 0; } }
+  .motion [data-split]:not(.is-split), .motion [data-split] .wi, .motion [data-reveal], .motion [data-stagger] > * { opacity: 0; }
+  .motion .bar i { transform: scaleX(0); }
+
+  @media (max-width: 1000px) {
+    .new-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .guarantees { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .numbers { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 901px) and (min-height: 700px) {
+    .how__stage { position: sticky; top: 112px; }
+  }
   @media (max-width: 900px) {
-    .lead, .feature, .how { grid-template-columns: 1fr; }
-    .flow { grid-template-columns: 1fr; }
-    .flow li { border-left: 0; border-top: 1px dashed rgba(241,241,238,.28); }
-    .flow li:first-child { border-top: 0; }
-    .privacy-grid { grid-template-columns: 1fr; }
-    .phoneclip { grid-template-columns: 1fr; }
-    .media--two { grid-template-columns: 1fr; }
+    .head, .switch, .js .switch, .how, .panel__copy, .istep { grid-template-columns: minmax(0, 1fr); }
+    .js .switch__tabs { flex-direction: row; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+    .switch__tabs::-webkit-scrollbar { display: none; }
+    .js .switch__tabs { -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
+    .tab, .tab:first-of-type { flex: none; width: auto; display: flex; gap: 8px; align-items: baseline; padding: 11px 15px; border: 1px dashed var(--rule); border-radius: 999px; }
+    .tab__d { display: none; }
+    .tab__n { line-height: 1; }
+    .tab__t { font-size: 15px; }
+    .tab-ind { border-radius: 999px; background: rgba(31,43,255,.5); box-shadow: inset 0 0 0 1px var(--ultramarine); }
+    .pair { grid-template-columns: minmax(0, 1fr); }
+    .pair img:last-child { width: 62%; margin-inline: auto; }
+    .duo__wire { margin-top: 18px; max-width: none; }
+    .duo__laptop figcaption { padding-right: 14px; }
+    .duo .duo__phone { margin-top: 20px; width: 56%; margin-right: 8px; }
+    .nav__links { display: none; }
+    .nav .glass { margin-left: auto; }
     .hero__label--b, .hero__label--d, .hero__label--e, .hero__label--f { display: none; }
     .hero__label--a { top: 8%; } .hero__label--c { top: 8%; left: auto; right: 4%; text-align: right; }
-    .install li { grid-template-columns: 1fr; gap: 6px; }
     .wordmark { flex-direction: column; gap: .18em; }
   }
-  @media (prefers-reduced-motion: reduce) { .hero__field { animation: none; } html { scroll-behavior: auto; } }
+  @media (max-width: 620px) {
+    .new-grid, .guarantees { grid-template-columns: minmax(0, 1fr); }
+    .fact { padding: 18px 16px 20px; }
+    .new-card { min-height: 0; }
+    .new-card h3, .g h3 { margin-top: 28px; }
+    .sec-top span:last-child { display: none; }
+    .study { padding: 20px; }
+    .code pre { font-size: 12.5px; padding: 16px; }
+    .foot__bar { flex-direction: column; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero__field { animation: none; }
+    *, *::before, *::after { transition-duration: .01ms !important; }
+  }
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="hero__field" aria-hidden="true"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="ch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".47" stop-color="#e4e4e8"/><stop offset=".53" stop-color="#a6a6b0"/><stop offset="1" stop-color="#d9d9de"/></linearGradient>
+    <symbol id="mark" viewBox="0 0 64 64"><rect x="12" y="4" width="10" height="56"/><rect x="12" y="4" width="22" height="10"/><rect x="12" y="50" width="38" height="10"/><rect x="40" y="24" width="10" height="36"/><rect x="42" y="4" width="10" height="10"/><rect x="56" y="0" width="6" height="6"/></symbol>
+    <symbol id="spark" viewBox="0 0 26 26"><path d="M13 0v26M0 13h26M3.8 3.8l18.4 18.4M22.2 3.8L3.8 22.2" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
+    <filter id="lg-refract" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.011 0.019" numOctaves="2" seed="7" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="2" result="soft"/>
+      <feDisplacementMap in="SourceGraphic" in2="soft" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<nav class="nav" id="nav" aria-label="Main">
+  <div class="nav__in">
+    <a class="nav__brand" href="#top"><svg aria-hidden="true" fill="url(#ch)"><use href="#mark"/></svg><span>Phone Senses</span></a>
+    <ul class="nav__links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="#install">Install</a></li>
+    </ul>
+    <a class="glass glass--light" href="https://github.com/LSUDOKO/Phone-Senses">GitHub</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero__parallax" aria-hidden="true"><div class="hero__field"></div></div>
   <div class="hero__grain" aria-hidden="true"></div>
   <div class="hero__grid" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
   <p class="hero__label hero__label--a" aria-hidden="true">Read<br>notifications</p>
@@ -157,175 +413,518 @@
 
   <div class="hero__center">
     <h1 class="wordmark">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="ch" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".47" stop-color="#e4e4e8"/><stop offset=".53" stop-color="#a6a6b0"/><stop offset="1" stop-color="#d9d9de"/></linearGradient></defs><g fill="url(#ch)"><rect x="12" y="4" width="10" height="56"/><rect x="12" y="4" width="22" height="10"/><rect x="12" y="50" width="38" height="10"/><rect x="40" y="24" width="10" height="36"/><rect x="42" y="4" width="10" height="10"/><rect x="56" y="0" width="6" height="6"/></g></svg>
-      <span>Phone Senses</span>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><g fill="url(#ch)"><rect x="12" y="4" width="10" height="56"/><rect x="12" y="4" width="22" height="10"/><rect x="12" y="50" width="38" height="10"/><rect x="40" y="24" width="10" height="36"/><rect x="42" y="4" width="10" height="10"/><rect x="56" y="0" width="6" height="6"/></g></svg>
+      <span data-split>Phone Senses</span>
     </h1>
     <p class="hero__lede">Give Hermes the senses of your own Android phone. It reads, tracks and warns — and asks before it sends anything.</p>
     <div class="hero__actions">
-      <a class="btn btn--solid" href="#install">Install the plugin</a>
-      <a class="btn btn--line" href="https://github.com/LSUDOKO/Phone-Senses">View the code on GitHub</a>
+      <a class="glass glass--light" href="#install">Install the plugin</a>
+      <a class="glass" href="https://github.com/LSUDOKO/Phone-Senses">View the code on GitHub</a>
     </div>
   </div>
   <svg class="hero__spark" viewBox="0 0 26 26" aria-hidden="true" fill="none" stroke="#fff" stroke-width="1.3"><path d="M13 0v26M0 13h26M3.8 3.8l18.4 18.4M22.2 3.8L3.8 22.2"/></svg>
 </header>
 
 <main>
-  <section id="features">
+  <!-- ===================== features ===================== -->
+  <section class="band" id="features" aria-labelledby="features-h">
+    <div class="glow glow--a" aria-hidden="true"></div><div class="glow glow--b" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
     <div class="wrap">
-      <div class="lead">
-        <h2>Ask Hermes about your phone.</h2>
-        <p>Every clip below is a real Hermes Agent session with the Phone Senses plugin. Clips marked <b>real phone</b> ran on a moto g34 over Termux:API. Clips marked <b>demo phone</b> use the built-in mock helper, so no one's private messages end up on this page.</p>
+      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>01 — Features</span><span>Real Hermes Agent sessions</span></div>
+      <div class="head">
+        <h2 id="features-h" class="chrome" data-split>Ask Hermes about your phone.</h2>
+        <p class="lede" data-reveal>Every clip is a real Hermes Agent session with the plugin. <span class="tag tag--real">Real phone</span> clips ran on a moto g34 over Termux:API. <span class="tag tag--demo">Demo phone</span> clips use the built-in mock helper, so nobody's private messages end up on this page.</p>
       </div>
 
-      <article class="feature">
-        <div>
-          <h3>One digest instead of two hundred notifications</h3>
-          <p>Phone Senses reads notifications, missed calls and SMS straight from Android, filters out system noise and media players, and hides one-time codes before Hermes ever sees them.</p>
-          <ul class="ask"><li>Anything important on my phone?</li><li>Give me my morning phone brief.</li><li>Did I miss any calls?</li></ul>
+      <div class="switch" data-switch>
+        <div class="switch__tabs" role="tablist" aria-label="Features" aria-orientation="vertical" data-reveal>
+          <div class="tab-ind" aria-hidden="true"></div>
+          <button class="tab" role="tab" id="tab-brief" aria-controls="p-brief" aria-selected="true" tabindex="0" type="button"><span class="tab__n">01</span><span class="tab__t">Morning brief</span><span class="tab__d">Notifications, missed calls and SMS in one digest</span></button>
+          <button class="tab" role="tab" id="tab-money" aria-controls="p-money" aria-selected="false" tabindex="-1" type="button"><span class="tab__n">02</span><span class="tab__t">Money from SMS</span><span class="tab__d">Spending, UPI income and budgets</span></button>
+          <button class="tab" role="tab" id="tab-scam" aria-controls="p-scam" aria-selected="false" tabindex="-1" type="button"><span class="tab__n">03</span><span class="tab__t">Scam warnings</span><span class="tab__d">Suspicious texts flagged with reasons</span></button>
+          <button class="tab" role="tab" id="tab-ask" aria-controls="p-ask" aria-selected="false" tabindex="-1" type="button"><span class="tab__n">04</span><span class="tab__t">Ask before sending</span><span class="tab__d">SMS, calls, photos and codes need your yes</span></button>
+          <button class="tab" role="tab" id="tab-find" aria-controls="p-find" aria-selected="false" tabindex="-1" type="button"><span class="tab__n">05</span><span class="tab__t">Find, speak, copy</span><span class="tab__d">Ring it, make it talk, pass links</span></button>
+          <button class="tab" role="tab" id="tab-watch" aria-controls="p-watch" aria-selected="false" tabindex="-1" type="button"><span class="tab__n">06</span><span class="tab__t">Watch rules</span><span class="tab__d">Get told once when something matches</span></button>
         </div>
-        <div class="media media--two">
-          <figure><img src="media/digest.gif" alt="Hermes summarising notifications and missed calls" loading="lazy" width="860" height="560"><figcaption><b>demo phone</b> — notifications and missed calls</figcaption></figure>
-          <figure><img src="media/brief.gif" alt="Hermes giving a morning brief with battery, calls, messages and spending" loading="lazy" width="860" height="560"><figcaption><b>demo phone</b> — morning brief</figcaption></figure>
-        </div>
-      </article>
 
-      <article class="feature">
-        <div>
-          <h3>A money tracker you never had to set up</h3>
-          <p>Every bank debit and UPI payment already arrives as an SMS. Phone Senses parses them into amounts, merchants and categories, stores only those numbers, and answers questions about your spending and income. Shopkeepers can ask how much came in by UPI today.</p>
-          <ul class="ask"><li>How much did I spend this week?</li><li>How much did I receive by UPI today?</li><li>Set a food budget of 3000 rupees.</li></ul>
-        </div>
-        <div class="media media--two">
-          <figure><img src="media/money.gif" alt="Weekly spending grouped by category" loading="lazy" width="860" height="600"><figcaption><b>demo phone</b> — spending by category</figcaption></figure>
-          <figure><img src="media/upi.gif" alt="UPI income for today grouped by sender" loading="lazy" width="860" height="480"><figcaption><b>demo phone</b> — UPI received today</figcaption></figure>
-        </div>
-      </article>
-
-      <article class="feature">
-        <div>
-          <h3>Scam texts get called out</h3>
-          <p>Fake KYC warnings, electricity disconnection threats, lottery prizes, parcel fees and refund apps are scored with clear reasons, so Hermes can tell you why a message looks wrong.</p>
-          <ul class="ask"><li>Check my recent SMS for scams.</li><li>Is this message a scam?</li></ul>
-        </div>
-        <div class="media"><figure><img src="media/scam.gif" alt="Two scam messages flagged with reasons" loading="lazy" width="860" height="520"><figcaption><b>demo phone</b> — scam check</figcaption></figure></div>
-      </article>
-
-      <article class="feature">
-        <div>
-          <h3>It asks before it acts</h3>
-          <p>Sending an SMS, placing a call, taking a photo and revealing a code always open Hermes's own approval panel with the exact number and text. Deny it and nothing leaves your phone. With nobody there to answer, the action is refused.</p>
-          <ul class="ask"><li>Text Rahul that I'm 10 minutes late.</li><li>Call Mom.</li></ul>
-        </div>
-        <div class="media">
-          <div class="phoneclip">
-            <figure><img src="media/sms-allow.gif" alt="Approval panel for sending an SMS, allowed once, SMS sent" loading="lazy" width="860" height="560"><figcaption><b>real phone</b> — allowed once, sent from the SIM</figcaption></figure>
-            <figure><img src="media/phone-sms-arrives.gif" alt="The phone receiving the SMS that Hermes sent" loading="lazy" width="380" height="474"><figcaption><b>real phone</b> — the text arrives</figcaption></figure>
+        <div class="panels" data-reveal>
+          <!-- 01 -->
+          <div class="panel" id="p-brief" data-tab="tab-brief">
+            <div class="stage">
+              <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">01 / 06</span></div>
+              <figure class="clip" data-label="Morning brief"><img src="media/brief.gif" alt="Hermes giving a morning brief with battery, calls, messages and spending" loading="lazy" decoding="async" width="860" height="588"><figcaption><span class="tag tag--demo">Demo phone</span>Morning brief</figcaption></figure>
+              <figure class="clip" data-label="Digest"><img src="media/digest.gif" alt="Hermes summarising notifications and missed calls" loading="lazy" decoding="async" width="860" height="506"><figcaption><span class="tag tag--demo">Demo phone</span>Notifications and missed calls</figcaption></figure>
+            </div>
+            <div class="panel__copy">
+              <div><h3>One digest instead of two hundred notifications</h3><p>Phone Senses reads notifications, missed calls and SMS straight from Android, filters out system noise and media players, and hides one-time codes before Hermes ever sees them.</p></div>
+              <div><p class="kicker">Try asking</p><ul class="ask"><li>Anything important on my phone?</li><li>Give me my morning phone brief.</li><li>Did I miss any calls?</li></ul></div>
+            </div>
           </div>
-          <figure><img src="media/sms-deny.gif" alt="Approval panel for sending an SMS, denied, nothing sent" loading="lazy" width="860" height="580"><figcaption><b>real phone</b> — denied: nothing sent, and Hermes does not retry</figcaption></figure>
+          <!-- 02 -->
+          <div class="panel" id="p-money" data-tab="tab-money">
+            <div class="stage">
+              <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">02 / 06</span></div>
+              <figure class="clip" data-label="Spending"><img src="media/money.gif" alt="Weekly spending grouped by category" loading="lazy" decoding="async" width="860" height="506"><figcaption><span class="tag tag--demo">Demo phone</span>Spending by category</figcaption></figure>
+              <figure class="clip" data-label="UPI today"><img src="media/upi.gif" alt="UPI income for today grouped by sender" loading="lazy" decoding="async" width="860" height="341"><figcaption><span class="tag tag--demo">Demo phone</span>UPI received today</figcaption></figure>
+              <figure class="clip" data-label="Budgets"><img src="media/budget.gif" alt="Hermes setting a food budget and reporting what is left" loading="lazy" decoding="async" width="860" height="361"><figcaption><span class="tag tag--demo">Demo phone</span>Budgets</figcaption></figure>
+            </div>
+            <div class="panel__copy">
+              <div><h3>A money tracker you never had to set up</h3><p>Every bank debit and UPI payment already arrives as an SMS. Phone Senses turns them into amounts, merchants and categories, stores only those numbers, and answers questions about your spending and income. Shopkeepers can ask how much came in by UPI today.</p></div>
+              <div><p class="kicker">Try asking</p><ul class="ask"><li>How much did I spend this week?</li><li>How much did I receive by UPI today?</li><li>Set a food budget of 3000 rupees.</li></ul></div>
+            </div>
+          </div>
+          <!-- 03 -->
+          <div class="panel" id="p-scam" data-tab="tab-scam">
+            <div class="stage">
+              <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">03 / 06</span></div>
+              <figure class="clip" data-label="Scam check"><img src="media/scam.gif" alt="Two scam messages flagged with reasons" loading="lazy" decoding="async" width="860" height="402"><figcaption><span class="tag tag--demo">Demo phone</span>Scam check</figcaption></figure>
+            </div>
+            <div class="panel__copy">
+              <div><h3>Scam texts get called out</h3><p>Fake KYC warnings, electricity disconnection threats, lottery prizes, parcel fees and refund apps are scored with clear reasons, so Hermes can tell you why a message looks wrong.</p></div>
+              <div><p class="kicker">Try asking</p><ul class="ask"><li>Check my recent SMS for scams.</li><li>Is this message a scam?</li></ul></div>
+            </div>
+          </div>
+          <!-- 04 -->
+          <div class="panel" id="p-ask" data-tab="tab-ask">
+            <div class="stage">
+              <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">04 / 06</span></div>
+              <figure class="clip" data-label="Allowed">
+                <div class="pair">
+                  <img src="media/sms-allow.gif" alt="Approval panel for sending an SMS, allowed once, SMS sent" loading="lazy" decoding="async" width="860" height="568">
+                  <img src="media/phone-sms-arrives.gif" alt="The phone receiving the SMS that Hermes sent" loading="lazy" decoding="async" width="380" height="472">
+                </div>
+                <figcaption><span class="tag tag--real">Real phone</span>Allowed once, sent from the SIM, and the text arrives</figcaption>
+              </figure>
+              <figure class="clip" data-label="Denied"><img src="media/sms-deny.gif" alt="Approval panel for sending an SMS, denied, nothing sent" loading="lazy" decoding="async" width="860" height="588"><figcaption><span class="tag tag--real">Real phone</span>Denied: nothing sent, and Hermes does not retry</figcaption></figure>
+              <figure class="clip" data-label="Call"><img src="media/call.gif" alt="Approval panel for placing a call, allowed once" loading="lazy" decoding="async" width="860" height="506"><figcaption><span class="tag tag--real">Real phone</span>Place a call, allowed once</figcaption></figure>
+              <figure class="clip" data-label="Photo"><img src="media/photo.gif" alt="Approval panel for taking a photo, allowed once" loading="lazy" decoding="async" width="860" height="568"><figcaption><span class="tag tag--real">Real phone</span>Take a photo, allowed once</figcaption></figure>
+              <figure class="clip" data-label="Nobody there"><img src="media/unattended.gif" alt="A send request refused because nobody was there to approve it" loading="lazy" decoding="async" width="860" height="258"><figcaption><span class="tag tag--real">Real phone</span>Nobody to approve, so the action is refused</figcaption></figure>
+            </div>
+            <div class="panel__copy">
+              <div><h3>It asks before it acts</h3><p>Sending an SMS, placing a call, taking a photo and revealing a code always open Hermes's own approval panel with the exact number and text. Deny it and nothing leaves your phone. With nobody there to answer, the action is refused.</p></div>
+              <div><p class="kicker">Try asking</p><ul class="ask"><li>Text Rahul that I'm 10 minutes late.</li><li>Call Mom.</li><li>Take a photo with my phone.</li></ul></div>
+            </div>
+          </div>
+          <!-- 05 -->
+          <div class="panel" id="p-find" data-tab="tab-find">
+            <div class="stage">
+              <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">05 / 06</span></div>
+              <figure class="clip" data-label="Ring"><img src="media/ring.gif" alt="Hermes making the phone ring" loading="lazy" decoding="async" width="860" height="258"><figcaption><span class="tag tag--real">Real phone</span>Find my phone</figcaption></figure>
+              <figure class="clip" data-label="Speak"><img src="media/speak.gif" alt="Hermes making the phone speak aloud" loading="lazy" decoding="async" width="860" height="237"><figcaption><span class="tag tag--real">Real phone</span>Read it aloud</figcaption></figure>
+              <figure class="clip" data-label="Clipboard"><img src="media/clipboard.gif" alt="Hermes copying a link to the phone clipboard" loading="lazy" decoding="async" width="860" height="237"><figcaption><span class="tag tag--real">Real phone</span>Clipboard between laptop and phone</figcaption></figure>
+              <figure class="clip" data-label="Location"><img src="media/location.gif" alt="Hermes reporting where the phone is" loading="lazy" decoding="async" width="860" height="320"><figcaption><span class="tag tag--demo">Demo phone</span>Where is my phone?</figcaption></figure>
+            </div>
+            <div class="panel__copy">
+              <div><h3>Find it, hear it, pass it a link</h3><p>Lost the phone under a cushion? It rings at full volume, speaks, vibrates and flashes the torch, then puts your volume back. It can also read text aloud, pass links between laptop and phone, and say where the phone is.</p></div>
+              <div><p class="kicker">Try asking</p><ul class="ask"><li>Find my phone.</li><li>Say “dinner is ready” on my phone.</li><li>Copy this link to my phone.</li></ul></div>
+            </div>
+          </div>
+          <!-- 06 -->
+          <div class="panel" id="p-watch" data-tab="tab-watch">
+            <div class="stage">
+              <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">06 / 06</span></div>
+              <figure class="clip" data-label="Watch rule"><img src="media/watch.gif" alt="A watch rule matching a newly received SMS" loading="lazy" decoding="async" width="860" height="361"><figcaption><span class="tag tag--real">Real phone</span>A watch rule catching a new SMS</figcaption></figure>
+            </div>
+            <div class="panel__copy">
+              <div><h3>Watch for what matters</h3><p>Set rules like “tell me when a notification says delivered” or “warn me about debits over 1,000 rupees”. Run the check from a Hermes cron job and matches reach your chat or Telegram, each one only once.</p></div>
+              <div><p class="kicker">Try asking</p><ul class="ask"><li>Tell me when my order is delivered.</li><li>Warn me about debits over 1000 rupees.</li></ul></div>
+            </div>
+          </div>
         </div>
-      </article>
-
-      <article class="feature">
-        <div>
-          <h3>Find, speak, copy</h3>
-          <p>Lost the phone under a cushion? It rings at full volume, speaks, vibrates and flashes the torch, then puts your volume back. It can also read text aloud and pass links between laptop and phone.</p>
-          <ul class="ask"><li>Find my phone.</li><li>Say “dinner is ready” on my phone.</li><li>Copy this link to my phone.</li></ul>
-        </div>
-        <div class="media media--two">
-          <figure><img src="media/ring.gif" alt="Hermes making the phone ring" loading="lazy" width="860" height="300"><figcaption><b>real phone</b> — find my phone</figcaption></figure>
-          <figure><img src="media/speak.gif" alt="Hermes making the phone speak aloud" loading="lazy" width="860" height="300"><figcaption><b>real phone</b> — speak aloud</figcaption></figure>
-        </div>
-      </article>
-
-      <article class="feature">
-        <div>
-          <h3>Watch for what matters</h3>
-          <p>Set rules like “tell me when a notification says delivered” or “warn me about debits over ₹1,000”. Run the check from a Hermes cron job and matches reach your chat or Telegram, each one only once.</p>
-          <ul class="ask"><li>Tell me when my order is delivered.</li><li>Warn me about debits over 1000 rupees.</li></ul>
-        </div>
-        <div class="media"><figure><img src="media/watch.gif" alt="A watch rule matching a newly received SMS" loading="lazy" width="860" height="440"><figcaption><b>real phone</b> — a watch rule catching a new SMS</figcaption></figure></div>
-      </article>
+      </div>
     </div>
   </section>
 
-  <section class="dark" id="how">
+  <!-- ===================== new ===================== -->
+  <section class="band" id="new" aria-labelledby="new-h">
+    <div class="glow" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
     <div class="wrap">
-      <div class="lead">
-        <h2>No screen tapping.</h2>
-        <p>Screen-driving agents take a screenshot for every step. Phone Senses calls Android's own APIs through Termux:API, so “read my latest SMS” is one request. Research on mobile agents found command-line access roughly twice as successful as screen tapping on data tasks.</p>
+      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>02 — New in this release</span><span>Clips coming soon</span></div>
+      <div class="head">
+        <h2 id="new-h" class="chrome h2--sm" data-split>Being added right now.</h2>
+        <p class="lede" data-reveal>Four new senses. They read the same SMS and notifications, keep only what they need, and bring the plugin to 25 tools.</p>
       </div>
-      <ol class="flow">
-        <li><b>You ask Hermes</b><span>on your laptop, in chat, Telegram or a cron job</span></li>
-        <li class="hot"><b>Phone Senses plugin</b><span>picks the tool, asks for approval, hides OTPs</span></li>
-        <li><b>Signed request</b><span>HMAC-SHA256 over Wi-Fi, Tailscale or USB</span></li>
-        <li><b>Helper in Termux</b><span>stdlib Python, fixed commands, no shell</span></li>
-        <li><b>Android APIs</b><span>SMS, notifications, calls, location, camera</span></li>
-      </ol>
+      <div class="new-grid" data-stagger>
+        <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Bills due</h3><p>Upcoming bill, EMI and credit card dues, read from the reminder texts your bank and biller already send.</p><p class="q">What bills are due this week?</p></article>
+        <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Deliveries</h3><p>Order and courier status from Amazon, Flipkart, Swiggy and courier messages, in one list.</p><p class="q">Where are my deliveries?</p></article>
+        <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Subscriptions</h3><p>Recurring debits grouped by merchant, with what they add up to each month.</p><p class="q">What am I paying for every month?</p></article>
+        <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Battery watch</h3><p>An alert in your chat when the phone drops below a battery level you pick.</p><p class="q">Tell me when my phone drops below 20%.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== how ===================== -->
+  <section class="sheet" id="how" aria-labelledby="how-h">
+    <div class="glow" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>03 — How it works</span><span>Laptop to phone in one request</span></div>
+      <div class="head">
+        <h2 id="how-h" data-split>No screen tapping.</h2>
+        <p class="lede" data-reveal>Screen-driving agents take a screenshot for every step. Phone Senses calls Android's own APIs through Termux:API, so “read my latest SMS” is one request.</p>
+      </div>
       <div class="how">
-        <figure><img src="media/status.gif" alt="Hermes reading the battery of a real phone" loading="lazy" width="860" height="420"><figcaption style="color:var(--mist)"><b style="color:#8B93FF">real phone</b> — the first question, end to end</figcaption></figure>
-        <ul>
-          <li><strong>Thin helper, smart plugin.</strong> The phone runs a small HTTP server that only knows a fixed list of termux commands. Parsing, masking and money logic live in the plugin.</li>
-          <li><strong>Your own SIM.</strong> Messages go out from your number, not a paid cloud number.</li>
-          <li><strong>Works with mock data.</strong> <code>helper.py --mock</code> serves a fake phone, so you can try everything on a laptop.</li>
-        </ul>
+        <div class="how__stage" data-reveal>
+          <div class="duo" data-step="1">
+            <figure class="duo__laptop"><img src="media/status.gif" alt="Hermes reading the battery of a real phone" loading="lazy" decoding="async" width="860" height="299"><figcaption><span class="tag tag--real">Real phone</span> First question, end to end</figcaption></figure>
+            <figure class="duo__phone"><img src="media/phone-helper-log.gif" alt="The Phone Senses helper log in Termux on the phone, one line per request" loading="lazy" decoding="async" width="380" height="472"><figcaption>Helper log in Termux</figcaption></figure>
+            <p class="duo__wire">HMAC-SHA256 · timestamp · nonce</p>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="rail" aria-hidden="true"><i></i></li>
+          <li class="step is-active"><span class="step__n">01</span><div><h3>You ask Hermes</h3><p>On your laptop, in chat, Telegram or a cron job. Hermes picks the Phone Senses tool for the job.</p><code>“what's my phone battery?”</code></div></li>
+          <li class="step"><span class="step__n">02</span><div><h3>The plugin checks it</h3><p>Sending an SMS, calling, taking a photo or revealing a code stops at Hermes's approval panel first, through a pre_tool_call hook. One-time codes are masked before Hermes sees any text.</p><code>pre_tool_call › approval panel · OTP › [OTP hidden]</code></div></li>
+          <li class="step"><span class="step__n">03</span><div><h3>A signed request goes out</h3><p>Plain HTTP over Wi-Fi, Tailscale or USB. Every request carries an HMAC-SHA256 signature, a timestamp and a one-time nonce. The pairing secret itself never travels.</p><code>GET /v1/status · HMAC-SHA256 · ts · nonce</code></div></li>
+          <li class="step"><span class="step__n">04</span><div><h3>The helper runs in Termux</h3><p>A small standard-library Python server on the phone. Each endpoint runs one fixed termux command with validated input, and there is no shell. Start it with --mock to try everything on a laptop.</p><code>[phone-senses] GET /v1/status 200</code></div></li>
+          <li class="step"><span class="step__n">05</span><div><h3>Android answers</h3><p>Termux:API reads SMS, notifications, the call log, battery and location, and drives the camera and SIM. Texts go out from your own number.</p><code>termux-battery-status · termux-sms-list</code></div></li>
+        </ol>
       </div>
     </div>
   </section>
 
-  <section id="privacy">
+  <!-- ===================== numbers ===================== -->
+  <section class="band" id="numbers" aria-labelledby="numbers-h">
+    <div class="glow" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
     <div class="wrap">
-      <div class="lead">
-        <h2>Built for the most private device you own.</h2>
-        <p>Phone Senses only ever talks to the helper on your own phone. There is no telemetry and no third-party service.</p>
+      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>04 — Numbers</span><span>Only measured numbers</span></div>
+      <div class="head">
+        <h2 id="numbers-h" class="chrome" data-split>Why skip the screen?</h2>
+        <p class="lede" data-reveal>Researchers compared agents that drive Android from the command line with agents that read screenshots and tap. On everyday data tasks the command line finished far more of them, in fewer steps.</p>
       </div>
-      <div class="privacy-grid">
-        <div><h3>Approval before every send</h3><p>SMS, calls, photos and OTP reveal go through Hermes's approval panel with the exact content shown.</p></div>
-        <div><h3>One-time codes hidden</h3><p>OTPs appear as [OTP hidden] in every result unless you turn reveal on and approve each request.</p></div>
-        <div><h3>No message text stored</h3><p>The money tracker keeps amounts, dates and merchants. Never the SMS itself.</p></div>
-        <div><h3>Signed, local requests</h3><p>Every request carries an HMAC signature, a timestamp and a one-time nonce. The secret is never sent.</p></div>
-        <div><h3>No shell on the phone</h3><p>Each endpoint runs one fixed termux command with validated input. Free text travels on stdin.</p></div>
-        <div><h3>Your phone only</h3><p>The helper runs visibly in Termux with a persistent notification. Stop it any time with Ctrl+C.</p></div>
+      <div class="numbers">
+        <div class="study" data-reveal>
+          <div class="cmp">
+            <p class="kicker">Task success, 45 everyday tasks</p>
+            <div class="cmp__row cmp__row--a">
+              <span class="cmp__label">Command-line agents</span>
+              <span class="cmp__val"><span class="sr-only">60.7 to 68.9 percent</span><span aria-hidden="true"><span data-count="60.7" data-dec="1">60.7</span>–<span data-count="68.9" data-dec="1">68.9</span>%</span></span>
+              <span class="bar" aria-hidden="true"><i style="--lo:60.7;--hi:68.9"></i></span>
+            </div>
+            <div class="cmp__row cmp__row--b">
+              <span class="cmp__label">Screen-based agents</span>
+              <span class="cmp__val"><span class="sr-only">22.2 to 33.3 percent</span><span aria-hidden="true"><span data-count="22.2" data-dec="1">22.2</span>–<span data-count="33.3" data-dec="1">33.3</span>%</span></span>
+              <span class="bar" aria-hidden="true"><i style="--lo:22.2;--hi:33.3"></i></span>
+            </div>
+          </div>
+          <div class="cmp">
+            <p class="kicker">Average steps per task, fewer is better</p>
+            <div class="cmp__row cmp__row--a">
+              <span class="cmp__label">Command-line agents</span>
+              <span class="cmp__val"><span class="sr-only">10.7 steps</span><span aria-hidden="true"><span data-count="10.7" data-dec="1">10.7</span></span></span>
+              <span class="bar" aria-hidden="true"><i style="--lo:57.5;--hi:57.5"></i></span>
+            </div>
+            <div class="cmp__row cmp__row--b">
+              <span class="cmp__label">Screen-based agents</span>
+              <span class="cmp__val"><span class="sr-only">18.6 steps</span><span aria-hidden="true"><span data-count="18.6" data-dec="1">18.6</span></span></span>
+              <span class="bar" aria-hidden="true"><i style="--lo:100;--hi:100"></i></span>
+            </div>
+          </div>
+          <p class="cite">Gu et al., 2026. “Beyond the GUI Paradigm: Do Mobile Agents Need the Phone Screen?” CLI-Advantage suite: coding agents driving Android over ADB vs screen-based agents. A study of the approach, not of Phone Senses. <a href="https://www.alphaxiv.org/abs/2606.19388">arXiv 2606.19388</a></p>
+        </div>
+        <div class="facts" data-stagger>
+          <div class="fact"><span class="fact__v chrome"><span class="sr-only">25</span><span aria-hidden="true" data-count="25">25</span></span><span class="fact__l">tools Hermes can call on your phone</span></div>
+          <div class="fact"><span class="fact__v chrome"><span class="sr-only">186</span><span aria-hidden="true"><span data-count="186">186</span></span></span><span class="fact__l">automated tests in the repo</span></div>
+          <div class="fact"><span class="fact__v chrome"><span class="sr-only">4</span><span aria-hidden="true" data-count="4">4</span></span><span class="fact__l">actions that always ask first: SMS, call, photo, OTP reveal</span></div>
+          <div class="fact"><span class="fact__v chrome"><span class="sr-only">0</span><span aria-hidden="true">0</span></span><span class="fact__l">third-party services, and no telemetry</span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="install" id="install">
+  <!-- ===================== privacy ===================== -->
+  <section class="sheet" id="privacy" aria-labelledby="privacy-h">
+    <div class="glow" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
     <div class="wrap">
-      <div class="lead">
-        <h2>Set it up in fifteen minutes.</h2>
-        <p>You need Hermes Agent 0.23 or newer and an Android phone with Termux and Termux:API from F-Droid.</p>
+      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>05 — Privacy</span><span>Local only · no telemetry</span></div>
+      <div class="head">
+        <h2 id="privacy-h" class="h2--sm" data-split>Built for the most private device you own.</h2>
+        <p class="lede" data-reveal>Phone Senses only ever talks to the helper on your own phone. There is no telemetry and no third-party service.</p>
       </div>
-      <ol>
-        <li><div><h3>Install Termux on the phone</h3><p>Install F-Droid, then Termux and Termux:API from F-Droid. Grant Termux:API the SMS, call log, contacts, location and camera permissions, and turn on its notification access.</p></div></li>
-        <li><div><h3>Start the helper</h3><p>In Termux, clone the repo, create your pairing code, and start the helper.</p>
-<pre><button class="copy" type="button">Copy</button>pkg install -y python termux-api git
-git clone https://github.com/LSUDOKO/Phone-Senses.git && cd Phone-Senses
-python phone_helper/helper.py --pair      <span class="c"># prints your pairing code once</span>
-termux-wake-lock && python phone_helper/helper.py --host 0.0.0.0</pre></div></li>
-        <li><div><h3>Add the plugin to Hermes</h3><p>Install it, then set the helper address and pairing code in Settings → Plugins → Phone Senses.</p>
-<pre><button class="copy" type="button">Copy</button>hermes plugins install https://github.com/LSUDOKO/Phone-Senses/tree/main/plugin --enable</pre></div></li>
-        <li><div><h3>Ask</h3><p>Try <code>/phone</code>, or ask “what's my phone battery?”.</p></div></li>
+      <div class="guarantees" data-stagger>
+        <div class="g"><span class="g__n">01</span><h3>Approval before every send</h3><p>SMS, calls, photos and OTP reveal go through Hermes's approval panel with the exact content shown.</p></div>
+        <div class="g"><span class="g__n">02</span><h3>One-time codes hidden</h3><p>OTPs appear as [OTP hidden] in every result unless you turn reveal on and approve each request.</p></div>
+        <div class="g"><span class="g__n">03</span><h3>No message text stored</h3><p>The money tracker keeps amounts, dates and merchants. Never the SMS itself.</p></div>
+        <div class="g"><span class="g__n">04</span><h3>Signed, local requests</h3><p>Every request carries an HMAC signature, a timestamp and a one-time nonce. The secret is never sent.</p></div>
+        <div class="g"><span class="g__n">05</span><h3>No shell on the phone</h3><p>Each endpoint runs one fixed termux command with validated input. Free text travels on stdin.</p></div>
+        <div class="g"><span class="g__n">06</span><h3>Your phone only</h3><p>The helper runs visibly in Termux with a persistent notification. Stop it any time with Ctrl+C.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== install ===================== -->
+  <section class="band" id="install" aria-labelledby="install-h">
+    <div class="glow" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>06 — Install</span><span>About fifteen minutes</span></div>
+      <div class="head">
+        <h2 id="install-h" class="chrome" data-split>Set it up in fifteen minutes.</h2>
+        <p class="lede" data-reveal>You need Hermes Agent 0.23 or newer and an Android phone with Termux and Termux:API from F-Droid.</p>
+      </div>
+      <ol class="isteps" data-stagger>
+        <li class="istep"><span class="istep__n chrome" aria-hidden="true">01</span><div><h3>Install Termux on the phone</h3><p>Install F-Droid, then Termux and Termux:API from F-Droid. Grant Termux:API the SMS, call log, contacts, location and camera permissions, and turn on its notification access.</p></div></li>
+        <li class="istep"><span class="istep__n chrome" aria-hidden="true">02</span><div><h3>Start the helper</h3><p>In Termux, clone the repo, create your pairing code, and start the helper.</p>
+          <div class="code"><div class="code__bar"><span>On the phone, in Termux</span><button class="glass glass--sm" type="button" data-copy="code-phone">Copy</button></div>
+<pre><code id="code-phone"><span class="ln">pkg install -y python termux-api git</span>
+<span class="ln">git clone https://github.com/LSUDOKO/Phone-Senses.git &amp;&amp; cd Phone-Senses</span>
+<span class="ln">python phone_helper/helper.py --pair</span>      <span class="c"># prints your pairing code once</span>
+<span class="ln">termux-wake-lock &amp;&amp; python phone_helper/helper.py --host 0.0.0.0</span></code></pre></div></div></li>
+        <li class="istep"><span class="istep__n chrome" aria-hidden="true">03</span><div><h3>Add the plugin to Hermes</h3><p>Install it, then set the helper address and pairing code in Settings › Plugins › Phone Senses.</p>
+          <div class="code"><div class="code__bar"><span>On your laptop</span><button class="glass glass--sm" type="button" data-copy="code-laptop">Copy</button></div>
+<pre><code id="code-laptop"><span class="ln">hermes plugins install https://github.com/LSUDOKO/Phone-Senses/tree/main/plugin --enable</span></code></pre></div></div></li>
+        <li class="istep"><span class="istep__n chrome" aria-hidden="true">04</span><div><h3>Ask</h3><p>Try <code>/phone</code>, or ask “what's my phone battery?”.</p>
+          <div class="stage slash"><div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>/phone</span></div><figure class="clip"><img src="media/slash.gif" alt="The /phone slash command showing a phone status summary" loading="lazy" decoding="async" width="860" height="217"><figcaption><span class="tag tag--real">Real phone</span>The /phone command</figcaption></figure></div>
+        </div></li>
       </ol>
+      <p class="sr-only" aria-live="polite" id="live"></p>
     </div>
   </section>
 </main>
 
-<footer>
+<footer class="band foot" aria-labelledby="foot-h">
+  <div class="foot__field" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
   <div class="wrap">
-    <span>Phone Senses 0.1.0 · MIT · built for the Hermes Agent plugin hackathon</span>
-    <span><a href="https://github.com/LSUDOKO/Phone-Senses">GitHub</a> · <a href="https://github.com/LSUDOKO/Phone-Senses#privacy-and-disclosures">Disclosures</a> · <a href="https://www.alphaxiv.org/abs/2606.19388">Research</a></span>
+    <div class="foot__cta">
+      <h2 id="foot-h" class="chrome" data-split>Your phone, in your chat.</h2>
+      <p class="lede" data-reveal>Open source, runs on your own devices, and asks before it acts.</p>
+      <div class="foot__actions" data-stagger>
+        <a class="glass glass--light" href="#install">Install the plugin</a>
+        <a class="glass" href="https://github.com/LSUDOKO/Phone-Senses">View the code on GitHub</a>
+      </div>
+    </div>
+    <div class="foot__bar">
+      <span>Phone Senses 0.1.0 · MIT · built for the Hermes Agent plugin hackathon</span>
+      <nav aria-label="Footer"><a href="https://github.com/LSUDOKO/Phone-Senses">GitHub</a><a href="https://github.com/LSUDOKO/Phone-Senses#privacy-and-disclosures">Disclosures</a><a href="https://www.alphaxiv.org/abs/2606.19388">Research</a></nav>
+    </div>
   </div>
 </footer>
 
-<script>
-  document.querySelectorAll(".copy").forEach((button) => {
-    button.addEventListener("click", async () => {
-      const text = button.parentElement.innerText.replace(/^Copy\n?/, "").replace(/\s+#.*$/gm, "");
-      try { await navigator.clipboard.writeText(text.trim()); button.textContent = "Copied"; }
-      catch { button.textContent = "Select and copy"; }
-      setTimeout(() => (button.textContent = "Copy"), 1600);
+<script type="module">
+  const M = window.Motion;
+  const root = document.documentElement;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const on = !!M && !reduce && root.classList.contains("motion");
+  if (!on) root.classList.remove("motion");
+  const EXPO = [0.16, 1, 0.3, 1];
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+  const unblur = (els) => els.forEach((el) => { el.style.filter = ""; });
+
+  /* Chromium renders SVG filters inside backdrop-filter; everyone else keeps the plain frosted glass. */
+  if (/Chrome\//.test(navigator.userAgent) && !/Edg\/|OPR\//.test(navigator.userAgent) && CSS.supports("backdrop-filter", "url(#a)")) root.classList.add("lg-svg");
+
+  /* ---------- word split + reveals ---------- */
+  function split(el) {
+    const words = el.textContent.trim().split(/\s+/);
+    el.textContent = "";
+    const inner = words.map((word, i) => {
+      const w = document.createElement("span"), wi = document.createElement("span");
+      w.className = "w"; wi.className = "wi"; wi.textContent = word;
+      w.append(wi); el.append(w);
+      if (i < words.length - 1) el.append(" ");
+      return wi;
+    });
+    el.classList.add("is-split");
+    return inner;
+  }
+
+  const reveal = (els, delay = 0) => M.animate(els, { opacity: [0, 1], y: [24, 0], filter: ["blur(6px)", "blur(0px)"] },
+    { duration: 0.95, ease: EXPO, delay }).finished.then(() => unblur([].concat(els)));
+
+  if (on) {
+    let heroWords = [];
+    $$("[data-split]").forEach((el) => {
+      const words = split(el);
+      if (el.closest(".hero")) { heroWords = words; return; }
+      M.inView(el, () => {
+        M.animate(words, { opacity: [0, 1], y: [34, 0], filter: ["blur(10px)", "blur(0px)"] }, { duration: 1.05, ease: EXPO, delay: M.stagger(0.06) })
+          .finished.then(() => unblur(words));
+      }, { amount: 0.5 });
+    });
+    M.inView("[data-reveal]", (el) => { reveal(el, 0.15); }, { amount: 0.2 });
+    M.inView("[data-stagger]", (el) => { reveal([...el.children], M.stagger(0.08, { startDelay: 0.1 })); }, { amount: 0.15 });
+
+    /* hero: one orchestrated load sequence */
+    M.animate(".hero__field", { opacity: [0, 1] }, { duration: 1.8, ease: "easeOut" });
+    M.animate(".hero__grid i:nth-child(-n+2)", { scaleY: [0, 1] }, { duration: 1.4, ease: EXPO, delay: M.stagger(0.1, { startDelay: 0.15 }) });
+    M.animate(".hero__grid i:nth-child(n+3)", { scaleX: [0, 1] }, { duration: 1.4, ease: EXPO, delay: M.stagger(0.1, { startDelay: 0.3 }) });
+    M.animate(heroWords, { opacity: [0, 1], y: [52, 0], filter: ["blur(14px)", "blur(0px)"] }, { duration: 1.25, ease: EXPO, delay: M.stagger(0.12, { startDelay: 0.4 }) })
+      .finished.then(() => unblur(heroWords));
+    M.animate(".hero__lede", { opacity: [0, 1], y: [18, 0], filter: ["blur(8px)", "blur(0px)"] }, { duration: 1.1, ease: EXPO, delay: 0.8 })
+      .finished.then(() => unblur($$(".hero__lede")));
+    M.animate(".hero__actions > *", { opacity: [0, 1], y: [18, 0] }, { duration: 1.1, ease: EXPO, delay: M.stagger(0.09, { startDelay: 0.95 }) });
+    M.animate(".hero__label", { opacity: [0, 1], y: [10, 0] }, { duration: 0.9, ease: EXPO, delay: M.stagger(0.06, { startDelay: 1.05 }) });
+    M.animate(".hero__spark", { opacity: [0, 0.9], rotate: [-90, 0] }, { duration: 1.6, ease: EXPO, delay: 1.2 });
+
+    /* hero field drifts slower than the page */
+    const par = $(".hero__parallax");
+    M.scroll((p, _info) => { par.style.transform = `translate3d(0, ${(p * 14).toFixed(2)}%, 0) scale(${(1 + p * 0.08).toFixed(4)})`; },
+      { target: $(".hero"), offset: ["start start", "end start"] });
+
+    /* counters and bars */
+    $$("[data-count]").forEach((el) => {
+      const to = parseFloat(el.dataset.count), dec = +(el.dataset.dec || 0);
+      el.textContent = (0).toFixed(dec);
+      M.inView(el, () => { M.animate(0, to, { duration: 1.8, ease: EXPO, onUpdate: (v) => { el.textContent = v.toFixed(dec); } }); }, { amount: 0.8 });
+    });
+    M.inView(".bar i", (el) => { M.animate(el, { scaleX: [0, 1] }, { duration: 1.6, ease: EXPO, delay: 0.1 }); }, { amount: 0.8 });
+  }
+
+  /* ---------- glass: pointer light, magnetic pull ---------- */
+  const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  $$(".glass").forEach((b) => {
+    const spring = { type: "spring", stiffness: 280, damping: 18, mass: 0.6 };
+    b.addEventListener("pointermove", (e) => {
+      const r = b.getBoundingClientRect();
+      b.style.setProperty("--mx", `${e.clientX - r.left}px`);
+      b.style.setProperty("--my", `${e.clientY - r.top}px`);
+      if (on && fine) M.animate(b, { x: (e.clientX - r.left - r.width / 2) * 0.22, y: (e.clientY - r.top - r.height / 2) * 0.32 }, spring);
+    });
+    b.addEventListener("pointerleave", () => {
+      b.style.removeProperty("--mx"); b.style.removeProperty("--my");
+      if (on && fine) M.animate(b, { x: 0, y: 0 }, spring);
     });
   });
+
+  /* ---------- feature switcher ---------- */
+  const sw = $("[data-switch]");
+  const tablist = $("[role=tablist]", sw);
+  const tabs = $$("[role=tab]", sw);
+  const panels = tabs.map((t) => document.getElementById(t.getAttribute("aria-controls")));
+  const box = $(".panels", sw);
+  const ind = $(".tab-ind", sw);
+  let cur = 0, seq = 0;
+
+  const prime = (scope) => $$(".clip:not([hidden]) img", scope).forEach((img) => { img.loading = "eager"; });
+  const ready = (scope) => Promise.all($$(".clip:not([hidden]) img", scope).map((img) => img.decode().catch(() => {})));
+
+  /* animate a container's height across a DOM change, then fade the new content in */
+  function morph(container, change, incoming) {
+    if (!on) { change(); return; }
+    const h0 = container.offsetHeight;
+    change();
+    const h1 = container.offsetHeight;
+    container.style.overflow = "clip";
+    M.animate(container, { height: [`${h0}px`, `${h1}px`] }, { duration: 0.6, ease: EXPO })
+      .finished.then(() => { container.style.height = ""; container.style.overflow = ""; });
+    M.animate(incoming, { opacity: [0, 1], y: [14, 0], scale: [0.985, 1], filter: ["blur(8px)", "blur(0px)"] }, { duration: 0.7, ease: EXPO })
+      .finished.then(() => unblur([incoming]));
+  }
+
+  function placeInd(animate) {
+    const t = tabs[cur];
+    const to = { x: t.offsetLeft, y: t.offsetTop, width: t.offsetWidth, height: t.offsetHeight };
+    if (on) M.animate(ind, { x: to.x, y: to.y, width: `${to.width}px`, height: `${to.height}px` }, animate ? { type: "spring", stiffness: 420, damping: 38 } : { duration: 0 });
+    else { ind.style.transform = `translate(${to.x}px, ${to.y}px)`; ind.style.width = `${to.width}px`; ind.style.height = `${to.height}px`; }
+    if (tablist.scrollWidth > tablist.clientWidth) tablist.scrollTo({ left: t.offsetLeft - 8, behavior: on ? "smooth" : "auto" });
+  }
+
+  async function select(i, focus) {
+    if (i === cur) return;
+    const token = ++seq;
+    const prev = panels[cur], next = panels[i];
+    cur = i;
+    tabs.forEach((t, k) => { t.setAttribute("aria-selected", String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    if (focus) tabs[i].focus();
+    placeInd(true);
+    prime(next);
+    if (on) {
+      box.style.height = `${box.offsetHeight}px`;
+      await Promise.all([
+        prev.hidden ? null : M.animate(prev, { opacity: 0, y: -8, filter: "blur(6px)" }, { duration: 0.16, ease: "easeIn" }).finished,
+        Promise.race([ready(next), wait(450)]),
+      ]);
+      if (token !== seq) return;
+      box.style.height = "";
+    }
+    morph(box, () => panels.forEach((p) => { p.hidden = p !== next; }), next);
+  }
+
+  panels.forEach((p, k) => {
+    p.setAttribute("role", "tabpanel");
+    p.setAttribute("aria-labelledby", tabs[k].id);
+    p.tabIndex = 0;
+    p.hidden = k !== 0;
+  });
+  tabs.forEach((t, k) => {
+    t.addEventListener("click", () => select(k, false));
+    t.addEventListener("pointerenter", () => prime(panels[k]));
+  });
+  tablist.addEventListener("keydown", (e) => {
+    const n = tabs.length;
+    const map = { ArrowDown: cur + 1, ArrowRight: cur + 1, ArrowUp: cur - 1, ArrowLeft: cur - 1, Home: 0, End: n - 1 };
+    if (!(e.key in map)) return;
+    e.preventDefault();
+    select((map[e.key] + n) % n, true);
+  });
+  placeInd(false);
+  addEventListener("resize", () => placeInd(false));
+  if (document.fonts) document.fonts.ready.then(() => placeInd(false));
+
+  /* clips inside one stage */
+  $$(".panel .stage").forEach((stage) => {
+    const figs = $$(".clip", stage);
+    if (figs.length < 2) return;
+    const row = document.createElement("div");
+    row.className = "clips";
+    row.setAttribute("role", "group");
+    row.setAttribute("aria-label", "Clips");
+    let at = 0;
+    const btns = figs.map((f, i) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "clip-btn"; b.textContent = f.dataset.label;
+      b.setAttribute("aria-pressed", String(i === 0));
+      b.addEventListener("pointerenter", () => $$("img", f).forEach((img) => { img.loading = "eager"; }));
+      b.addEventListener("click", async () => {
+        if (i === at) return;
+        at = i;
+        btns.forEach((x, k) => x.setAttribute("aria-pressed", String(k === i)));
+        $$("img", f).forEach((img) => { img.loading = "eager"; });
+        if (on) await Promise.race([Promise.all($$("img", f).map((img) => img.decode().catch(() => {}))), wait(450)]);
+        if (at !== i) return;
+        morph(stage, () => figs.forEach((g) => { g.hidden = g !== f; }), f);
+      });
+      if (i) f.hidden = true;
+      row.append(b);
+      return b;
+    });
+    $(".stage__bar", stage).after(row);
+  });
+
+  /* ---------- how it works: scroll-linked stepper ---------- */
+  if (on) {
+    const how = $("#how"), steps = $$(".step", how), fill = $(".rail i", how), duo = $(".duo", how);
+    let act = -1;
+    how.classList.add("stepper-on");
+    M.scroll((p, _info) => {
+      fill.style.transform = `scaleY(${p.toFixed(4)})`;
+      const line = innerHeight * 0.55;
+      let a = 0;
+      steps.forEach((s, k) => { if (s.getBoundingClientRect().top < line) a = k; });
+      if (a === act) return;
+      act = a;
+      steps.forEach((s, k) => s.classList.toggle("is-active", k === a));
+      duo.dataset.step = String(a + 1);
+    }, { target: $(".steps", how), offset: ["start 55%", "end 55%"] });
+  }
+
+  /* ---------- sticky nav after the hero ---------- */
+  const nav = $("#nav");
+  new IntersectionObserver(([e]) => nav.classList.toggle("is-on", !e.isIntersecting), { rootMargin: "-80px 0px 0px 0px" }).observe($(".hero"));
+
+  /* ---------- copy buttons ---------- */
+  const live = $("#live");
+  $$("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const text = document.getElementById(btn.dataset.copy).textContent.replace(/[ \t]+#.*$/gm, "").trim();
+      let msg = "Copied";
+      try { await navigator.clipboard.writeText(text); } catch { msg = "Select and copy"; }
+      btn.textContent = msg; live.textContent = msg === "Copied" ? "Commands copied to the clipboard" : "Copy failed, select the text instead";
+      setTimeout(() => { btn.textContent = "Copy"; }, 1600);
+    });
+  });
+
+  window.__psReady = true; /* reached the end: the head-script fallback can stand down */
 </script>
 </body>
 </html>
