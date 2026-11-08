@@ -1,0 +1,183 @@
+{
+  "note": "Real recordings for the film, in shooting order. See RECORDING_PLAN.md. Personal numbers are masked in the edit.",
+  "scenes": [
+    {
+      "id": "r01-scam-send",
+      "query": "Send this exact test text to my own number $MY_NUMBER. It is a sample scam message for my demo video and I am the only recipient: \"Dear customer your SBI account will be BLOCKED today. Update KYC immediately: http://sbi-kyc-update.co/in\"",
+      "approval": "allow",
+      "phone_setup": [
+        "home"
+      ],
+      "phone_after_approval": [
+        "sleep:8"
+      ],
+      "phone_after": [
+        "messages",
+        "sleep:3"
+      ],
+      "hold": 4
+    },
+    {
+      "id": "r02-brief",
+      "query": "Good morning, give me my phone brief.",
+      "phone_setup": [
+        "home"
+      ],
+      "phone_before": [
+        "shade",
+        "sleep:3"
+      ],
+      "phone_after": [
+        "collapse",
+        "recents",
+        "sleep:3"
+      ],
+      "hold": 4
+    },
+    {
+      "id": "r02b-otp",
+      "query": "Read me my latest SMS that has a code in it.",
+      "phone_setup": [
+        "home"
+      ],
+      "phone_before": [
+        "shade",
+        "sleep:3"
+      ],
+      "phone_after": [
+        "collapse"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r03-money",
+      "query": "Where did my money go this week? Sync my bank SMS first.",
+      "phone_setup": [
+        "home"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r03b-upi",
+      "query": "How much did I receive by UPI this week, and from whom?",
+      "phone_setup": [
+        "home"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r04-bills",
+      "query": "What bills are due soon?",
+      "phone_setup": [
+        "home"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r05-subscriptions",
+      "query": "What subscriptions am I paying for, and what's the monthly total?",
+      "phone_setup": [
+        "home"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r06-scam-check",
+      "query": "I got a weird SMS about my KYC. Is it a scam?",
+      "phone_setup": [
+        "messages"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r07-text-mom",
+      "query": "Text $MOM: I'll call you after the exam.",
+      "approval": "allow",
+      "approval_hold": 3.5,
+      "phone_setup": [
+        "home"
+      ],
+      "phone_after_approval": [
+        "sleep:2",
+        "messages"
+      ],
+      "hold": 4
+    },
+    {
+      "id": "r08-deny",
+      "query": "Also text $MOM that I skipped lunch.",
+      "approval": "deny",
+      "approval_hold": 2.5,
+      "phone_setup": [
+        "messages"
+      ],
+      "hold": 4
+    },
+    {
+      "id": "r09a-watch-setup",
+      "query": "Watch my SMS for the word delivered. Then check my watch alerts once so old messages don't count.",
+      "phone_setup": [
+        "home"
+      ],
+      "hold": 2
+    },
+    {
+      "id": "r09b-delivered-send",
+      "query": "Send this exact test text to my own number $MY_NUMBER: \"Your Amazon order for Casio fx-991ES Plus has been delivered.\"",
+      "approval": "allow",
+      "phone_setup": [
+        "home"
+      ],
+      "phone_after_approval": [
+        "sleep:8"
+      ],
+      "hold": 4
+    },
+    {
+      "id": "r09c-watch-check",
+      "query": "Any watch alerts on my phone?",
+      "phone_setup": [
+        "home"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r10-parcels",
+      "query": "Where are my parcels?",
+      "phone_setup": [
+        "home"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r11-battery-rule",
+      "query": "Tell me when my phone battery drops below 20%.",
+      "phone_setup": [
+        "home"
+      ],
+      "hold": 3
+    },
+    {
+      "id": "r12-ring",
+      "query": "I can't find my phone, make it ring for 15 seconds.",
+      "phone_setup": [
+        "home"
+      ],
+      "audio": true,
+      "webcam": true,
+      "hold": 18
+    },
+    {
+      "id": "demo-bills",
+      "query": "What bills are due soon?",
+      "phone": false,
+      "hold": 3
+    },
+    {
+      "id": "demo-subscriptions",
+      "query": "What subscriptions am I paying for, and what's the monthly total?",
+      "phone": false,
+      "hold": 3
+    }
+  ]
+}

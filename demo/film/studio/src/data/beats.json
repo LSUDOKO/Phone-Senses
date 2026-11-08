@@ -1,0 +1,671 @@
+{
+  "fps": 30,
+  "beats": [
+    {
+      "id": "b01-brief",
+      "scene": "r02-brief",
+      "tag": "REAL PHONE · SCAM TEXT RE-CREATED",
+      "start": 70.0,
+      "duration": 9.266666666666667,
+      "phone": true,
+      "webcam": false,
+      "blur": [
+        [
+          0,
+          400,
+          720,
+          1160,
+          6.9
+        ]
+      ],
+      "pieces": [
+        {
+          "a": 4.0,
+          "b": 7.9,
+          "out": 2.438,
+          "t0": 0.0
+        },
+        {
+          "a": 7.9,
+          "b": 38.2,
+          "out": 1.0,
+          "t0": 2.438,
+          "label": "18 s later"
+        },
+        {
+          "a": 38.2,
+          "b": 41.2,
+          "out": 3.0,
+          "t0": 3.438
+        },
+        {
+          "a": 41.2,
+          "b": null,
+          "out": 2.829,
+          "t0": 6.438,
+          "mark": "hold"
+        }
+      ],
+      "labels": [
+        {
+          "text": "18 s later",
+          "from": 2.438,
+          "to": 3.438
+        }
+      ],
+      "zoom": {
+        "row": 23,
+        "rows": 6,
+        "scale": 1.55,
+        "from": 6.438,
+        "to": 9.267,
+        "anchor": "center"
+      },
+      "callout": {
+        "text": "Scam text, flagged first",
+        "at": 6.688
+      }
+    },
+    {
+      "id": "b02-otp",
+      "scene": "r02b-otp",
+      "tag": "REAL PHONE · CODE BLURRED",
+      "start": 79.251,
+      "duration": 8.8,
+      "phone": true,
+      "webcam": false,
+      "blur": [
+        [
+          120,
+          480,
+          580,
+          180
+        ],
+        [
+          0,
+          670,
+          720,
+          890
+        ]
+      ],
+      "pieces": [
+        {
+          "a": 4.0,
+          "b": 8.4,
+          "out": 2.0,
+          "t0": 0.0
+        },
+        {
+          "a": 8.4,
+          "b": 48.6,
+          "out": 0.7,
+          "t0": 2.0
+        },
+        {
+          "a": 48.6,
+          "b": 50.6,
+          "out": 2.0,
+          "t0": 2.7,
+          "mark": "panel"
+        },
+        {
+          "a": 50.6,
+          "b": 349.2,
+          "out": 0.7,
+          "t0": 4.7,
+          "label": "5 minutes, no answer"
+        },
+        {
+          "a": 349.2,
+          "b": 349.6,
+          "out": 0.4,
+          "t0": 5.4
+        },
+        {
+          "a": 349.6,
+          "b": 361.5,
+          "out": 0.3,
+          "t0": 5.8
+        },
+        {
+          "a": 361.5,
+          "b": 362.6,
+          "out": 1.1,
+          "t0": 6.1
+        },
+        {
+          "a": 362.6,
+          "b": null,
+          "out": 1.6,
+          "t0": 7.2,
+          "mark": "hold"
+        }
+      ],
+      "labels": [
+        {
+          "text": "5 minutes, no answer",
+          "from": 4.7,
+          "to": 5.4
+        }
+      ],
+      "zoom": {
+        "row": 26,
+        "rows": 4,
+        "scale": 1.6,
+        "from": 7.2,
+        "to": 8.8,
+        "anchor": "center"
+      },
+      "callout": {
+        "text": "The code never reaches the model",
+        "at": 7.45
+      }
+    },
+    {
+      "id": "b03-money",
+      "scene": "r03-money",
+      "tag": "REAL PHONE · AMOUNTS HIDDEN",
+      "start": 88.048,
+      "duration": 4.466666666666667,
+      "phone": true,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 6.3,
+          "out": 1.514,
+          "t0": 0.0
+        },
+        {
+          "a": 6.3,
+          "b": 67.8,
+          "out": 0.5,
+          "t0": 1.514
+        },
+        {
+          "a": 67.8,
+          "b": 69.6,
+          "out": 1.5,
+          "t0": 2.014
+        },
+        {
+          "a": 69.6,
+          "b": null,
+          "out": 0.952,
+          "t0": 3.514,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 24,
+        "rows": 5,
+        "scale": 1.5,
+        "from": 3.514,
+        "to": 4.467,
+        "anchor": "center"
+      }
+    },
+    {
+      "id": "b04-upi",
+      "scene": "r03b-upi",
+      "tag": "REAL PHONE · AMOUNTS HIDDEN",
+      "start": 92.51,
+      "duration": 3.8666666666666667,
+      "phone": true,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 6.0,
+          "out": 1.111,
+          "t0": 0.0
+        },
+        {
+          "a": 6.0,
+          "b": 35.4,
+          "out": 0.4,
+          "t0": 1.111
+        },
+        {
+          "a": 35.4,
+          "b": 36.9,
+          "out": 1.5,
+          "t0": 1.511
+        },
+        {
+          "a": 36.9,
+          "b": null,
+          "out": 0.856,
+          "t0": 3.011,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 30,
+        "rows": 5,
+        "scale": 1.5,
+        "from": 3.011,
+        "to": 3.867,
+        "anchor": "center"
+      }
+    },
+    {
+      "id": "b05a-bills",
+      "scene": "demo-bills",
+      "tag": "DEMO PHONE · SYNTHETIC DATA",
+      "start": 96.384,
+      "duration": 2.7,
+      "phone": false,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 3.5,
+          "out": 0.5,
+          "t0": 0.0
+        },
+        {
+          "a": 3.5,
+          "b": 46.9,
+          "out": 0.3,
+          "t0": 0.5
+        },
+        {
+          "a": 46.9,
+          "b": 48.1,
+          "out": 0.8,
+          "t0": 0.8
+        },
+        {
+          "a": 48.1,
+          "b": null,
+          "out": 1.1,
+          "t0": 1.6,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 20,
+        "rows": 7,
+        "scale": 1.45,
+        "from": 1.6,
+        "to": 2.7,
+        "anchor": "center"
+      }
+    },
+    {
+      "id": "b05b-subscriptions",
+      "scene": "demo-subscriptions",
+      "tag": "DEMO PHONE · SYNTHETIC DATA",
+      "start": 99.084,
+      "duration": 2.7,
+      "phone": false,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 7.1,
+          "out": 0.61,
+          "t0": 0.0
+        },
+        {
+          "a": 7.1,
+          "b": 29.8,
+          "out": 0.2,
+          "t0": 0.61
+        },
+        {
+          "a": 29.8,
+          "b": 32.7,
+          "out": 1.3,
+          "t0": 0.81
+        },
+        {
+          "a": 32.7,
+          "b": null,
+          "out": 0.59,
+          "t0": 2.11,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 30,
+        "rows": 5,
+        "scale": 1.5,
+        "from": 2.11,
+        "to": 2.7,
+        "anchor": "bottom"
+      }
+    },
+    {
+      "id": "b06-scam",
+      "scene": "r06-scam-check",
+      "tag": "RE-CREATED · SENT TO MY OWN NUMBER",
+      "start": 101.771,
+      "duration": 5.7,
+      "phone": true,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 5.4,
+          "out": 1.467,
+          "t0": 0.0
+        },
+        {
+          "a": 5.4,
+          "b": 43.4,
+          "out": 0.5,
+          "t0": 1.467
+        },
+        {
+          "a": 43.4,
+          "b": 45.9,
+          "out": 2.5,
+          "t0": 1.967
+        },
+        {
+          "a": 45.9,
+          "b": null,
+          "out": 1.233,
+          "t0": 4.467,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 24,
+        "rows": 5,
+        "scale": 1.45,
+        "from": 4.467,
+        "to": 5.7,
+        "anchor": "center"
+      },
+      "callout": {
+        "text": "Look-alike link, fake deadline",
+        "at": 4.717
+      }
+    },
+    {
+      "id": "b07-text-mom",
+      "scene": "r07-text-mom",
+      "tag": "REAL PHONE · REAL SMS",
+      "start": 107.458,
+      "duration": 11.0,
+      "phone": false,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 5.3,
+          "out": 2.15,
+          "t0": 0.0
+        },
+        {
+          "a": 5.3,
+          "b": 32.5,
+          "out": 0.5,
+          "t0": 2.15
+        },
+        {
+          "a": 32.5,
+          "b": 36.3,
+          "out": 4.471,
+          "t0": 2.65,
+          "mark": "panel"
+        },
+        {
+          "a": 36.3,
+          "b": 38.7,
+          "out": 1.6,
+          "t0": 7.121,
+          "mark": "allowed"
+        },
+        {
+          "a": 38.7,
+          "b": 42.1,
+          "out": 0.3,
+          "t0": 8.721
+        },
+        {
+          "a": 42.1,
+          "b": 43.0,
+          "out": 0.9,
+          "t0": 9.021
+        },
+        {
+          "a": 43.0,
+          "b": null,
+          "out": 1.079,
+          "t0": 9.921,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 20,
+        "rows": 12,
+        "scale": 1.5,
+        "from": 2.65,
+        "to": 8.721,
+        "anchor": "center"
+      },
+      "callout": {
+        "text": "Exact number and words",
+        "at": 2.9
+      }
+    },
+    {
+      "id": "b08-deny",
+      "scene": "r08-deny",
+      "tag": "REAL PHONE · NOTHING SENT",
+      "start": 118.471,
+      "duration": 7.6,
+      "phone": false,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 4.9,
+          "out": 1.114,
+          "t0": 0.0
+        },
+        {
+          "a": 4.9,
+          "b": 29.6,
+          "out": 0.4,
+          "t0": 1.114
+        },
+        {
+          "a": 29.6,
+          "b": 31.3,
+          "out": 1.7,
+          "t0": 1.514,
+          "mark": "panel"
+        },
+        {
+          "a": 31.3,
+          "b": 81.0,
+          "out": 0.35,
+          "t0": 3.214
+        },
+        {
+          "a": 81.0,
+          "b": 81.6,
+          "out": 0.6,
+          "t0": 3.564
+        },
+        {
+          "a": 81.6,
+          "b": null,
+          "out": 3.436,
+          "t0": 4.164,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 22,
+        "rows": 12,
+        "scale": 1.5,
+        "from": 1.514,
+        "to": 3.214,
+        "anchor": "center"
+      },
+      "callout": {
+        "text": "Denied: nothing sent",
+        "at": 4.414
+      }
+    },
+    {
+      "id": "b09-watch",
+      "scene": "r09c-watch-check",
+      "tag": "RE-CREATED · SENT TO MY OWN NUMBER",
+      "start": 126.086,
+      "duration": 4.0,
+      "phone": true,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 4.1,
+          "out": 1.033,
+          "t0": 0.0
+        },
+        {
+          "a": 4.1,
+          "b": 24.7,
+          "out": 0.4,
+          "t0": 1.033
+        },
+        {
+          "a": 24.7,
+          "b": 26.2,
+          "out": 1.5,
+          "t0": 1.433
+        },
+        {
+          "a": 26.2,
+          "b": null,
+          "out": 1.067,
+          "t0": 2.933,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 25,
+        "rows": 4,
+        "scale": 1.5,
+        "from": 2.933,
+        "to": 4.0,
+        "anchor": "center"
+      }
+    },
+    {
+      "id": "b10-battery",
+      "scene": "r11-battery-rule",
+      "tag": "REAL PHONE · MOTO G34",
+      "start": 130.092,
+      "duration": 4.033333333333333,
+      "phone": true,
+      "webcam": false,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 5.4,
+          "out": 1.467,
+          "t0": 0.0
+        },
+        {
+          "a": 5.4,
+          "b": 163.8,
+          "out": 0.5,
+          "t0": 1.467
+        },
+        {
+          "a": 163.8,
+          "b": 165.0,
+          "out": 1.2,
+          "t0": 1.967
+        },
+        {
+          "a": 165.0,
+          "b": null,
+          "out": 0.867,
+          "t0": 3.167,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 28,
+        "rows": 4,
+        "scale": 1.5,
+        "from": 3.167,
+        "to": 4.033,
+        "anchor": "center"
+      }
+    },
+    {
+      "id": "b11-ring",
+      "scene": "r12-ring",
+      "tag": "REAL PHONE · UNDER THE BED",
+      "start": 134.113,
+      "duration": 11.9,
+      "phone": true,
+      "webcam": true,
+      "blur": [],
+      "pieces": [
+        {
+          "a": 1.0,
+          "b": 5.8,
+          "out": 2.4,
+          "t0": 0.0
+        },
+        {
+          "a": 5.8,
+          "b": 20.5,
+          "out": 0.5,
+          "t0": 2.4
+        },
+        {
+          "a": 20.5,
+          "b": 28.0,
+          "out": 7.5,
+          "t0": 2.9,
+          "mark": "ring"
+        },
+        {
+          "a": 28.0,
+          "b": null,
+          "out": 1.5,
+          "t0": 10.4,
+          "mark": "hold"
+        }
+      ],
+      "labels": [],
+      "zoom": {
+        "row": 14,
+        "rows": 6,
+        "scale": 1.45,
+        "from": 2.9,
+        "to": 11.9,
+        "anchor": "center"
+      }
+    }
+  ]
+}

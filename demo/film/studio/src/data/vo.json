@@ -1,0 +1,364 @@
+{
+  "voice": "af_heart",
+  "sections": [
+    {
+      "id": "cold",
+      "title": "Cold open",
+      "start": 0.0,
+      "end": 10.0,
+      "lines": [
+        {
+          "id": "c1",
+          "text": "Hundreds of notifications a day.",
+          "start": 0.0,
+          "end": 1.804
+        },
+        {
+          "id": "c2",
+          "text": "A text that says his bank account is blocked.",
+          "start": 2.831,
+          "end": 5.071
+        },
+        {
+          "id": "c3",
+          "text": "And it's exam week.",
+          "start": 6.097,
+          "end": 7.126
+        }
+      ]
+    },
+    {
+      "id": "title",
+      "title": "Title",
+      "start": 10.0,
+      "end": 18.0,
+      "lines": [
+        {
+          "id": "t1",
+          "text": "His phone knew all of it.",
+          "start": 10.0,
+          "end": 11.146
+        },
+        {
+          "id": "t2",
+          "text": "His AI agent knew none of it.",
+          "start": 11.587,
+          "end": 13.133
+        },
+        {
+          "id": "t3",
+          "text": "Until now.",
+          "start": 14.235,
+          "end": 14.916
+        }
+      ]
+    },
+    {
+      "id": "problem",
+      "title": "The problem",
+      "start": 18.0,
+      "end": 50.0,
+      "lines": [
+        {
+          "id": "p1",
+          "text": "Meet Arpit. A final-year student in Hamirpur, Himachal Pradesh.",
+          "start": 18.0,
+          "end": 21.981
+        },
+        {
+          "id": "p2",
+          "text": "Everything in his life lands on his phone first.",
+          "start": 22.609,
+          "end": 25.16
+        },
+        {
+          "id": "p3",
+          "text": "In October, India made over twenty-five billion UPI payments.",
+          "start": 25.997,
+          "end": 29.985
+        },
+        {
+          "id": "p4",
+          "text": "His bank texts him for every one.",
+          "start": 30.403,
+          "end": 32.024
+        },
+        {
+          "id": "p5",
+          "text": "The average Indian sees thirteen scam messages a day.",
+          "start": 32.861,
+          "end": 36.067
+        },
+        {
+          "id": "p6",
+          "text": "And since twenty twenty-one, Indians have reported over fifty-five thousand crore rupees in cyber fraud.",
+          "start": 36.904,
+          "end": 42.965
+        },
+        {
+          "id": "p7",
+          "text": "His agent lives on his laptop, a foot away.",
+          "start": 44.011,
+          "end": 46.542
+        },
+        {
+          "id": "p8",
+          "text": "And it can't see any of it.",
+          "start": 46.961,
+          "end": 48.117
+        }
+      ]
+    },
+    {
+      "id": "turn",
+      "title": "The painkiller",
+      "start": 50.0,
+      "end": 70.0,
+      "lines": [
+        {
+          "id": "k1",
+          "text": "So Arpit built the fix. Phone Senses.",
+          "start": 50.0,
+          "end": 52.403
+        },
+        {
+          "id": "k2",
+          "text": "A Hermes plugin that gives his agent the senses of his own phone.",
+          "start": 53.443,
+          "end": 57.002
+        },
+        {
+          "id": "k3",
+          "text": "No screen tapping. It talks to Android directly, through Termux.",
+          "start": 57.782,
+          "end": 61.62
+        },
+        {
+          "id": "k4",
+          "text": "And it always asks before it touches anything.",
+          "start": 62.4,
+          "end": 64.702
+        },
+        {
+          "id": "k5",
+          "text": "Here's his real day, on his real phone.",
+          "start": 65.742,
+          "end": 67.92
+        }
+      ]
+    },
+    {
+      "id": "walk",
+      "title": "Walkthrough",
+      "start": 70.0,
+      "end": 146.0,
+      "lines": [
+        {
+          "id": "w1",
+          "text": "Morning. One question: give me my phone brief.",
+          "start": 70.0,
+          "end": 72.777
+        },
+        {
+          "id": "w2",
+          "text": "Hermes reads what his phone sees, and puts the scam text right at the top.",
+          "start": 73.583,
+          "end": 77.639
+        },
+        {
+          "id": "w3",
+          "text": "One-time codes stay hidden. When Hermes tried to reveal one, it had to ask. Nobody said yes, so it stayed hidden.",
+          "start": 79.251,
+          "end": 86.032
+        },
+        {
+          "id": "w4",
+          "text": "Where did his money go? Every bank SMS, sorted by category.",
+          "start": 88.048,
+          "end": 91.703
+        },
+        {
+          "id": "w5",
+          "text": "And every rupee that came in by UPI.",
+          "start": 92.51,
+          "end": 94.772
+        },
+        {
+          "id": "w6",
+          "text": "Bills before they're late, and subscriptions, added up for the month.",
+          "start": 96.384,
+          "end": 99.756
+        },
+        {
+          "id": "w7",
+          "text": "Then the text that almost got him. Hermes flags it, and shows why.",
+          "start": 101.771,
+          "end": 105.443
+        },
+        {
+          "id": "w8",
+          "text": "Text Mom: I'll call you after the exam.",
+          "start": 107.458,
+          "end": 109.711
+        },
+        {
+          "id": "w9",
+          "text": "Hermes stops, and shows the exact words.",
+          "start": 110.92,
+          "end": 113.254
+        },
+        {
+          "id": "w10",
+          "text": "Allow once. It goes from his own SIM.",
+          "start": 114.463,
+          "end": 116.456
+        },
+        {
+          "id": "w11",
+          "text": "One more text? He changes his mind. Deny. Nothing is sent, and Hermes doesn't try again.",
+          "start": 118.471,
+          "end": 124.071
+        },
+        {
+          "id": "w12",
+          "text": "A watch rule catches the delivery text, just once.",
+          "start": 126.086,
+          "end": 128.883
+        },
+        {
+          "id": "w13",
+          "text": "Battery under twenty? He'll get a heads-up.",
+          "start": 130.092,
+          "end": 132.097
+        },
+        {
+          "id": "w14",
+          "text": "That night, the phone is gone. Under the bed.",
+          "start": 134.113,
+          "end": 136.207
+        },
+        {
+          "id": "w15",
+          "text": "One line to Hermes. It rings, speaks, vibrates and flashes.",
+          "start": 137.416,
+          "end": 141.164
+        }
+      ]
+    },
+    {
+      "id": "hood",
+      "title": "Under the hood",
+      "start": 146.0,
+      "end": 166.0,
+      "lines": [
+        {
+          "id": "h1",
+          "text": "Follow one real request: what's my battery?",
+          "start": 146.0,
+          "end": 148.475
+        },
+        {
+          "id": "h2",
+          "text": "The approval hook checks it first. A read passes.",
+          "start": 148.942,
+          "end": 151.793
+        },
+        {
+          "id": "h3",
+          "text": "The request is signed with a secret that's never sent.",
+          "start": 152.26,
+          "end": 155.167
+        },
+        {
+          "id": "h4",
+          "text": "A one-time nonce stops anyone replaying it.",
+          "start": 155.478,
+          "end": 158.195
+        },
+        {
+          "id": "h5",
+          "text": "In Termux, a tiny helper asks Android directly.",
+          "start": 158.662,
+          "end": 161.81
+        },
+        {
+          "id": "h6",
+          "text": "And the answer is back in about a second and a half.",
+          "start": 162.121,
+          "end": 164.755
+        }
+      ]
+    },
+    {
+      "id": "impact",
+      "title": "Impact",
+      "start": 166.0,
+      "end": 186.0,
+      "lines": [
+        {
+          "id": "i1",
+          "text": "Before: hundreds of notifications, and an agent that couldn't see them.",
+          "start": 166.0,
+          "end": 169.829
+        },
+        {
+          "id": "i2",
+          "text": "Now: one question, and Hermes knows his whole day.",
+          "start": 170.393,
+          "end": 173.316
+        },
+        {
+          "id": "i3",
+          "text": "It reads the phone itself, not pictures of the screen.",
+          "start": 174.067,
+          "end": 176.887
+        },
+        {
+          "id": "i4",
+          "text": "Texts, calls, photos and codes: all four ask him first.",
+          "start": 177.45,
+          "end": 180.927
+        },
+        {
+          "id": "i5",
+          "text": "Codes stay hidden. The plugin talks only to his phone.",
+          "start": 181.49,
+          "end": 184.498
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "title": "Outro",
+      "start": 186.0,
+      "end": 201.0,
+      "lines": [
+        {
+          "id": "o1",
+          "text": "Phone Senses. Your phone's senses, for Hermes.",
+          "start": 186.0,
+          "end": 188.63
+        },
+        {
+          "id": "o2",
+          "text": "And it still asks before it touches anything.",
+          "start": 189.282,
+          "end": 191.373
+        },
+        {
+          "id": "o3",
+          "text": "Built by Arpit Singh, in Hamirpur. Open source, for Hermes Agent.",
+          "start": 192.189,
+          "end": 196.344
+        },
+        {
+          "id": "o4",
+          "text": "Try it tonight. Link below.",
+          "start": 196.996,
+          "end": 198.554
+        }
+      ]
+    }
+  ],
+  "duration": 201.0
+}

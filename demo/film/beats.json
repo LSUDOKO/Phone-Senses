@@ -1,0 +1,631 @@
+{
+ "note": "Walkthrough edit decision list. Times are seconds in each prepared clip (studio/public/footage/<scene>/clip.json). Segment kinds: speed (src a→b at rate), squeeze (src a→b into `out` seconds), hold (freeze at src t; takes the remaining time). Beat lengths come from vo.json (each beat runs from its first line to the next beat's first line).",
+ "beats": [
+  {
+   "id": "b01-brief",
+   "lines": [
+    "w1",
+    "w2"
+   ],
+   "scene": "r02-brief",
+   "tag": "REAL PHONE · SCAM TEXT RE-CREATED",
+   "segments": [
+    {
+     "speed": [
+      4.0,
+      7.9
+     ],
+     "rate": 1.6
+    },
+    {
+     "squeeze": [
+      7.9,
+      38.2
+     ],
+     "out": 1.0,
+     "label": "18 s later"
+    },
+    {
+     "speed": [
+      38.2,
+      41.2
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 41.2
+    }
+   ],
+   "zoom": {
+    "at": 41.2,
+    "find": "SCAM ALERT",
+    "rows": 6,
+    "scale": 1.55,
+    "from": "hold"
+   },
+   "callout": {
+    "text": "Scam text, flagged first",
+    "at": "hold"
+   },
+   "phone_scene": "r01-scam-send",
+   "phone_hold": 80.5,
+   "phone_play": 8.0,
+   "phone_blur": [
+    [
+     0,
+     400,
+     720,
+     1160,
+     6.9
+    ]
+   ]
+  },
+  {
+   "id": "b02-otp",
+   "lines": [
+    "w3"
+   ],
+   "scene": "r02b-otp",
+   "tag": "REAL PHONE · CODE BLURRED",
+   "segments": [
+    {
+     "speed": [
+      4.0,
+      8.4
+     ],
+     "rate": 2.2
+    },
+    {
+     "squeeze": [
+      8.4,
+      48.6
+     ],
+     "out": 0.7
+    },
+    {
+     "speed": [
+      48.6,
+      50.6
+     ],
+     "rate": 1.0,
+     "mark": "panel"
+    },
+    {
+     "squeeze": [
+      50.6,
+      349.2
+     ],
+     "out": 0.7,
+     "label": "5 minutes, no answer"
+    },
+    {
+     "speed": [
+      349.2,
+      349.6
+     ],
+     "rate": 1.0
+    },
+    {
+     "squeeze": [
+      349.6,
+      361.5
+     ],
+     "out": 0.3
+    },
+    {
+     "speed": [
+      361.5,
+      362.6
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 362.6
+    }
+   ],
+   "zoom": {
+    "at": 362.6,
+    "find": "OTP hidden",
+    "rows": 4,
+    "scale": 1.6,
+    "from": "hold"
+   },
+   "callout": {
+    "text": "The code never reaches the model",
+    "at": "hold"
+   },
+   "phone_scene": "r01-scam-send",
+   "phone_hold": 82.0,
+   "phone_play": 1.0,
+   "phone_blur": [
+    [
+     120,
+     480,
+     580,
+     180
+    ],
+    [
+     0,
+     670,
+     720,
+     890
+    ]
+   ]
+  },
+  {
+   "id": "b03-money",
+   "lines": [
+    "w4"
+   ],
+   "scene": "r03-money",
+   "tag": "REAL PHONE · AMOUNTS HIDDEN",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      6.3
+     ],
+     "rate": 3.5
+    },
+    {
+     "squeeze": [
+      6.3,
+      67.8
+     ],
+     "out": 0.5
+    },
+    {
+     "speed": [
+      67.8,
+      69.6
+     ],
+     "rate": 1.2
+    },
+    {
+     "hold": 69.6
+    }
+   ],
+   "zoom": {
+    "at": 69.6,
+    "find": "By category",
+    "rows": 5,
+    "scale": 1.5,
+    "from": "hold"
+   }
+  },
+  {
+   "id": "b04-upi",
+   "lines": [
+    "w5"
+   ],
+   "scene": "r03b-upi",
+   "tag": "REAL PHONE · AMOUNTS HIDDEN",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      6.0
+     ],
+     "rate": 4.5
+    },
+    {
+     "squeeze": [
+      6.0,
+      35.4
+     ],
+     "out": 0.4
+    },
+    {
+     "speed": [
+      35.4,
+      36.9
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 36.9
+    }
+   ],
+   "zoom": {
+    "at": 36.9,
+    "find": "Received",
+    "rows": 5,
+    "scale": 1.5,
+    "from": "hold"
+   },
+   "phone_scene": "r03-money",
+   "phone_hold": 60.0
+  },
+  {
+   "id": "b05a-bills",
+   "lines": [
+    "w6"
+   ],
+   "split": 0.5,
+   "scene": "demo-bills",
+   "tag": "DEMO PHONE · SYNTHETIC DATA",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      3.5
+     ],
+     "rate": 5.0
+    },
+    {
+     "squeeze": [
+      3.5,
+      46.9
+     ],
+     "out": 0.3
+    },
+    {
+     "speed": [
+      46.9,
+      48.1
+     ],
+     "rate": 1.5
+    },
+    {
+     "hold": 48.1
+    }
+   ],
+   "zoom": {
+    "at": 48.7,
+    "find": "bills are due",
+    "rows": 7,
+    "scale": 1.45,
+    "from": "hold"
+   }
+  },
+  {
+   "id": "b05b-subscriptions",
+   "lines": [],
+   "scene": "demo-subscriptions",
+   "tag": "DEMO PHONE · SYNTHETIC DATA",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      7.1
+     ],
+     "rate": 10.0
+    },
+    {
+     "squeeze": [
+      7.1,
+      29.8
+     ],
+     "out": 0.2
+    },
+    {
+     "speed": [
+      29.8,
+      32.7
+     ],
+     "rate": 2.23
+    },
+    {
+     "hold": 32.7
+    }
+   ],
+   "zoom": {
+    "at": 32.7,
+    "find": "Monthly total",
+    "rows": 5,
+    "scale": 1.5,
+    "from": "hold",
+    "anchor": "bottom"
+   }
+  },
+  {
+   "id": "b06-scam",
+   "lines": [
+    "w7"
+   ],
+   "scene": "r06-scam-check",
+   "tag": "RE-CREATED · SENT TO MY OWN NUMBER",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      5.4
+     ],
+     "rate": 3.0
+    },
+    {
+     "squeeze": [
+      5.4,
+      43.4
+     ],
+     "out": 0.5
+    },
+    {
+     "speed": [
+      43.4,
+      45.9
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 45.9
+    }
+   ],
+   "zoom": {
+    "at": 45.9,
+    "find": "Why it's fake",
+    "rows": 5,
+    "scale": 1.45,
+    "from": "hold"
+   },
+   "callout": {
+    "text": "Look-alike link, fake deadline",
+    "at": "hold"
+   }
+  },
+  {
+   "id": "b07-text-mom",
+   "lines": [
+    "w8",
+    "w9",
+    "w10"
+   ],
+   "scene": "r07-text-mom",
+   "tag": "REAL PHONE · REAL SMS",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      5.3
+     ],
+     "rate": 2.0
+    },
+    {
+     "squeeze": [
+      5.3,
+      32.5
+     ],
+     "out": 0.5
+    },
+    {
+     "speed": [
+      32.5,
+      36.3
+     ],
+     "rate": 0.85,
+     "mark": "panel"
+    },
+    {
+     "speed": [
+      36.3,
+      38.7
+     ],
+     "rate": 1.5,
+     "mark": "allowed"
+    },
+    {
+     "squeeze": [
+      38.7,
+      42.1
+     ],
+     "out": 0.3
+    },
+    {
+     "speed": [
+      42.1,
+      43.0
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 43.0
+    }
+   ],
+   "zoom": {
+    "at": 34.0,
+    "find": "Allow once",
+    "rows": 12,
+    "scale": 1.5,
+    "from": "panel",
+    "to": "allowed_end"
+   },
+   "callout": {
+    "text": "Exact number and words",
+    "at": "panel"
+   },
+   "phone_off": true
+  },
+  {
+   "id": "b08-deny",
+   "lines": [
+    "w11"
+   ],
+   "scene": "r08-deny",
+   "tag": "REAL PHONE · NOTHING SENT",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      4.9
+     ],
+     "rate": 3.5
+    },
+    {
+     "squeeze": [
+      4.9,
+      29.6
+     ],
+     "out": 0.4
+    },
+    {
+     "speed": [
+      29.6,
+      31.3
+     ],
+     "rate": 1.0,
+     "mark": "panel"
+    },
+    {
+     "squeeze": [
+      31.3,
+      81.0
+     ],
+     "out": 0.35
+    },
+    {
+     "speed": [
+      81.0,
+      81.6
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 81.6
+    }
+   ],
+   "zoom": {
+    "at": 29.8,
+    "find": "Deny",
+    "rows": 12,
+    "scale": 1.5,
+    "from": "panel",
+    "to": "panel_end"
+   },
+   "callout": {
+    "text": "Denied: nothing sent",
+    "at": "hold"
+   },
+   "phone_off": true
+  },
+  {
+   "id": "b09-watch",
+   "lines": [
+    "w12"
+   ],
+   "scene": "r09c-watch-check",
+   "tag": "RE-CREATED · SENT TO MY OWN NUMBER",
+   "phone_scene": "r09b-delivered-send",
+   "phone_hold": 45.5,
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      4.1
+     ],
+     "rate": 3.0
+    },
+    {
+     "squeeze": [
+      4.1,
+      24.7
+     ],
+     "out": 0.4
+    },
+    {
+     "speed": [
+      24.7,
+      26.2
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 26.2
+    }
+   ],
+   "zoom": {
+    "at": 26.2,
+    "find": "matches",
+    "rows": 4,
+    "scale": 1.5,
+    "from": "hold"
+   },
+   "phone_play": 2.5
+  },
+  {
+   "id": "b10-battery",
+   "lines": [
+    "w13"
+   ],
+   "scene": "r11-battery-rule",
+   "tag": "REAL PHONE · MOTO G34",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      5.4
+     ],
+     "rate": 3.0
+    },
+    {
+     "squeeze": [
+      5.4,
+      163.8
+     ],
+     "out": 0.5
+    },
+    {
+     "speed": [
+      163.8,
+      165.0
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 165.0
+    }
+   ],
+   "zoom": {
+    "at": 165.0,
+    "find": "battery below",
+    "rows": 4,
+    "scale": 1.5,
+    "from": "hold"
+   }
+  },
+  {
+   "id": "b11-ring",
+   "lines": [
+    "w14",
+    "w15"
+   ],
+   "scene": "r12-ring",
+   "tag": "REAL PHONE · UNDER THE BED",
+   "segments": [
+    {
+     "speed": [
+      1.0,
+      5.8
+     ],
+     "rate": 2.0
+    },
+    {
+     "squeeze": [
+      5.8,
+      20.5
+     ],
+     "out": 0.5
+    },
+    {
+     "speed": [
+      20.5,
+      28.0
+     ],
+     "rate": 1.0,
+     "mark": "ring"
+    },
+    {
+     "hold": 28.0
+    }
+   ],
+   "webcam": true,
+   "webcam_start": 27.2,
+   "zoom": {
+    "at": 28.0,
+    "find": "rang the phone",
+    "rows": 6,
+    "scale": 1.45,
+    "from": "ring"
+   }
+  }
+ ]
+}

@@ -1,0 +1,308 @@
+{
+  "voice": "af_heart",
+  "speed": 1.04,
+  "note": "Approved SCRIPT.md, with walkthrough lines matched to what the real recordings show (2026-11-08). Pause = silence after the line, seconds.",
+  "sections": [
+    {
+      "id": "cold",
+      "title": "Cold open",
+      "lines": [
+        {
+          "id": "c1",
+          "text": "Hundreds of notifications a day.",
+          "pause": 0.25
+        },
+        {
+          "id": "c2",
+          "text": "A text that says his bank account is blocked.",
+          "pause": 0.25
+        },
+        {
+          "id": "c3",
+          "text": "And it's exam week.",
+          "pause": 0.7
+        }
+      ],
+      "min": 10
+    },
+    {
+      "id": "title",
+      "title": "Title",
+      "lines": [
+        {
+          "id": "t1",
+          "text": "His phone knew all of it.",
+          "pause": 0.2
+        },
+        {
+          "id": "t2",
+          "text": "His AI agent knew none of it.",
+          "pause": 0.5
+        },
+        {
+          "id": "t3",
+          "text": "Until now.",
+          "pause": 1.4
+        }
+      ],
+      "min": 8
+    },
+    {
+      "id": "problem",
+      "title": "The problem",
+      "lines": [
+        {
+          "id": "p1",
+          "text": "Meet Arpit. A final-year student in Hamirpur, Himachal Pradesh.",
+          "pause": 0.3
+        },
+        {
+          "id": "p2",
+          "text": "Everything in his life lands on his phone first.",
+          "pause": 0.4
+        },
+        {
+          "id": "p3",
+          "text": "In October, India made over twenty-five billion UPI payments.",
+          "pause": 0.2
+        },
+        {
+          "id": "p4",
+          "text": "His bank texts him for every one.",
+          "pause": 0.4
+        },
+        {
+          "id": "p5",
+          "text": "The average Indian sees thirteen scam messages a day.",
+          "pause": 0.4
+        },
+        {
+          "id": "p6",
+          "text": "And since twenty twenty-one, Indians have reported over fifty-five thousand crore rupees in cyber fraud.",
+          "pause": 0.5
+        },
+        {
+          "id": "p7",
+          "text": "His agent lives on his laptop, a foot away.",
+          "pause": 0.2
+        },
+        {
+          "id": "p8",
+          "text": "And it can't see any of it.",
+          "pause": 0.9
+        }
+      ],
+      "min": 32
+    },
+    {
+      "id": "turn",
+      "title": "The painkiller",
+      "lines": [
+        {
+          "id": "k1",
+          "text": "So Arpit built the fix. Phone Senses.",
+          "pause": 0.4
+        },
+        {
+          "id": "k2",
+          "text": "A Hermes plugin that gives his agent the senses of his own phone.",
+          "pause": 0.3
+        },
+        {
+          "id": "k3",
+          "text": "No screen tapping. It talks to Android directly, through Termux.",
+          "pause": 0.3
+        },
+        {
+          "id": "k4",
+          "text": "And it always asks before it touches anything.",
+          "pause": 0.4
+        },
+        {
+          "id": "k5",
+          "text": "Here's his real day, on his real phone.",
+          "pause": 0.8
+        }
+      ],
+      "min": 20
+    },
+    {
+      "id": "walk",
+      "title": "Walkthrough",
+      "lines": [
+        {
+          "id": "w1",
+          "text": "Morning. One question: give me my phone brief.",
+          "pause": 0.2
+        },
+        {
+          "id": "w2",
+          "text": "Hermes reads what his phone sees, and puts the scam text right at the top.",
+          "pause": 0.4
+        },
+        {
+          "id": "w3",
+          "text": "One-time codes stay hidden. When Hermes tried to reveal one, it had to ask. Nobody said yes, so it stayed hidden.",
+          "pause": 0.5
+        },
+        {
+          "id": "w4",
+          "text": "Where did his money go? Every bank SMS, sorted by category.",
+          "pause": 0.2
+        },
+        {
+          "id": "w5",
+          "text": "And every rupee that came in by UPI.",
+          "pause": 0.4
+        },
+        {
+          "id": "w6",
+          "text": "Bills before they're late, and subscriptions, added up for the month.",
+          "pause": 0.5
+        },
+        {
+          "id": "w7",
+          "text": "Then the text that almost got him. Hermes flags it, and shows why.",
+          "pause": 0.5
+        },
+        {
+          "id": "w8",
+          "text": "Text Mom: I'll call you after the exam.",
+          "pause": 0.3
+        },
+        {
+          "id": "w9",
+          "text": "Hermes stops, and shows the exact words.",
+          "pause": 0.3
+        },
+        {
+          "id": "w10",
+          "text": "Allow once. It goes from his own SIM.",
+          "pause": 0.5
+        },
+        {
+          "id": "w11",
+          "text": "One more text? He changes his mind. Deny. Nothing is sent, and Hermes doesn't try again.",
+          "pause": 0.5
+        },
+        {
+          "id": "w12",
+          "text": "A watch rule catches the delivery text, just once.",
+          "pause": 0.3
+        },
+        {
+          "id": "w13",
+          "text": "Battery under twenty? He'll get a heads-up.",
+          "pause": 0.5
+        },
+        {
+          "id": "w14",
+          "text": "That night, the phone is gone. Under the bed.",
+          "pause": 0.3
+        },
+        {
+          "id": "w15",
+          "text": "One line to Hermes. It rings, speaks, vibrates and flashes.",
+          "pause": 1.2
+        }
+      ],
+      "min": 76
+    },
+    {
+      "id": "hood",
+      "title": "Under the hood",
+      "lines": [
+        {
+          "id": "h1",
+          "text": "Follow one real request: what's my battery?",
+          "pause": 0.3
+        },
+        {
+          "id": "h2",
+          "text": "The approval hook checks it first. A read passes.",
+          "pause": 0.3
+        },
+        {
+          "id": "h3",
+          "text": "The request is signed with a secret that's never sent.",
+          "pause": 0.2
+        },
+        {
+          "id": "h4",
+          "text": "A one-time nonce stops anyone replaying it.",
+          "pause": 0.3
+        },
+        {
+          "id": "h5",
+          "text": "In Termux, a tiny helper asks Android directly.",
+          "pause": 0.2
+        },
+        {
+          "id": "h6",
+          "text": "And the answer is back in about a second and a half.",
+          "pause": 0.8
+        }
+      ],
+      "min": 20
+    },
+    {
+      "id": "impact",
+      "title": "Impact",
+      "lines": [
+        {
+          "id": "i1",
+          "text": "Before: hundreds of notifications, and an agent that couldn't see them.",
+          "pause": 0.3
+        },
+        {
+          "id": "i2",
+          "text": "Now: one question, and Hermes knows his whole day.",
+          "pause": 0.4
+        },
+        {
+          "id": "i3",
+          "text": "It reads the phone itself, not pictures of the screen.",
+          "pause": 0.3
+        },
+        {
+          "id": "i4",
+          "text": "Texts, calls, photos and codes: all four ask him first.",
+          "pause": 0.3
+        },
+        {
+          "id": "i5",
+          "text": "Codes stay hidden. The plugin talks only to his phone.",
+          "pause": 0.8
+        }
+      ],
+      "min": 20
+    },
+    {
+      "id": "outro",
+      "title": "Outro",
+      "lines": [
+        {
+          "id": "o1",
+          "text": "Phone Senses. Your phone's senses, for Hermes.",
+          "pause": 0.4
+        },
+        {
+          "id": "o2",
+          "text": "And it still asks before it touches anything.",
+          "pause": 0.5
+        },
+        {
+          "id": "o3",
+          "text": "Built by Arpit Singh, in Hamirpur. Open source, for Hermes Agent.",
+          "pause": 0.4
+        },
+        {
+          "id": "o4",
+          "text": "Try it tonight. Link below.",
+          "pause": 1.5
+        }
+      ],
+      "min": 15
+    }
+  ]
+}

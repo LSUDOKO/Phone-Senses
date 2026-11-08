@@ -9,6 +9,16 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/LSUDOKO/Phone-Senses/actions/workflows/tests.yml"><img alt="tests" src="https://github.com/LSUDOKO/Phone-Senses/actions/workflows/tests.yml/badge.svg"></a>
+  <img alt="186 tests" src="https://img.shields.io/badge/tests-186%20passing-1F2BFF">
+  <img alt="25 tools" src="https://img.shields.io/badge/tools-25-1F2BFF">
+  <img alt="Hermes Agent 0.23+" src="https://img.shields.io/badge/Hermes%20Agent-0.23%2B-050507">
+  <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-050507">
+  <img alt="stdlib only" src="https://img.shields.io/badge/runtime%20deps-none-050507">
+  <a href="LICENSE"><img alt="MIT" src="https://img.shields.io/badge/license-MIT-9AA0B4"></a>
+</p>
+
+<p align="center">
   <a href="https://phone-senses.pages.dev"><b>Website</b></a> ·
   <a href="#setup">Install</a> ·
   <a href="#see-it-work">See it work</a> ·
@@ -80,6 +90,10 @@ Sending an SMS, placing a call, taking a photo and revealing an OTP always open 
 | "Is this SMS a scam?" | A risk level and the reasons: fake KYC, disconnection threats, look-alike links |
 | "Tell me when my order is out for delivery" | A watch rule. Run `phone_watch_check` from a Hermes cron job to get alerts. |
 | "Find my phone" | The phone rings at full volume, speaks, vibrates and flashes. Then the volume is restored. |
+| "What bills are due soon?" | Electricity, broadband, mobile and card bills found in your SMS, overdue ones first |
+| "What subscriptions am I paying for?" | Recurring charges (Spotify, Netflix, …) with cadence, next expected date and the monthly total |
+| "Where are my parcels?" | Latest status per shipment from courier and shop SMS: shipped, out for delivery, delivered |
+| "Tell me when my battery drops below 20%" | A `battery_below` watch rule: one alert, re-armed after the phone charges |
 | "Good morning, brief me" | Battery, missed calls, SMS from people, important notifications, scam alerts and yesterday's spending |
 | "Where is my phone?" / "Read this aloud" / "Copy this link to my phone" | Location with a Maps link / text-to-speech / clipboard |
 
@@ -105,7 +119,10 @@ Slash command: `/phone`, `/phone ring`, `/phone money week`, `/phone received to
 | `phone_money_summary` | Totals by category, counterparty or day; top transactions; budget use | |
 | `phone_budget_set` | Monthly budget per category | |
 | `phone_scam_check` | Scam score for a message or recent SMS | |
-| `phone_watch_add` / `_list` / `_remove` / `_check` | Watch rules for notifications, SMS and big debits | |
+| `phone_watch_add` / `_list` / `_remove` / `_check` | Watch rules for notifications, SMS, big debits and low battery | |
+| `phone_bills` | Bills due soon and overdue, from biller SMS | |
+| `phone_deliveries` | Parcel status per shipment from courier/shop SMS | |
+| `phone_subscriptions` | Recurring charges with cadence, next date and monthly total | |
 | `phone_brief` | Morning brief in one call | |
 
 A bundled skill (`phone-senses:phone-senses`) teaches the agent which tool to use, to summarise instead
@@ -268,7 +285,7 @@ Phone Senses is that API layer for Hermes. It pairs well with screen-driving plu
 
 ## Development
 ```bash
-python -m pytest -q                                  # 129 tests, no phone needed, about 1 second
+python -m pytest -q                                  # 186 tests, no phone needed, about 2 seconds
 hermes plugins validate plugin --install-deps        # catalog checks
 ```
 Repository layout: `plugin/` (the Hermes plugin, catalog `subdir`), `phone_helper/` (runs on the phone),
