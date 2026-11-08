@@ -96,12 +96,13 @@ const PhoneBlur: React.FC<{ boxes: number[][] }> = ({ boxes }) => {
   );
 };
 
-const BeatView: React.FC<{ b: Beat; dur: number }> = ({ b, dur }) => {
+const BeatView: React.FC<{ b: Beat; dur: number; first: boolean; last: boolean }> = ({ b, dur, first, last }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const { s, t, rowY } = useZoom(b);
-  const fadeIn = interpolate(frame, [0, 6], [0, 1], clamp);
-  const fadeOut = interpolate(frame, [dur - 5, dur], [1, 0], clamp);
+  // hard cuts between beats (the window stays put); fades only into and out of the walkthrough
+  const fadeIn = first ? interpolate(frame, [0, 8], [0, 1], clamp) : 1;
+  const fadeOut = last ? interpolate(frame, [dur - 8, dur], [1, 0], clamp) : 1;
   const hasPhone = b.phone;
   const winW = hasPhone ? CONTENT_W : CONTENT_W + 200;
   const winLeft = hasPhone ? 110 : (1920 - winW) / 2;
@@ -176,12 +177,12 @@ export const Walkthrough: React.FC = () => {
       <div style={{ position: "absolute", left: 110, top: 64, ...mono(16) }}>
         <span style={{ color: C.blueText }}>04</span>&nbsp;&nbsp;A REAL DAY · REAL PHONE
       </div>
-      {(beats.beats as Beat[]).map((b) => {
+      {(beats.beats as Beat[]).map((b, i) => {
         const from = Math.round((b.start - WALK_START) * fps);
         const dur = Math.round(b.duration * fps);
         return (
           <Sequence key={b.id} name={b.id} from={from} durationInFrames={dur}>
-            <BeatView b={b} dur={dur} />
+            <BeatView b={b} dur={dur} first={i === 0} last={i === beats.beats.length - 1} />
           </Sequence>
         );
       })}

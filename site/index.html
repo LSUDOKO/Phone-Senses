@@ -141,6 +141,10 @@
 
   .sec-top { display: flex; justify-content: space-between; gap: 24px; padding: 22px 0; margin-bottom: clamp(56px, 8vw, 112px); border-bottom: 1px dashed var(--rule); font: 500 11px/1.35 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
   .sec-top span { display: inline-flex; align-items: center; gap: 10px; }
+  .film { position: relative; margin: 0; border-radius: 22px; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,.14);
+    box-shadow: 0 40px 120px rgba(0,0,0,.6), 0 0 0 1px rgba(31,43,255,.18), 0 0 120px rgba(31,43,255,.22); aspect-ratio: 16 / 9; }
+  .film video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .film-cap { margin-top: 18px; font: 500 11px/1.5 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
   .sec-top span:last-child { text-align: right; }
   .spark { width: 12px; height: 12px; flex: none; color: var(--ultramarine); }
   .band .spark { color: var(--ultra-soft); }
@@ -391,6 +395,7 @@
   <div class="nav__in">
     <a class="nav__brand" href="#top"><svg aria-hidden="true" fill="url(#ch)"><use href="#mark"/></svg><span>Phone Senses</span></a>
     <ul class="nav__links">
+      <li><a href="#film">Film</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#privacy">Privacy</a></li>
@@ -426,6 +431,23 @@
 </header>
 
 <main>
+  <!-- ===================== film ===================== -->
+  <section class="band" id="film" aria-labelledby="film-h">
+    <div class="glow glow--a" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>00 — The film</span><span>86 seconds · real phone</span></div>
+      <div class="head">
+        <h2 id="film-h" class="chrome" data-split>One real day, on a real phone.</h2>
+      </div>
+      <figure class="film" data-reveal>
+        <video controls preload="none" playsinline poster="media/film-poster.jpg">
+          <source src="media/phone-senses-86s.mp4" type="video/mp4">
+        </video>
+      </figure>
+      <p class="film-cap" data-reveal>Real Hermes Agent sessions on a moto g34. Waiting time is sped up and marked. Numbers, amounts and names are blurred. Bills and subscriptions ran on the demo phone.</p>
+    </div>
+  </section>
+
   <!-- ===================== features ===================== -->
   <section class="band" id="features" aria-labelledby="features-h">
     <div class="glow glow--a" aria-hidden="true"></div><div class="glow glow--b" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
@@ -539,10 +561,10 @@
   <section class="band" id="new" aria-labelledby="new-h">
     <div class="glow" aria-hidden="true"></div><div class="rails" aria-hidden="true"></div>
     <div class="wrap">
-      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>02 — New in this release</span><span>Clips coming soon</span></div>
+      <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>02 — New in this release</span><span>Shipped · tested on a real phone</span></div>
       <div class="head">
-        <h2 id="new-h" class="chrome h2--sm" data-split>Being added right now.</h2>
-        <p class="lede" data-reveal>Four new senses. They read the same SMS and notifications, keep only what they need, and bring the plugin to 25 tools.</p>
+        <h2 id="new-h" class="chrome h2--sm" data-split>Four new senses.</h2>
+        <p class="lede" data-reveal>They read the same SMS and notifications, keep only what they need, and bring the plugin to 25 tools.</p>
       </div>
       <div class="new-grid" data-stagger>
         <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Bills due</h3><p>Upcoming bill, EMI and credit card dues, read from the reminder texts your bank and biller already send.</p><p class="q">What bills are due this week?</p></article>
