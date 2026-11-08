@@ -1,0 +1,56 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    name: pytest (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      # The plugin has no runtime dependencies; PyYAML is only for the manifest tests.
+      - run: pip install pytest pyyaml
+      - run: python -m pytest -q
+
+  repo-checks:
+    name: repo hygiene and manifest sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install pyyaml
+      - name: No compiled files or secrets tracked
+        run: |
+          bad=$(git ls-files | grep -E '\.(pyc|pyo|pyd|so|dll|dylib|exe|o|class|whl|db|db-wal|db-shm)$|(^|/)\.env$|__pycache__/' || true)
+          if [ -n "$bad" ]; then echo "Tracked files that must not be in the repo:"; echo "$bad"; exit 1; fi
+      - name: plugin.yaml matches docs/catalog-entry.yaml
+        shell: python
+        run: |
+          import sys, yaml
+          m = yaml.safe_load(open("plugin/plugin.yaml", encoding="utf-8"))
+          c = yaml.safe_load(open("docs/catalog-entry.yaml", encoding="utf-8"))
+          cap = c["capabilities"]
+          checks = {
+              "provides_tools": (m["provides_tools"], cap["provides_tools"]),
+              "provides_hooks": (m.get("provides_hooks", []), cap["provides_hooks"]),
+              "version": (m["version"], c["version"]),
+              "requires_hermes": (m["requires_hermes"], c["requires_hermes"]),
+          }
+          bad = [k for k, (a, b) in checks.items() if a != b]
+          for k in bad:
+              print(f"::error::{k} differs: plugin.yaml={checks[k][0]!r} catalog-entry.yaml={checks[k][1]!r}")
+          sys.exit(1 if bad else 0)

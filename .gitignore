@@ -10,3 +10,6 @@ __pycache__/
 .playwright-mcp/
 .try_tool.db
 demo-capture/
+.wrangler/
+demo/takes/
+demo/film/studio/out/

@@ -1,0 +1,45 @@
+name: Feature request
+description: Suggest a new phone sense, tool or improvement.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Phone Senses only uses Termux:API on the user's own phone, keeps data on the user's devices,
+        and asks before anything that sends, calls, takes a photo or reveals an OTP. Ideas that fit
+        those rules are the easiest to accept.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you want Hermes to do?
+      description: The question you would ask, or the job you want done.
+      placeholder: '"Tell me which bills are due this week."'
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: How could it work?
+      description: Which Termux:API command or phone data it would use, and what the tool would return.
+  - type: dropdown
+    id: acts
+    attributes:
+      label: Does it act on the phone or reveal sensitive data?
+      description: Sending, calling, taking photos or showing OTPs must go through Hermes's approval prompt.
+      options:
+        - No, it only reads and summarises
+        - Yes, it would need an approval prompt
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you have tried
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: Any examples above use made-up names, numbers and messages, not real ones.
+          required: true

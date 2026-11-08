@@ -1,0 +1,21 @@
+name: Private contact request
+description: Ask the maintainer for a private channel (security or code of conduct). Put no details here.
+title: "Private contact request"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **This issue is public. Do not describe the problem here.** Just pick the topic below and
+        submit. The maintainer will reply with a private way to share the details.
+
+        For security problems, use **Security > Report a vulnerability** first if that button is
+        available. See [SECURITY.md](https://github.com/LSUDOKO/Phone-Senses/blob/main/SECURITY.md).
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      options:
+        - Security vulnerability
+        - Code of conduct
+    validations:
+      required: true
