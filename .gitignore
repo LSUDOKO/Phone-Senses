@@ -13,3 +13,6 @@ demo-capture/
 .wrangler/
 demo/takes/
 demo/film/studio/out/
+demo/film/.venv/
+demo/film/footage/
+demo/film/.fonts/

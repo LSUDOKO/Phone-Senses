@@ -1,0 +1,167 @@
+{
+ "_note": "Synthetic order and parcel updates (fake ids). sender is an SMS sender id or a notification's package and title.",
+ "parsed": [
+  [
+   "D1",
+   "AX-AMAZON",
+   "Shipped: Demo Phone Case. Your Amazon order #403-1234567-1234567 will be delivered Mon, 09 Nov.",
+   {
+    "merchant": "Amazon",
+    "status": "shipped",
+    "item": "Demo Phone Case",
+    "order_id": "403-1234567-1234567",
+    "eta": "Mon, 09 Nov"
+   }
+  ],
+  [
+   "D2",
+   "in.amazon.mShop.android.shopping Out for delivery: Demo Phone Case",
+   "Out for delivery: Demo Phone Case. Arriving today by 8 PM. Order #403-1234567-1234567",
+   {
+    "merchant": "Amazon",
+    "status": "out_for_delivery",
+    "item": "Demo Phone Case",
+    "order_id": "403-1234567-1234567",
+    "eta": "today by 8 PM"
+   }
+  ],
+  [
+   "D3",
+   "VM-FLPKRT",
+   "Your Flipkart order for Demo Bluetooth Speaker has been delivered. Order ID OD4012345678901234.",
+   {
+    "merchant": "Flipkart",
+    "status": "delivered",
+    "item": "Demo Bluetooth Speaker",
+    "order_id": "OD4012345678901234",
+    "eta": null
+   }
+  ],
+  [
+   "D4",
+   "JD-DLHVRY",
+   "Delhivery: your shipment AWB 9876543210 is out for delivery and will reach you today.",
+   {
+    "merchant": "Delhivery",
+    "status": "out_for_delivery",
+    "item": null,
+    "order_id": "9876543210",
+    "eta": "today"
+   }
+  ],
+  [
+   "D5",
+   "in.swiggy.android Your order is out for delivery",
+   "Your order is out for delivery. Ravi is on the way with your order. Arriving in 12 mins.",
+   {
+    "merchant": "Swiggy",
+    "status": "out_for_delivery",
+    "item": null,
+    "order_id": null,
+    "eta": "in 12 mins"
+   }
+  ],
+  [
+   "D6",
+   "in.amazon.mShop.android.shopping Delivered: Demo USB-C cable",
+   "Delivered: Demo USB-C cable. Your package was delivered to the front door.",
+   {
+    "merchant": "Amazon",
+    "status": "delivered",
+    "item": "Demo USB-C cable",
+    "order_id": null
+   }
+  ],
+  [
+   "D7",
+   "VM-MYNTRA",
+   "Thank you for shopping with Myntra! Your order for Demo Running Shoes is confirmed. Order No. 1234567890123.",
+   {
+    "merchant": "Myntra",
+    "status": "ordered",
+    "item": "Demo Running Shoes",
+    "order_id": "1234567890123"
+   }
+  ],
+  [
+   "D8",
+   "VM-BLUDRT",
+   "Blue Dart: delivery attempt failed for shipment 70012345678 as the premises were locked. Will be re-attempted tomorrow.",
+   {
+    "merchant": "Blue Dart",
+    "status": "failed_attempt",
+    "order_id": "70012345678",
+    "eta": "tomorrow"
+   }
+  ],
+  [
+   "D9",
+   "VM-MEESHO",
+   "Your Meesho order 98765432101 for Demo Kurta has been cancelled. Refund will be processed in 5-7 days.",
+   {
+    "merchant": "Meesho",
+    "status": "cancelled",
+    "order_id": "98765432101",
+    "eta": null
+   }
+  ],
+  [
+   "D10",
+   "com.zeptoconsumerapp Order update",
+   "Order update. Your Zepto order is on the way! Arriving in 8 minutes.",
+   {
+    "merchant": "Zepto",
+    "status": "out_for_delivery",
+    "eta": "in 8 minutes"
+   }
+  ],
+  [
+   "D11",
+   "VM-EKARTL",
+   "Ekart: your shipment FMPP0123456789 is in transit and is expected to be delivered by 11 Nov.",
+   {
+    "merchant": "Ekart",
+    "status": "shipped",
+    "order_id": "FMPP0123456789",
+    "eta": "11 Nov"
+   }
+  ],
+  [
+   "D12",
+   "VM-INDPST",
+   "Speed Post article EE123456789IN has been delivered.",
+   {
+    "merchant": "India Post",
+    "status": "delivered",
+    "order_id": "EE123456789IN"
+   }
+  ]
+ ],
+ "ignored": [
+  [
+   "X1",
+   "VM-INDPST",
+   "Your parcel could not be delivered. Pay Rs 25 redelivery fee: https://indiapost-track.xyz"
+  ],
+  [
+   "X2",
+   "AX-FLPKRT",
+   "Big Billion Days are here! Up to 80% off on mobiles. Shop now on Flipkart."
+  ],
+  [
+   "X3",
+   "AX-AMAZON",
+   "123456 is your Amazon OTP. Do not share it with anyone."
+  ],
+  [
+   "X4",
+   "AX-HDFCBK",
+   "Sent Rs.250.00 From HDFC Bank A/C *4321 To ZOMATO LTD On 08/11/26 Ref 512345678901"
+  ],
+  [
+   "X5",
+   "+919000000104",
+   "The parcel was delivered to your neighbour."
+  ]
+ ]
+}

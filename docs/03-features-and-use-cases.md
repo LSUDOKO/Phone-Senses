@@ -105,11 +105,55 @@ Rules like "notification from Swiggy containing 'out for delivery'" or "debit ov
 `phone_watch_check` evaluates new notifications and SMS since the last check and returns matches.
 Run it from a Hermes scheduled (cron) job so results reach the user's chat or Telegram.
 Optional (P2): post a phone notification on match via `termux-notification`.
+- Rule kind `battery_below` (P1, `percent` 1–99): `phone_watch_check` reads `/v1/status` and fires once
+  when the level drops below `percent` while the phone is not charging; it stays quiet until the level
+  rises above `percent + 5`, then re-arms (state kept in a per-rule cursor). `notify_phone=true` also
+  posts the alert on the phone.
+- Accept: a 20% rule fires at 15%, not again at 12%, 22% or 25%, re-arms at 26%, fires again at 14%;
+  no alert while charging.
 - VERIFY: how Hermes cron jobs deliver results to messaging platforms (Hermes docs, cron section).
 
 ### F17. Morning brief (P1): `phone_brief`
 One call: battery, missed calls, unread or recent SMS (deduplicated, OTP-masked), important
-notifications, yesterday's spending. Users can schedule it daily with Hermes cron.
+notifications, bills due in the next 7 days (top 3), deliveries out for delivery or arriving today,
+yesterday's spending. Each section fails on its own (`{"error": ...}`) without breaking the brief.
+Users can schedule it daily with Hermes cron.
+
+### F17b. Bills due (P1): `phone_bills`
+Upcoming dues read from inbox SMS of the last 60 days: electricity, water, gas, broadband and mobile
+postpaid bills, credit card statements ("total amount due ... due date"), loan EMIs and insurance
+premiums. Args: `days_ahead` (default 30), `include_overdue` (default true, up to 30 days past due).
+Returns biller, kind, amount, due date, days left and status (upcoming, due_today, overdue, no_date),
+soonest first, plus the total. Parser: `parsers/bills.py` (pure).
+- The newest bill SMS per biller is its current bill (this month's statement replaces last month's;
+  an undated reminder keeps the earlier due date).
+- Payment confirmations ("thank you for your payment", "payment received", "paid successfully",
+  "has been debited") are not bills; a confirmation newer than a due from the same biller removes it.
+- Ignored: texts from personal numbers, OTP messages, promos without a due, scam-scored texts.
+- Nothing is stored.
+- Accept: the mock phone shows ACT Fibernet overdue by 1 day, Airtel in 2 days, BESCOM in 6, the ICICI
+  card in 12 (total, not minimum due), and leaves out the gas bill that has a later payment SMS.
+
+### F17c. Deliveries (P1): `phone_deliveries`
+Order and parcel status from SMS **and** notifications for Amazon, Flipkart, Myntra, Meesho, Swiggy,
+Zomato, Zepto, Blinkit and couriers (Delhivery, Blue Dart, Ekart, India Post, DTDC, Shadowfax).
+Statuses: ordered, shipped, out_for_delivery, delivered, failed_attempt, cancelled. Extracts merchant,
+a short item hint, order or tracking id and ETA text when present, and the last update time. Updates
+are grouped per order (same merchant and same order id, or same item; id-less updates join the shop's
+latest order) and keep the latest status. Args: `days` (default 7), `active_only` (default false).
+Parser: `parsers/deliveries.py` (pure). Scam "parcel held, pay a fee" texts are ignored.
+- Accept: the mock phone shows the Amazon phone case as out for delivery (shipped SMS + notification
+  merged by order id), Swiggy and Delhivery out for delivery, Flipkart and the Amazon cable delivered.
+
+### F17d. Subscriptions (P1): `phone_subscriptions`
+Recurring debits from stored transactions of the last 120 days (syncs SMS first; respects
+`money_enabled`). A payee counts with 2+ debits about a month apart (25–35 days) and similar amounts
+(within 15%), or when it is a known subscription service (Netflix, Spotify, Prime, Hotstar, YouTube,
+iCloud, Google One, gym, broadband). Returns merchant, typical amount, cadence, charges, last charged,
+next expected and status (active, or maybe_stopped when a monthly charge is 10+ days late), plus the
+monthly total of active monthly ones. Detection: `subscriptions.py` (pure).
+- Accept: the mock phone shows Netflix (Rs 99) and Spotify (Rs 119) monthly, total Rs 218 a month;
+  ATM withdrawals and one-off payments are not listed.
 
 ### F18. Fingerprint approval (P2)
 Ask for a fingerprint on the phone (`termux-fingerprint`) as an extra confirmation for sensitive
@@ -125,7 +169,8 @@ about battery use.
 ## Interfaces
 
 ### F20. `/phone` slash command (P1)
-`/phone` shows status; `/phone ring`; `/phone money today`; `/phone pair` shows pairing help.
+`/phone` shows status; `/phone ring`; `/phone money today`; `/phone bills [days]`; `/phone deliveries`;
+`/phone pair` shows pairing help.
 
 ### F21. Bundled skill (P0)
 `skills/phone-senses/SKILL.md` teaches the agent when to use which tool, to prefer summaries, to
@@ -148,7 +193,8 @@ https://hermes-agent.nousresearch.com/docs/developer-guide/desktop-plugin-sdk
 | Student | Pocket-money tracker, morning brief before class, location reminder at college |
 | Working professional | "What did I miss in the meeting?" (calls + SMS + notifications), text "running late" without touching the phone |
 | Small shop owner | "How much did I receive by UPI today?", alert on big payments, scam warnings |
+| Household | "Which bills are due this week?", "What subscriptions am I paying for?", "Is my parcel out for delivery?" |
 | Developer | Clipboard bridge, send files or links to phone, OTP on approval for logins |
-| Traveller | "Where am I?", low-battery reminder, photo of a sign or ticket for Hermes to read |
+| Traveller | "Where am I?", low-battery alert (`battery_below` watch rule), photo of a sign or ticket for Hermes to read |
 | Driver / cook | Important messages read aloud |
 | Everyone | Find my phone, one digest instead of 200 notifications |

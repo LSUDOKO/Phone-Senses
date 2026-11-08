@@ -6,7 +6,7 @@ repo: https://github.com/LSUDOKO/Phone-Senses
 sha: <SHA>
 subdir: plugin
 title: Phone Senses
-description: "Give Hermes your own Android phone's senses through Termux:API: notification and SMS digests, sending SMS from your SIM, a bank and UPI money tracker, scam SMS warnings and find my phone. Disclosure — needs the separately installed Termux and Termux:API apps (F-Droid) and runs the repo's own stdlib-only helper on the phone, which executes fixed termux-* commands (no shell) and serves an HMAC-signed HTTP API on the address you choose; the plugin talks only to that helper; reads notifications, SMS, call log, contacts, location and battery; sending SMS, calls, photos and OTP reveal always go to Hermes's approval prompt; OTPs are masked by default; parsed transactions (no message text), budgets, watch rules and approved photos are stored in the plugin's data directory; no telemetry."
+description: "Give Hermes your own Android phone's senses through Termux:API: notification and SMS digests, sending SMS from your SIM, a bank and UPI money tracker with bill, subscription and delivery tracking, scam SMS warnings, low-battery alerts and find my phone. Disclosure — needs the separately installed Termux and Termux:API apps (F-Droid) and runs the repo's own stdlib-only helper on the phone, which executes fixed termux-* commands (no shell) and serves an HMAC-signed HTTP API on the address you choose; the plugin talks only to that helper; reads notifications, SMS, call log, contacts, location and battery; sending SMS, calls, photos and OTP reveal always go to Hermes's approval prompt; OTPs are masked by default; parsed transactions (no message text), budgets, watch rules and approved photos are stored in the plugin's data directory; no telemetry."
 maintainer: LSUDOKO
 tier: community
 category: tools
@@ -34,6 +34,9 @@ capabilities:
   - phone_money_sync
   - phone_money_summary
   - phone_budget_set
+  - phone_subscriptions
+  - phone_bills
+  - phone_deliveries
   - phone_scam_check
   - phone_watch_add
   - phone_watch_list

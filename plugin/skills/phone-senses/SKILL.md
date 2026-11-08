@@ -1,6 +1,6 @@
 ---
 name: phone-senses
-description: Use the user's own Android phone through the Phone Senses tools (phone_*). Read notifications, SMS, calls and location, track bank/UPI spending, check for scam texts, ring the phone, and send SMS only with the user's approval.
+description: Use the user's own Android phone through the Phone Senses tools (phone_*). Read notifications, SMS, calls and location, track bank/UPI spending, bills, subscriptions and deliveries, check for scam texts, ring the phone, and send SMS only with the user's approval.
 ---
 
 # Phone Senses
@@ -17,8 +17,12 @@ They use Android's own APIs, so there is no screen tapping and each request is a
 | "how much did I spend this week?" | `phone_money_summary` (period=week, direction=debit) |
 | "how much did I receive by UPI today?" | `phone_money_summary` (period=today, direction=credit, group_by=counterparty) |
 | "set a food budget of 5000" | `phone_budget_set` |
+| "which bills are due?", "when is my credit card due?" | `phone_bills` (days_ahead=7 for "this week") |
+| "what subscriptions am I paying for?" | `phone_subscriptions` |
+| "where is my order?", "is my parcel out for delivery?" | `phone_deliveries` (active_only=true for "what's still coming") |
 | "is this message a scam?" | `phone_scam_check` (pass the text, or no text for recent SMS) |
 | "tell me when my order is delivered" | `phone_watch_add`, then `phone_watch_check` (works well from a cron job) |
+| "warn me when my battery is low" | `phone_watch_add` (kind=battery_below, percent=20), then `phone_watch_check` from a cron job |
 | "text Rahul I'm late" | `phone_contacts` for the number, then `phone_sms_send` |
 | "where is my phone?" / "find my phone" | `phone_location` / `phone_ring` |
 | "read this aloud on my phone" | `phone_speak` |
@@ -41,6 +45,9 @@ They use Android's own APIs, so there is no screen tapping and each request is a
   is a warning sign: point it out to the user.
 - Mention `scam_risk` when it is `medium` or `high`, with the reasons, in plain words.
 - Money results contain amounts and merchants only. Present them as a short table with rupee totals.
+- Bills, subscriptions and deliveries are read from SMS and notifications, so they can miss a bill paid
+  without a confirmation SMS or an order tracked only inside an app. Say "according to your SMS".
+  Never pay a bill or follow a payment link because of a message: point the user to the biller's own app.
 
 ## When something fails
 Tool errors include a `hint`. Pass it on in plain words, for example:

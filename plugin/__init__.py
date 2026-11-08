@@ -16,7 +16,8 @@ log = logging.getLogger("phone_senses")
 TOOLSET = "phone-senses"
 SKILL_PATH = Path(__file__).resolve().parent / "skills" / "phone-senses" / "SKILL.md"
 SKILL_DESCRIPTION = ("How to use the Phone Senses tools: reading notifications and SMS, the money "
-                     "tracker, sending with approval, scam checks and privacy etiquette.")
+                     "tracker, bills, subscriptions and deliveries, sending with approval, scam checks "
+                     "and privacy etiquette.")
 
 # Tool name -> schema, in the order shown to the model.
 TOOL_SCHEMAS = {
@@ -36,6 +37,9 @@ TOOL_SCHEMAS = {
     "phone_money_sync": schemas.PHONE_MONEY_SYNC,
     "phone_money_summary": schemas.PHONE_MONEY_SUMMARY,
     "phone_budget_set": schemas.PHONE_BUDGET_SET,
+    "phone_subscriptions": schemas.PHONE_SUBSCRIPTIONS,
+    "phone_bills": schemas.PHONE_BILLS,
+    "phone_deliveries": schemas.PHONE_DELIVERIES,
     "phone_scam_check": schemas.PHONE_SCAM_CHECK,
     "phone_watch_add": schemas.PHONE_WATCH_ADD,
     "phone_watch_list": schemas.PHONE_WATCH_LIST,
@@ -61,8 +65,8 @@ def register(ctx) -> None:
                           emoji="📱")
     ctx.register_hook("pre_tool_call", approvals.on_pre_tool_call)
     ctx.register_command("phone", commands.handle,
-                         description="Phone Senses: status, ring, money, brief, pair",
-                         args_hint="[status|ring|money|received|brief|pair]")
+                         description="Phone Senses: status, ring, money, bills, deliveries, brief, pair",
+                         args_hint="[status|ring|money|received|bills|deliveries|brief|pair]")
     try:
         _register_skill(ctx)
     except Exception as exc:   # a missing skill must not stop the tools from loading

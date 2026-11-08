@@ -132,6 +132,35 @@ PHONE_BUDGET_SET = _schema(
      "monthly_limit_rs": {"type": "number", "minimum": 0, "description": "Monthly limit in rupees"}},
     ["category", "monthly_limit_rs"])
 
+PHONE_SUBSCRIPTIONS = _schema(
+    "phone_subscriptions",
+    "Recurring debits found in the stored bank, card and UPI transactions of the last 120 days: "
+    "subscriptions such as Netflix, Spotify, Prime, Hotstar, YouTube, iCloud, Google One, a gym or "
+    "broadband, and any payee charged a similar amount about once a month. Returns the typical amount, "
+    "cadence, last charge, next expected charge and the monthly total. Syncs recent SMS first. "
+    "Example: 'what subscriptions am I paying for?'")
+
+PHONE_BILLS = _schema(
+    "phone_bills",
+    "Upcoming bills and dues read from the phone's SMS: electricity, water, gas, broadband and mobile "
+    "postpaid bills, credit card statements, loan EMIs and insurance premiums. Returns biller, amount, "
+    "due date and days left, soonest first, with the total. A bill is left out when a later SMS from the "
+    "same biller confirms the payment. Nothing is stored. Example: 'what bills are due this week?' (days_ahead=7).",
+    {"days_ahead": _int("Show bills due within this many days", 30, 1, 365),
+     "include_overdue": {"type": "boolean", "default": True,
+                         "description": "Also list bills whose due date passed in the last 30 days"}})
+
+PHONE_DELIVERIES = _schema(
+    "phone_deliveries",
+    "Order and parcel status from SMS and notifications (Amazon, Flipkart, Myntra, Meesho, Swiggy, "
+    "Zomato, Zepto, Blinkit, and couriers such as Delhivery, Blue Dart, Ekart, India Post, DTDC and "
+    "Shadowfax). Status is ordered, shipped, out_for_delivery, delivered, failed_attempt or cancelled, with "
+    "the item, order or tracking id and ETA when the message has them. Updates for one order are merged "
+    "into its latest status. Example: 'where is my Amazon order?'" + UNTRUSTED,
+    {"days": _int("How far back to look", 7, 1, 30),
+     "active_only": {"type": "boolean", "default": False,
+                     "description": "Only orders not yet delivered or cancelled"}})
+
 PHONE_SCAM_CHECK = _schema(
     "phone_scam_check",
     "Check a message (or the latest SMS when no text is given) for signs of a scam: fake KYC or "
@@ -144,12 +173,15 @@ PHONE_WATCH_ADD = _schema(
     "phone_watch_add",
     "Add a watch rule. phone_watch_check reports new notifications or SMS that match it (each item "
     "once). Kinds: 'notification' (app and/or contains), 'sms' (from_number and/or contains), "
-    "'debit_over' (amount_rs).",
-    {"kind": _enum("Rule type", ["notification", "sms", "debit_over"], "notification"),
+    "'debit_over' (amount_rs), 'battery_below' (percent: alerts once when the battery drops below it "
+    "while not charging, and again only after it charged above percent + 5).",
+    {"kind": _enum("Rule type", ["notification", "sms", "debit_over", "battery_below"], "notification"),
      "app": {"type": "string", "description": "notification: app name or package"},
      "contains": {"type": "string", "description": "notification/sms: text to look for (case-insensitive)"},
      "from_number": {"type": "string", "description": "sms: sender number or id"},
      "amount_rs": {"type": "number", "minimum": 1, "description": "debit_over: alert above this amount"},
+     "percent": {"type": "integer", "minimum": 1, "maximum": 99,
+                 "description": "battery_below: alert when the battery level drops below this percent"},
      "label": {"type": "string", "description": "Short name for the rule"}},
     ["kind"])
 
@@ -161,12 +193,13 @@ PHONE_WATCH_REMOVE = _schema(
 
 PHONE_WATCH_CHECK = _schema(
     "phone_watch_check",
-    "Check new notifications and SMS since the last check against the watch rules and return matches. "
-    "Each item matches only once. Good to run from a scheduled (cron) job." + UNTRUSTED,
+    "Check new notifications, SMS and the battery level since the last check against the watch rules and "
+    "return matches. Each item matches only once. Good to run from a scheduled (cron) job." + UNTRUSTED,
     {"notify_phone": {"type": "boolean", "default": False,
                       "description": "Also show a notification on the phone for each match"}})
 
 PHONE_BRIEF = _schema(
     "phone_brief",
     "One-call morning brief from the phone: battery, missed calls, recent SMS (OTPs hidden), important "
-    "notifications, scam alerts and yesterday's spending." + UNTRUSTED)
+    "notifications, scam alerts, bills due in the next 7 days, deliveries arriving today and yesterday's "
+    "spending." + UNTRUSTED)

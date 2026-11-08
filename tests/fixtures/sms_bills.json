@@ -1,0 +1,229 @@
+{
+ "_note": "Synthetic bill and due SMS (fake account numbers). Dates without a year resolve against sms_date.",
+ "sms_date": "2026-11-08",
+ "bills": [
+  [
+   "B1",
+   "VM-BESCOM",
+   "BESCOM: Electricity bill of Rs 1,240.00 for RR no. KA00123 is generated. Due date 14-11-26. Pay before the due date to avoid a late fee.",
+   {
+    "biller": "BESCOM",
+    "amount_paise": 124000,
+    "due_date": "2026-11-14",
+    "kind": "electricity",
+    "source_sender": "BESCOM"
+   }
+  ],
+  [
+   "B2",
+   "JD-ICICIT",
+   "Your ICICI Bank Credit Card XX1111 statement is ready. Total Amount Due: Rs 4,820.00, Minimum Amount Due: Rs 250.00, Payment Due Date: 20-Nov-26.",
+   {
+    "biller": "ICICI Bank credit card",
+    "amount_paise": 482000,
+    "due_date": "2026-11-20",
+    "kind": "credit_card"
+   }
+  ],
+  [
+   "B3",
+   "AX-AIRTEL",
+   "Dear customer, your Airtel postpaid bill of Rs 799.00 for Nov is due on 10 Nov 2026. Pay on the Airtel Thanks app to avoid late charges.",
+   {
+    "biller": "Airtel",
+    "amount_paise": 79900,
+    "due_date": "2026-11-10",
+    "kind": "mobile"
+   }
+  ],
+  [
+   "B4",
+   "VM-BWSSBB",
+   "BWSSB: Water bill of Rs 312.50 for RR no. W123 is due by 25/11/2026.",
+   {
+    "biller": "BWSSB",
+    "amount_paise": 31250,
+    "due_date": "2026-11-25",
+    "kind": "water"
+   }
+  ],
+  [
+   "B5",
+   "AD-BAJAJF",
+   "Bajaj Finserv: EMI of Rs 5,499.00 for loan a/c XX7788 is due on 05-Dec-26. Keep sufficient balance in your account.",
+   {
+    "biller": "Bajaj Finserv",
+    "amount_paise": 549900,
+    "due_date": "2026-12-05",
+    "kind": "emi"
+   }
+  ],
+  [
+   "B6",
+   "VM-LICIND",
+   "Premium of Rs 12,000 for LIC policy no. 812345678 is due on 1st Dec 2026. Pay online to keep the policy active.",
+   {
+    "biller": "LIC",
+    "amount_paise": 1200000,
+    "due_date": "2026-12-01",
+    "kind": "insurance"
+   }
+  ],
+  [
+   "B7",
+   "VM-MGLGAS",
+   "Mahanagar Gas: your gas bill of Rs 640.00 for BP no. 5000123 is due on 09-11-26.",
+   {
+    "biller": "Mahanagar Gas",
+    "amount_paise": 64000,
+    "due_date": "2026-11-09",
+    "kind": "gas"
+   }
+  ],
+  [
+   "B8",
+   "VM-ACTFBR",
+   "ACT Fibernet: your broadband bill of Rs 1,059.00 was due on 07-11-26. Pay now for uninterrupted service.",
+   {
+    "biller": "ACT Fibernet",
+    "amount_paise": 105900,
+    "due_date": "2026-11-07",
+    "kind": "broadband"
+   }
+  ],
+  [
+   "B9",
+   "VM-AIRTEL",
+   "Your Airtel Xstream Fiber bill of Rs 999 is due. Pay now to avoid service interruption.",
+   {
+    "biller": "Airtel",
+    "amount_paise": 99900,
+    "due_date": null,
+    "kind": "broadband"
+   }
+  ],
+  [
+   "B10",
+   "VM-BESCOM",
+   "BESCOM electricity bill of Rs 800 is due on 31-02-26.",
+   {
+    "biller": "BESCOM",
+    "amount_paise": 80000,
+    "due_date": null,
+    "kind": "electricity"
+   }
+  ],
+  [
+   "B11",
+   "JD-HDFCBK",
+   "HDFC Bank Credit Card XX2222: Min due Rs 300, total due Rs 6,150.75. Pay by Nov 28, 2026.",
+   {
+    "biller": "HDFC Bank credit card",
+    "amount_paise": 615075,
+    "due_date": "2026-11-28",
+    "kind": "credit_card"
+   }
+  ],
+  [
+   "B12",
+   "AD-BAJAJF",
+   "Bajaj Finserv: EMI of Rs 5,499.00 for loan a/c XX7788 is due on 05-Dec-26 and will be debited from your account.",
+   {
+    "biller": "Bajaj Finserv",
+    "amount_paise": 549900,
+    "due_date": "2026-12-05",
+    "kind": "emi"
+   }
+  ],
+  [
+   "B13",
+   "AD-BAJAJF",
+   "Bajaj Finserv: EMI of Rs 5,499.00 due on 05-12-26 is debited from your account on presentation. Keep sufficient balance.",
+   {
+    "biller": "Bajaj Finserv",
+    "amount_paise": 549900,
+    "due_date": "2026-12-05",
+    "kind": "emi"
+   }
+  ],
+  [
+   "B14",
+   "VM-BESCOM",
+   "BESCOM: Electricity bill of Rs 1,240.00 for the service at PIN code 560001 is due on 14-11-26.",
+   {
+    "biller": "BESCOM",
+    "amount_paise": 124000,
+    "due_date": "2026-11-14",
+    "kind": "electricity"
+   }
+  ]
+ ],
+ "paid": [
+  [
+   "P1",
+   "VM-ACTFBR",
+   "Thank you for your payment of Rs 1,059.00 towards your ACT Fibernet broadband account.",
+   "ACT Fibernet"
+  ],
+  [
+   "P2",
+   "JD-ICICIT",
+   "Payment of Rs 4,820.00 has been received towards your ICICI Bank Credit Card XX1111. Thank you.",
+   "ICICI Bank credit card"
+  ],
+  [
+   "P3",
+   "AX-AIRTEL",
+   "Your Airtel postpaid bill of Rs 799 has been paid successfully.",
+   "Airtel"
+  ],
+  [
+   "P4",
+   "AD-BAJAJF",
+   "Bajaj Finserv: EMI of Rs 5,499.00 for loan a/c XX7788 has been debited from your account.",
+   "Bajaj Finserv"
+  ]
+ ],
+ "ignored": [
+  [
+   "I1",
+   "+919000000107",
+   "Your electricity bill of Rs 1,240 is due on 14-11-26"
+  ],
+  [
+   "I2",
+   "VM-ELECTR",
+   "Electricity power will be disconnected tonight because your bill is due. Pay Rs 1,240 now at http://bescom-pay.xyz"
+  ],
+  [
+   "I3",
+   "VM-ACTFBR",
+   "Thank you for your payment of Rs 1,059.00 towards your ACT Fibernet broadband account."
+  ],
+  [
+   "I4",
+   "VM-BESCOM",
+   "123456 is your OTP to pay your BESCOM electricity bill of Rs 1,240 due on 14-11-26."
+  ],
+  [
+   "I5",
+   "AD-PAYTMM",
+   "Pay your electricity bill on Paytm and get Rs 50 cashback! Use code BILL50."
+  ],
+  [
+   "I6",
+   "AX-HDFCBK",
+   "Rs 1,240.00 debited from A/c XX4321 towards BESCOM on 06-11-26."
+  ],
+  [
+   "I7",
+   "JD-ICICIT",
+   "Your credit card statement for Oct is ready. Check the app for the due date."
+  ],
+  [
+   "I8",
+   "AX-AIRTEL",
+   "Your Airtel postpaid bill of Rs 799 has been paid successfully."
+  ]
+ ]
+}

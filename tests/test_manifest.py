@@ -44,6 +44,7 @@ def test_register_matches_declared_capabilities():
     assert len(ctx.tools) == len(set(ctx.tools))
     assert ctx.hooks == MANIFEST["provides_hooks"] == ["pre_tool_call"]
     assert ctx.commands == ["phone"] and ctx.skills == ["phone-senses"]
+    assert {"phone_bills", "phone_deliveries", "phone_subscriptions"} <= set(ctx.tools)
 
 
 def test_manifest_fields():

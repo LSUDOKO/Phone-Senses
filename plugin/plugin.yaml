@@ -1,7 +1,7 @@
 name: phone-senses
 version: 0.1.0
 manifest_version: 2
-description: Give Hermes your Android phone's senses through Termux:API (notifications, SMS, money tracking, scam warnings, find my phone) with approval for every send
+description: Give Hermes your Android phone's senses through Termux:API (notifications, SMS, money tracking, bills, deliveries, scam warnings, find my phone) with approval for every send
 author: Arpit Singh
 license: MIT
 homepage: https://github.com/LSUDOKO/Phone-Senses
@@ -24,6 +24,9 @@ provides_tools:
   - phone_money_sync
   - phone_money_summary
   - phone_budget_set
+  - phone_subscriptions
+  - phone_bills
+  - phone_deliveries
   - phone_scam_check
   - phone_watch_add
   - phone_watch_list

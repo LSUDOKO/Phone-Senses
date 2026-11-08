@@ -178,5 +178,145 @@
   "number": "+919000000101",
   "received": "@1d 18:30:00",
   "body": "Reached home, thanks!"
+ },
+ {
+  "_id": 119,
+  "threadid": 29,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "AX-AIRTEL",
+  "received": "@1d 10:15:00",
+  "body": "Dear customer, your Airtel postpaid bill of Rs 799.00 for Nov is due on {{date+2d|%d %b %Y}}. Pay on the Airtel Thanks app to avoid late charges."
+ },
+ {
+  "_id": 120,
+  "threadid": 30,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "VM-BESCOM",
+  "received": "@2d 11:00:00",
+  "body": "BESCOM: Electricity bill of Rs 1,240.00 for RR no. KA00123 is generated. Due date {{date+6d}}. Pay before the due date to avoid a late fee."
+ },
+ {
+  "_id": 121,
+  "threadid": 31,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-ICICIT",
+  "received": "@4d 09:00:00",
+  "body": "Your ICICI Bank Credit Card XX1111 statement is ready. Total Amount Due: Rs 4,820.00, Minimum Amount Due: Rs 250.00, Payment Due Date: {{date+12d|%d-%b-%y}}."
+ },
+ {
+  "_id": 122,
+  "threadid": 32,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "VM-ACTFBR",
+  "received": "@9d 10:00:00",
+  "body": "ACT Fibernet: your broadband bill of Rs 1,059.00 is due on {{date-1d}}. Pay now for uninterrupted service."
+ },
+ {
+  "_id": 123,
+  "threadid": 33,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "VM-MGLGAS",
+  "received": "@6d 12:30:00",
+  "body": "Mahanagar Gas: your gas bill of Rs 640.00 for BP no. 5000123 is due on {{date+1d}}."
+ },
+ {
+  "_id": 124,
+  "threadid": 34,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "VM-MGLGAS",
+  "received": "@0d 08:40:00",
+  "body": "Thank you for your payment of Rs 640.00 towards your Mahanagar Gas bill for BP no. 5000123."
+ },
+ {
+  "_id": 125,
+  "threadid": 35,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "AX-AMAZON",
+  "received": "@1d 15:20:00",
+  "body": "Shipped: Demo Phone Case. Your Amazon order #403-1234567-1234567 will be delivered {{date+0d|%a, %d %b}}."
+ },
+ {
+  "_id": 126,
+  "threadid": 36,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "VM-FLPKRT",
+  "received": "@2d 13:05:00",
+  "body": "Your Flipkart order for Demo Bluetooth Speaker has been delivered. Order ID OD4012345678901234."
+ },
+ {
+  "_id": 127,
+  "threadid": 37,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-DLHVRY",
+  "received": "@0d 08:50:00",
+  "body": "Delhivery: your shipment AWB 9876543210 is out for delivery and will reach you today."
+ },
+ {
+  "_id": 128,
+  "threadid": 38,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-ICICIT",
+  "received": "@31d 08:00:12",
+  "body": "INR 99.00 spent using ICICI Bank Card XX1111 on {{date-31d|%d-%b-%y}} on NETFLIX. Avl Limit: INR 46,100.00. If not you, call 1800 000 0003/SMS BLOCK 1111 to 9000000102."
+ },
+ {
+  "_id": 129,
+  "threadid": 39,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-ICICIT",
+  "received": "@61d 08:00:12",
+  "body": "INR 99.00 spent using ICICI Bank Card XX1111 on {{date-61d|%d-%b-%y}} on NETFLIX. Avl Limit: INR 46,900.00. If not you, call 1800 000 0003/SMS BLOCK 1111 to 9000000102."
+ },
+ {
+  "_id": 130,
+  "threadid": 40,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-ICICIT",
+  "received": "@12d 07:30:00",
+  "body": "INR 119.00 spent using ICICI Bank Card XX1111 on {{date-12d|%d-%b-%y}} on SPOTIFY. Avl Limit: INR 45,600.00. If not you, call 1800 000 0003/SMS BLOCK 1111 to 9000000102."
+ },
+ {
+  "_id": 131,
+  "threadid": 41,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-ICICIT",
+  "received": "@42d 07:30:00",
+  "body": "INR 119.00 spent using ICICI Bank Card XX1111 on {{date-42d|%d-%b-%y}} on SPOTIFY. Avl Limit: INR 46,300.00. If not you, call 1800 000 0003/SMS BLOCK 1111 to 9000000102."
+ },
+ {
+  "_id": 132,
+  "threadid": 42,
+  "type": "inbox",
+  "read": true,
+  "sender": null,
+  "number": "JD-ICICIT",
+  "received": "@72d 07:30:00",
+  "body": "INR 119.00 spent using ICICI Bank Card XX1111 on {{date-72d|%d-%b-%y}} on SPOTIFY. Avl Limit: INR 47,000.00. If not you, call 1800 000 0003/SMS BLOCK 1111 to 9000000102."
  }
 ]

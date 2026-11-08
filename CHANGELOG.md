@@ -6,11 +6,18 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-### In progress
-- **Bills due:** spot upcoming bill and EMI due dates in SMS and include them in the brief.
-- **Deliveries:** track "out for delivery" and "delivered" messages for orders.
-- **Subscriptions:** find recurring charges (streaming, cloud, autopay) in the money tracker.
-- **Battery watch:** a watch rule that alerts when the phone battery drops below a level.
+### Added
+- `phone_bills`: upcoming bills and dues from SMS (electricity, water, gas, broadband, postpaid,
+  credit card statements, EMIs, insurance) with amount, due date and days left. A later payment
+  confirmation from the same biller clears the due. Nothing is stored.
+- `phone_deliveries`: order and parcel status from SMS and notifications (Amazon, Flipkart, Myntra,
+  Meesho, Swiggy, Zomato, Zepto, Blinkit and major couriers), merged per order.
+- `phone_subscriptions`: recurring debits (streaming, cloud storage, gym, broadband, and any payee
+  charged a similar amount about monthly) with the next expected charge and the monthly total.
+- Battery watch: `phone_watch_add` accepts `battery_below` with a percent; `phone_watch_check`
+  alerts once per drop and can post the alert to the phone.
+- `phone_brief` now includes bills due in the next 7 days and deliveries arriving today.
+- `/phone bills` and `/phone deliveries`.
 
 ## [0.1.0] - 2026-11-08
 

@@ -125,10 +125,14 @@ class MockRunner:
         return self._t
 
     def _fixture(self, name: str) -> str:
-        """Fixture text with relative dates ("@2d 14:02:00" = two days ago) made absolute."""
+        """Fixture text with relative dates made absolute: "@2d 14:02:00" (two days ago) for
+        timestamps, and inside message bodies {{date+7d}} (15-11-26) or {{date-3d|%d %b %Y}}."""
         text = (self.data_dir / f"{name}.json").read_text(encoding="utf-8")
         now = self.started
         midnight = now.replace(hour=0, minute=0, second=0)
+        text = re.sub(r"\{\{date([+-]\d+)d(?:\|([^}]+))?\}\}",
+                      lambda m: (now + datetime.timedelta(days=int(m.group(1)))).strftime(m.group(2) or "%d-%m-%y"),
+                      text)
 
         def absolute(m: re.Match) -> str:
             days = int(m.group(1))

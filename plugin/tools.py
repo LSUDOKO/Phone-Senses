@@ -15,9 +15,9 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Any, Callable
 
-from . import client, storage, watch
+from . import client, storage, subscriptions, watch
 from .client import PhoneError
-from .parsers import money, otp, scam
+from .parsers import bills, deliveries, money, otp, scam
 
 log = logging.getLogger("phone_senses")
 
@@ -96,6 +96,13 @@ def _int_arg(args: dict, key: str, default: int, lo: int, hi: int) -> int:
     except (TypeError, ValueError):
         raise ValueError(f"{key} must be an integer")
     return max(lo, min(hi, n))
+
+
+def _bool_arg(args: dict, key: str, default: bool) -> bool:
+    value = args.get(key, default)
+    if isinstance(value, str):
+        return value.strip().lower() in ("1", "true", "yes", "on")
+    return bool(value)
 
 
 def _bool_setting(key: str, default: bool) -> bool:
@@ -204,6 +211,10 @@ def _public_sms(m: dict, with_scam: bool) -> dict:
 # Level 1: read the phone
 
 
+def _charging(bat: dict) -> bool:
+    return bat.get("status") == "CHARGING" or bat.get("plugged") not in (None, "UNPLUGGED", "PLUGGED_NONE")
+
+
 @tool
 def phone_status(args: dict) -> dict:
     c = client.get_client()
@@ -213,8 +224,7 @@ def phone_status(args: dict) -> dict:
     except PhoneError:
         ping = {}
     bat = data.get("battery") or {}
-    return _ok(battery_percent=bat.get("percentage"), charging=(bat.get("status") == "CHARGING"
-               or (bat.get("plugged") not in (None, "UNPLUGGED", "PLUGGED_NONE"))),
+    return _ok(battery_percent=bat.get("percentage"), charging=_charging(bat),
                battery_status=bat.get("status"), temperature_c=bat.get("temperature"),
                battery_health=bat.get("health"), wifi=_ssid((data.get("wifi") or {}).get("ssid")),
                device=ping.get("device_model"), helper_version=ping.get("helper_version"),
@@ -476,10 +486,10 @@ def _parse_messages(items: list[dict]) -> list[dict]:
     return txs
 
 
-def sync_sms(days: int, max_messages: int = 2000) -> dict:
-    """Read inbox SMS back to ``days`` ago, store new transactions, return counts and warnings."""
+def inbox_since(days: int, max_messages: int = 2000) -> tuple[int, list[dict]]:
+    """Page through inbox SMS back to ``days`` ago. Returns (messages scanned, messages in range)."""
     cutoff = time.time() - days * 86400
-    scanned, offset, txs = 0, 0, []
+    scanned, offset, out = 0, 0, []
     page = 200
     while scanned < max_messages:
         items = fetch_sms(page, "inbox", offset)
@@ -487,10 +497,17 @@ def sync_sms(days: int, max_messages: int = 2000) -> dict:
             break
         scanned += len(items)
         recent = [m for m in items if (m["ts"] or 0) >= cutoff]
-        txs.extend(_parse_messages(recent))
+        out.extend(recent)
         if len(items) < page or len(recent) < len(items):
             break
         offset += page
+    return scanned, out
+
+
+def sync_sms(days: int, max_messages: int = 2000) -> dict:
+    """Read inbox SMS back to ``days`` ago, store new transactions, return counts and warnings."""
+    scanned, items = inbox_since(days, max_messages)
+    txs = _parse_messages(items)
     unique = list({t["id"]: t for t in txs}.values())
     added = storage.add_transactions(unique)
     warnings = _warnings(unique) if added else []
@@ -625,6 +642,121 @@ def phone_budget_set(args: dict) -> dict:
     return _ok(category=category, monthly_limit_rs=round(limit, 2), removed=limit == 0)
 
 
+@tool
+def phone_subscriptions(args: dict) -> dict:
+    _money_enabled()
+    sync_note = None
+    try:   # quick sync so this month's charges are in
+        sync_sms(120, max_messages=1000)
+    except PhoneError as exc:
+        sync_note = f"Could not read new SMS from the phone ({exc.code}); showing stored data."
+    now = int(time.time())
+    subs = subscriptions.find(storage.transactions(now - 120 * 86400, now + 1, "debit"))
+    out = _ok(count=len(subs), monthly_total_rs=subscriptions.monthly_total_rs(subs), subscriptions=subs[:20])
+    if not subs:
+        out["note"] = "No recurring debits found in the last 120 days of bank and UPI SMS."
+    if sync_note:
+        out["sync_note"] = sync_note
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Bills and deliveries (read from SMS and notifications; nothing is stored)
+
+
+def due_bills(items: list[dict], days_ahead: int = 30, include_overdue: bool = True,
+              today: dt.date | None = None) -> list[dict]:
+    """Bills due within ``days_ahead`` (and overdue up to 30 days) from normalised SMS, soonest first.
+    The newest SMS per biller is its current bill (this month's statement replaces last month's);
+    a newer payment confirmation from the same biller cancels it."""
+    today = today or dt.date.today()
+    dues: dict[tuple, dict] = {}
+    paid: dict[str, int] = {}
+    for m in sorted((m for m in items if m["ts"]), key=lambda m: m["ts"]):
+        bill = bills.parse(m["number"], m["ts"], m["_full_body"])
+        if bill:
+            older = dues.get((bill["biller"], bill["kind"]))
+            if older and not bill["due_date"]:
+                bill["due_date"] = older["due_date"]   # an undated reminder of the same bill
+            dues[(bill["biller"], bill["kind"])] = {**bill, "ts": m["ts"]}
+        elif (who := bills.paid_biller(m["number"], m["_full_body"])):
+            paid[who] = m["ts"]
+    out = []
+    for b in dues.values():
+        if paid.get(b["biller"], 0) > b["ts"]:
+            continue
+        left = (dt.date.fromisoformat(b["due_date"]) - today).days if b["due_date"] else None
+        if left is None:
+            if b["ts"] < time.time() - 30 * 86400:
+                continue   # undated and old: probably settled
+        elif left > days_ahead or (left < 0 and (not include_overdue or left < -30)):
+            continue
+        status = ("no_date" if left is None else "overdue" if left < 0 else "due_today" if left == 0 else "upcoming")
+        out.append({"biller": b["biller"], "kind": b["kind"], "amount_rs": _rs(b["amount_paise"]),
+                    "due_date": b["due_date"], "days_left": left, "status": status, "from": b["source_sender"],
+                    "sms_date": _fmt_time(b["ts"])[:10]})
+    out.sort(key=lambda b: (b["days_left"] is None, b["days_left"] or 0))
+    return out
+
+
+@tool
+def phone_bills(args: dict) -> dict:
+    days_ahead = _int_arg(args, "days_ahead", 30, 1, 365)
+    include_overdue = _bool_arg(args, "include_overdue", True)
+    _, items = inbox_since(60, max_messages=1000)   # statements arrive up to ~4 weeks before the due date
+    due = due_bills(items, days_ahead, include_overdue)
+    out = _ok(count=len(due), total_due_rs=round(sum(b["amount_rs"] for b in due), 2),
+              overdue=sum(b["status"] == "overdue" for b in due), bills=due[:20])
+    if not due:
+        out["note"] = f"No bills due in the next {days_ahead} days found in the last 60 days of SMS."
+    return out
+
+
+def delivery_updates(sms_items: list[dict], notifications: list[dict], since_ts: float) -> list[dict]:
+    """Delivery updates from normalised SMS and raw notifications newer than ``since_ts``."""
+    updates = []
+    for m in sms_items:
+        if (m["ts"] or 0) >= since_ts and (u := deliveries.parse(m["number"], m["_full_body"])):
+            updates.append({**u, "ts": m["ts"], "source": "sms"})
+    for n in notifications:
+        if _is_noise(n):
+            continue
+        item = _norm_notification(n)
+        text = f"{n.get('title') or ''}. {n.get('content') or ''}"
+        if (item["ts"] or 0) >= since_ts and (u := deliveries.parse(f"{item['package']} {item['title']}", text)):
+            updates.append({**u, "ts": item["ts"], "source": "notification"})
+    return updates
+
+
+def _public_delivery(g: dict) -> dict:
+    return {"merchant": g["merchant"], "status": g["status"], "item": g.get("item"), "order_id": g.get("order_id"),
+            "eta": g.get("eta"), "last_update": _fmt_time(g["ts"]), "source": g.get("source")}
+
+
+@tool
+def phone_deliveries(args: dict) -> dict:
+    days = _int_arg(args, "days", 7, 1, 30)
+    active_only = _bool_arg(args, "active_only", False)
+    since = time.time() - days * 86400
+    _, sms_items = inbox_since(days, max_messages=600)
+    note = None
+    try:
+        notes = fetch_notifications()
+    except PhoneError as exc:   # SMS still work without Notification access
+        notes, note = [], f"Notifications unavailable ({exc.code}); showing SMS only."
+    groups = deliveries.group_updates(delivery_updates(sms_items, notes, since))
+    if active_only:
+        groups = [g for g in groups if g["status"] in deliveries.ACTIVE]
+    groups.sort(key=lambda g: (g["status"] not in deliveries.ACTIVE, -g["ts"]))
+    out = _ok(count=len(groups), active=sum(g["status"] in deliveries.ACTIVE for g in groups),
+              deliveries=[_public_delivery(g) for g in groups[:20]])
+    if note:
+        out["note"] = note
+    elif not groups:
+        out["note"] = f"No order or parcel updates in the last {days} days."
+    return out
+
+
 # ---------------------------------------------------------------------------
 # Scam check, watch rules, brief
 
@@ -681,6 +813,24 @@ def phone_watch_check(args: dict) -> dict:
     matches: list[dict] = []
     checked = {}
     kinds = {r["kind"] for r in rules}
+    if "battery_below" in kinds:
+        bat = (client.get_client().get("/v1/status") or {}).get("battery") or {}
+        try:
+            level = int(bat.get("percentage"))
+        except (TypeError, ValueError):
+            level = None
+        checked["battery_percent"] = level
+        for r in rules:
+            if r["kind"] != "battery_below":
+                continue
+            cursor = f"watch_battery_{r['id']}"
+            fire, fired = watch.battery_step(r["params"], level, _charging(bat), storage.get_cursor(cursor) == "fired")
+            storage.set_cursor(cursor, "fired" if fired else "armed")
+            if fire:
+                matches.append({"rule_id": r["id"], "rule": watch.describe(r["kind"], r["params"]),
+                                "source": "battery", "percent": level,
+                                "text": f"Phone battery is at {level}%. Plug it in soon.",
+                                "time": _fmt_time(int(time.time()))})
     if "notification" in kinds:
         since = _cursor_ts("watch_notifications")
         newest = since
@@ -775,8 +925,11 @@ def phone_brief(args: dict) -> dict:
             people.append({"from": m["from"], "time": m["date"], "text": _cap(m["body"], 160)})
         return {"from_people": people[:6], "bank_or_service_sms": bank}
 
+    notif_cache: list[dict] = []
+
     def notes():
-        items = [_norm_notification(n) for n in fetch_notifications() if not _is_noise(n)]
+        notif_cache.extend(fetch_notifications())
+        items = [_norm_notification(n) for n in notif_cache if not _is_noise(n)]
         items.sort(key=lambda i: i["ts"] or 0, reverse=True)
         return [{"app": i["app"], "title": i["title"], "text": _cap(i["text"], 160)} for i in items[:8]]
 
@@ -785,6 +938,17 @@ def phone_brief(args: dict) -> dict:
                    for m in sms_cache[:40] if (m["ts"] or 0) >= time.time() - 3 * 86400
                    for r in [scam.score(m["_full_body"])] if r["level"] == "high"]
         return flagged[:3]
+
+    def bills_soon():
+        due = due_bills(inbox_since(40, max_messages=400)[1], days_ahead=7, include_overdue=False)
+        return [{k: b[k] for k in ("biller", "amount_rs", "due_date", "days_left")} for b in due[:3]]
+
+    def deliveries_today():
+        groups = deliveries.group_updates(delivery_updates(sms_cache, notif_cache, time.time() - 2 * 86400))
+        today = [g for g in groups if g["status"] == "out_for_delivery" or
+                 (g["status"] in deliveries.ACTIVE and "today" in str(g.get("eta") or "").lower())]
+        today.sort(key=lambda g: -g["ts"])
+        return [{k: g.get(k) for k in ("merchant", "status", "item", "eta")} for g in today[:5]]
 
     def spending():
         if not _bool_setting("money_enabled", True):
@@ -803,6 +967,8 @@ def phone_brief(args: dict) -> dict:
         section("notifications", notes)
         if _bool_setting("scam_check_enabled", True):
             section("scam_alerts", scams)
+        section("bills_due_soon", bills_soon)
+        section("deliveries_today", deliveries_today)
         section("money", spending)
     except PhoneError as exc:
         return exc.to_result()
@@ -827,6 +993,9 @@ HANDLERS: dict[str, Callable[..., Any]] = {
     "phone_money_sync": phone_money_sync,
     "phone_money_summary": phone_money_summary,
     "phone_budget_set": phone_budget_set,
+    "phone_subscriptions": phone_subscriptions,
+    "phone_bills": phone_bills,
+    "phone_deliveries": phone_deliveries,
     "phone_scam_check": phone_scam_check,
     "phone_watch_add": phone_watch_add,
     "phone_watch_list": phone_watch_list,

@@ -1,6 +1,7 @@
 """Phone helper: auth, replay protection, validation, rate limits, mock endpoints."""
 from __future__ import annotations
 
+import datetime
 import json
 import secrets
 import time
@@ -174,3 +175,13 @@ def test_sms_list_argv_supports_old_and_new_termux(helper, app):
     assert call(helper, app, "GET", "/v1/sms?limit=3&box=all&from=%2B919000000104")[0] == 200
     argv = [a for a, _ in app.runner.calls if a[0] == "termux-sms-list"][-1]
     assert argv == ["termux-sms-list", "-d", "-n", "-l", "3", "-o", "0", "-t", "all", "-f", "+919000000104"]
+
+
+def test_mock_relative_dates_in_bodies(helper, app, tmp_path):
+    (tmp_path / "x.json").write_text('["{{date+7d}}", "{{date-3d|%d %b %Y}}"]', encoding="utf-8")
+    runner = helper.MockRunner(tmp_path)
+    week, back = json.loads(runner._fixture("x"))
+    assert week == (runner.started + datetime.timedelta(days=7)).strftime("%d-%m-%y")
+    assert back == (runner.started - datetime.timedelta(days=3)).strftime("%d %b %Y")
+    sms = call(helper, app, "GET", "/v1/sms?limit=100&box=all")[1]["data"]
+    assert "{{" not in json.dumps(sms) and "@" not in "".join(m["received"] for m in sms)

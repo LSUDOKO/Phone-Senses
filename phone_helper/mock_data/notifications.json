@@ -6,5 +6,6 @@
   {"id": 1005, "tag": "", "key": "0|com.google.android.apps.messaging|0|null|10120", "group": "", "packageName": "com.google.android.apps.messaging", "title": "VM-DEMOBK", "content": "482913 is your OTP for login to DemoBank NetBanking. Do not share it with anyone.", "when": "@0d 09:30:05"},
   {"id": 1006, "tag": "", "key": "0|com.spotify.music|0|null|10400", "group": "", "packageName": "com.spotify.music", "title": "Lo-fi beats", "content": "Demo Artist", "when": "@0d 09:00:00"},
   {"id": 1007, "tag": "", "key": "0|com.google.android.gm|0|null|10160", "group": "", "packageName": "com.google.android.gm", "title": "Exam timetable released", "content": "The end-semester timetable is now available on the portal.", "when": "@0d 08:15:00"},
-  {"id": 1008, "tag": "", "key": "0|in.amazon.mShop.android.shopping|0|null|10500", "group": "", "packageName": "in.amazon.mShop.android.shopping", "title": "Delivered: Demo USB-C cable", "content": "Your package was delivered to the front door.", "when": "@1d 17:30:00"}
+  {"id": 1008, "tag": "", "key": "0|in.amazon.mShop.android.shopping|0|null|10500", "group": "", "packageName": "in.amazon.mShop.android.shopping", "title": "Delivered: Demo USB-C cable", "content": "Your package was delivered to the front door.", "when": "@1d 17:30:00"},
+  {"id": 1009, "tag": "", "key": "0|in.amazon.mShop.android.shopping|1|null|10500", "group": "", "packageName": "in.amazon.mShop.android.shopping", "title": "Out for delivery: Demo Phone Case", "content": "Arriving today by 8 PM. Order #403-1234567-1234567", "when": "@0d 08:30:00"}
 ]

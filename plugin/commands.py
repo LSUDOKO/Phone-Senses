@@ -1,4 +1,4 @@
-"""``/phone`` slash command: quick status, ring, money, brief and pairing help."""
+"""``/phone`` slash command: quick status, ring, money, bills, deliveries, brief and pairing help."""
 from __future__ import annotations
 
 import json
@@ -7,7 +7,7 @@ from typing import Any
 from . import tools
 
 USAGE = ("Usage: /phone [status] | ring [seconds] | money [today|yesterday|week|month] | received [today|week] "
-         "| brief | pair")
+         "| bills [days] | deliveries | brief | pair")
 
 PAIR_HELP = """Pair Phone Senses with your Android phone:
 1. Install Termux and Termux:API from F-Droid; in Termux run: pkg install -y python termux-api git
@@ -42,6 +42,32 @@ def _money(res: dict, direction: str) -> str:
     return "\n".join(lines)
 
 
+def _bills(res: dict) -> str:
+    if not res.get("ok"):
+        return _err(res)
+    if not res["bills"]:
+        return res.get("note") or "No bills due."
+    lines = [f"Bills due: Rs {res['total_due_rs']:,.2f} in {res['count']} bill(s)"]
+    for b in res["bills"]:
+        left = b["days_left"]
+        when = ("date unknown" if left is None else f"overdue by {-left} day(s)" if left < 0
+                else "due today" if left == 0 else f"due {b['due_date']} (in {left} day(s))")
+        lines.append(f"  {b['biller']:<24} Rs {b['amount_rs']:>10,.2f}  {when}")
+    return "\n".join(lines)
+
+
+def _deliveries(res: dict) -> str:
+    if not res.get("ok"):
+        return _err(res)
+    if not res["deliveries"]:
+        return res.get("note") or "No deliveries."
+    lines = [f"Deliveries ({res['active']} on the way):"]
+    for d in res["deliveries"]:
+        extra = ", ".join(x for x in (d.get("item"), d.get("eta") and f"ETA {d['eta']}") if x)
+        lines.append(f"  {d['merchant']}: {d['status'].replace('_', ' ')}" + (f" ({extra})" if extra else ""))
+    return "\n".join(lines)
+
+
 def handle(raw_args: str = "", **kwargs: Any) -> str:
     """Entry point for ``/phone <args>``. Always returns text; never raises."""
     try:
@@ -67,6 +93,11 @@ def handle(raw_args: str = "", **kwargs: Any) -> str:
             group = "counterparty" if direction == "credit" else "category"
             return _money(_call("phone_money_summary", {"period": period, "direction": direction,
                                                         "group_by": group}), direction)
+        if cmd == "bills":
+            days = int(rest[0]) if rest and rest[0].isdigit() else 30
+            return _bills(_call("phone_bills", {"days_ahead": days}))
+        if cmd == "deliveries":
+            return _deliveries(_call("phone_deliveries"))
         if cmd == "brief":
             res = _call("phone_brief")
             if not res.get("ok"):
