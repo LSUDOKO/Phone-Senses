@@ -14,22 +14,30 @@ const RANGES: [number, number][] = [
   [133.9, 143.0], // phone under the bed: ring + webcam
   [186, 201], // outro
 ];
-const FADE = 5; // frames of dip at each join
+export const FADE = 5; // frames of dip at each join
 
 const LINES = vo.sections.flatMap((s) => s.lines);
-let acc = 0;
-const PLACED = RANGES.map(([a, b]) => {
-  const at = acc;
-  acc += b - a;
-  return { a, b, at };
-});
-export const CUT_SECONDS = acc + 1;
-/** VO lines remapped onto the cut's timeline, for music ducking. */
-const CUT_LINES = PLACED.flatMap(({ a, b, at }) =>
-  LINES.filter((l) => l.start >= a - 0.01 && l.end <= b + 0.01).map((l) => ({ start: l.start - a + at, end: l.end - a + at })),
-);
 
-const Dip: React.FC<{ dur: number; first: boolean; last: boolean }> = ({ dur, first, last }) => {
+/** Lay ranges end to end; returns placements, total seconds and the VO lines on the new timeline. */
+export const place = (ranges: [number, number][]) => {
+  let acc = 0;
+  const placed = ranges.map(([a, b]) => {
+    const at = acc;
+    acc += b - a;
+    return { a, b, at };
+  });
+  const lines = placed.flatMap(({ a, b, at }) =>
+    LINES.filter((l) => l.start >= a - 0.01 && l.end <= b + 0.01).map((l) => ({ start: l.start - a + at, end: l.end - a + at })),
+  );
+  return { placed, seconds: acc + 1, lines };
+};
+
+const CUT = place(RANGES);
+const PLACED = CUT.placed;
+export const CUT_SECONDS = CUT.seconds;
+const CUT_LINES = CUT.lines;
+
+export const Dip: React.FC<{ dur: number; first: boolean; last: boolean }> = ({ dur, first, last }) => {
   const frame = useCurrentFrame();
   const o = Math.min(first ? 1 : interpolate(frame, [0, FADE], [0, 1], { extrapolateRight: "clamp" }), last ? 1 : interpolate(frame, [dur - FADE, dur], [1, 0], { extrapolateLeft: "clamp" }));
   return <AbsoluteFill style={{ backgroundColor: C.ink, opacity: 1 - o }} />;

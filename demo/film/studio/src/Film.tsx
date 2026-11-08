@@ -27,7 +27,7 @@ export const musicVolume = (t: number, lines: { start: number; end: number }[] =
 };
 
 /** Burned-in captions: one short page at a time, the spoken word lit in ultramarine tint. */
-const Captions: React.FC = () => {
+export const Captions: React.FC<{ big?: boolean }> = ({ big = false }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
@@ -39,7 +39,7 @@ const Captions: React.FC = () => {
   const page = pages[i];
   const pop = interpolate(t, [page.start - 0.05, page.start + 0.12], [0, 1], clamp);
   return (
-    <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 46, pointerEvents: "none" }}>
+    <AbsoluteFill style={{ alignItems: "center", paddingBottom: big ? 0 : 46, justifyContent: big ? "center" : "flex-end", pointerEvents: "none" }}>
       <div
         style={{
           padding: "10px 22px",
@@ -50,7 +50,9 @@ const Captions: React.FC = () => {
           fontFamily: DISPLAY,
           fontWeight: 650,
           fontStretch: "104%",
-          fontSize: 40,
+          fontSize: big ? 64 : 40,
+          maxWidth: big ? 940 : undefined,
+          textAlign: "center",
           letterSpacing: "-0.01em",
           color: C.paper,
           opacity: pop,
@@ -85,7 +87,7 @@ const sfxCues = (): Sfx[] => {
   return cues;
 };
 
-export const Film: React.FC<{ music?: boolean }> = ({ music = true }) => {
+export const Film: React.FC<{ music?: boolean; captions?: boolean }> = ({ music = true, captions = true }) => {
   const { fps } = useVideoConfig();
   return (
     <AbsoluteFill style={{ backgroundColor: C.ink }}>
@@ -97,7 +99,7 @@ export const Film: React.FC<{ music?: boolean }> = ({ music = true }) => {
           </Sequence>
         ) : null;
       })}
-      <Captions />
+      {captions ? <Captions /> : null}
       {music ? <Audio src={staticFile("audio/music.mp3")} volume={(f) => musicVolume(f / fps)} /> : null}
       {LINES.map((l) => (
         <Sequence key={l.id} name={`vo ${l.id}`} from={Math.round(l.start * fps)} layout="none">
