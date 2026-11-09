@@ -18,6 +18,7 @@
           6.9
         ]
       ],
+      "speech": null,
       "pieces": [
         {
           "a": 4.0,
@@ -70,7 +71,7 @@
       "id": "b02-otp",
       "scene": "r02b-otp",
       "tag": "REAL PHONE · CODE BLURRED",
-      "start": 79.251,
+      "start": 79.253,
       "duration": 8.8,
       "phone": true,
       "webcam": false,
@@ -88,6 +89,7 @@
           890
         ]
       ],
+      "speech": null,
       "pieces": [
         {
           "a": 4.0,
@@ -165,11 +167,12 @@
       "id": "b03-money",
       "scene": "r03-money",
       "tag": "REAL PHONE · AMOUNTS HIDDEN",
-      "start": 88.048,
+      "start": 88.05,
       "duration": 4.466666666666667,
       "phone": true,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -211,11 +214,12 @@
       "id": "b04-upi",
       "scene": "r03b-upi",
       "tag": "REAL PHONE · AMOUNTS HIDDEN",
-      "start": 92.51,
+      "start": 92.512,
       "duration": 3.8666666666666667,
       "phone": true,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -257,11 +261,12 @@
       "id": "b05a-bills",
       "scene": "demo-bills",
       "tag": "DEMO PHONE · SYNTHETIC DATA",
-      "start": 96.384,
+      "start": 96.388,
       "duration": 2.7,
       "phone": false,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -303,11 +308,12 @@
       "id": "b05b-subscriptions",
       "scene": "demo-subscriptions",
       "tag": "DEMO PHONE · SYNTHETIC DATA",
-      "start": 99.084,
+      "start": 99.088,
       "duration": 2.7,
       "phone": false,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -349,11 +355,12 @@
       "id": "b06-scam",
       "scene": "r06-scam-check",
       "tag": "RE-CREATED · SENT TO MY OWN NUMBER",
-      "start": 101.771,
+      "start": 101.776,
       "duration": 5.7,
       "phone": true,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -399,11 +406,12 @@
       "id": "b07-text-mom",
       "scene": "r07-text-mom",
       "tag": "REAL PHONE · REAL SMS",
-      "start": 107.458,
+      "start": 107.465,
       "duration": 11.0,
       "phone": false,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -469,11 +477,12 @@
       "id": "b08-deny",
       "scene": "r08-deny",
       "tag": "REAL PHONE · NOTHING SENT",
-      "start": 118.471,
+      "start": 118.48,
       "duration": 7.6,
       "phone": false,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -529,14 +538,106 @@
       }
     },
     {
+      "id": "b08b-tripwire",
+      "scene": "r13-tripwire",
+      "tag": "REAL PHONE · ANYDESK SIGNAL STAGED",
+      "start": 126.096,
+      "duration": 17.6,
+      "phone": true,
+      "webcam": false,
+      "blur": [
+        [
+          0,
+          660,
+          720,
+          640,
+          0,
+          4.6
+        ]
+      ],
+      "speech": {
+        "at": 8.3,
+        "dur": 6.45,
+        "text": "Careful. This looks like a scam call. Never share an OTP, PIN or your screen."
+      },
+      "pieces": [
+        {
+          "a": 1.5,
+          "b": 6.0,
+          "out": 4.5,
+          "t0": 0.0,
+          "mark": "staged"
+        },
+        {
+          "a": 6.0,
+          "b": 18.6,
+          "out": 3.15,
+          "t0": 4.5
+        },
+        {
+          "a": 18.6,
+          "b": 39.5,
+          "out": 0.65,
+          "t0": 7.65,
+          "label": "scam guard running"
+        },
+        {
+          "a": 39.5,
+          "b": 45.95,
+          "out": 6.45,
+          "t0": 8.3,
+          "mark": "speech"
+        },
+        {
+          "a": 45.95,
+          "b": 63.6,
+          "out": 0.3,
+          "t0": 14.75
+        },
+        {
+          "a": 63.6,
+          "b": 65.0,
+          "out": 1.4,
+          "t0": 15.05
+        },
+        {
+          "a": 65.0,
+          "b": null,
+          "out": 1.15,
+          "t0": 16.45,
+          "mark": "hold"
+        }
+      ],
+      "labels": [
+        {
+          "text": "scam guard running",
+          "from": 7.65,
+          "to": 8.3
+        }
+      ],
+      "zoom": {
+        "row": 24,
+        "rows": 5,
+        "scale": 1.5,
+        "from": 16.45,
+        "to": 17.6,
+        "anchor": "center"
+      },
+      "callout": {
+        "text": "Scam call caught in progress",
+        "at": 16.7
+      }
+    },
+    {
       "id": "b09-watch",
       "scene": "r09c-watch-check",
       "tag": "RE-CREATED · SENT TO MY OWN NUMBER",
-      "start": 126.086,
+      "start": 143.68,
       "duration": 4.0,
       "phone": true,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -578,11 +679,12 @@
       "id": "b10-battery",
       "scene": "r11-battery-rule",
       "tag": "REAL PHONE · MOTO G34",
-      "start": 130.092,
+      "start": 147.687,
       "duration": 4.033333333333333,
       "phone": true,
       "webcam": false,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,
@@ -624,11 +726,12 @@
       "id": "b11-ring",
       "scene": "r12-ring",
       "tag": "REAL PHONE · UNDER THE BED",
-      "start": 134.113,
+      "start": 151.709,
       "duration": 11.9,
       "phone": true,
       "webcam": true,
       "blur": [],
+      "speech": null,
       "pieces": [
         {
           "a": 1.0,

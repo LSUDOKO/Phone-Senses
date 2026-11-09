@@ -57,15 +57,18 @@ def main(only: list[str]) -> int:
                                 "-ac", "1", str(wav)], check=True)
                 raw.unlink()
             dur = sf.info(str(wav)).duration
-            lines.append({"id": line["id"], "text": line["text"], "dur": dur, "pause": line.get("pause", 0.3)})
+            lines.append({"id": line["id"], "text": line["text"], "dur": dur, "pause": line.get("pause", 0.3),
+                          "hold": line.get("hold", 0.0)})
         # stretch the section to its minimum length by spreading extra silence across its pauses
-        natural = sum(l["dur"] + l["pause"] for l in lines)
+        # "hold": fixed extra silence after a line (e.g. the phone's own voice plays there); it takes no share
+        # of the stretch, so adding one doesn't move the other lines' pauses
+        natural = sum(l["dur"] + l["pause"] + l["hold"] for l in lines)
         extra = max(0.0, sec.get("min", 0) - natural)
         weight = sum(l["pause"] for l in lines) or 1.0
         for l in lines:
             l["start"], l["end"] = round(t, 3), round(t + l["dur"], 3)
-            t += l["dur"] + l["pause"] + extra * l["pause"] / weight
-            del l["dur"], l["pause"]
+            t += l["dur"] + l["pause"] + l["hold"] + extra * l["pause"] / weight
+            del l["dur"], l["pause"], l["hold"]
         timeline["sections"].append({"id": sec["id"], "title": sec["title"], "start": round(s_start, 3),
                                      "end": round(t, 3), "lines": lines})
     timeline["duration"] = round(t, 3)

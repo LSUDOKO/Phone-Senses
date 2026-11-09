@@ -151,7 +151,7 @@
       "id": "walk",
       "title": "Walkthrough",
       "start": 70.0,
-      "end": 146.0,
+      "end": 163.6,
       "lines": [
         {
           "id": "w1",
@@ -162,203 +162,209 @@
         {
           "id": "w2",
           "text": "Hermes reads what his phone sees, and puts the scam text right at the top.",
-          "start": 73.583,
-          "end": 77.639
+          "start": 73.584,
+          "end": 77.64
         },
         {
           "id": "w3",
           "text": "One-time codes stay hidden. When Hermes tried to reveal one, it had to ask. Nobody said yes, so it stayed hidden.",
-          "start": 79.251,
-          "end": 86.032
+          "start": 79.253,
+          "end": 86.034
         },
         {
           "id": "w4",
           "text": "Where did his money go? Every bank SMS, sorted by category.",
-          "start": 88.048,
-          "end": 91.703
+          "start": 88.05,
+          "end": 91.706
         },
         {
           "id": "w5",
           "text": "And every rupee that came in by UPI.",
-          "start": 92.51,
-          "end": 94.772
+          "start": 92.512,
+          "end": 94.774
         },
         {
           "id": "w6",
           "text": "Bills before they're late, and subscriptions, added up for the month.",
-          "start": 96.384,
-          "end": 99.756
+          "start": 96.388,
+          "end": 99.76
         },
         {
           "id": "w7",
           "text": "Then the text that almost got him. Hermes flags it, and shows why.",
-          "start": 101.771,
-          "end": 105.443
+          "start": 101.776,
+          "end": 105.448
         },
         {
           "id": "w8",
           "text": "Text Mom: I'll call you after the exam.",
-          "start": 107.458,
-          "end": 109.711
+          "start": 107.465,
+          "end": 109.717
         },
         {
           "id": "w9",
           "text": "Hermes stops, and shows the exact words.",
-          "start": 110.92,
-          "end": 113.254
+          "start": 110.927,
+          "end": 113.261
         },
         {
           "id": "w10",
           "text": "Allow once. It goes from his own SIM.",
-          "start": 114.463,
-          "end": 116.456
+          "start": 114.471,
+          "end": 116.463
         },
         {
           "id": "w11",
           "text": "One more text? He changes his mind. Deny. Nothing is sent, and Hermes doesn't try again.",
-          "start": 118.471,
-          "end": 124.071
+          "start": 118.48,
+          "end": 124.079
+        },
+        {
+          "id": "w16",
+          "text": "Then a stranger calls about his bank account, and asks him to install AnyDesk. Hermes connects the dots, and the phone warns him out loud.",
+          "start": 126.096,
+          "end": 134.18
         },
         {
           "id": "w12",
           "text": "A watch rule catches the delivery text, just once.",
-          "start": 126.086,
-          "end": 128.883
+          "start": 143.68,
+          "end": 146.478
         },
         {
           "id": "w13",
           "text": "Battery under twenty? He'll get a heads-up.",
-          "start": 130.092,
-          "end": 132.097
+          "start": 147.687,
+          "end": 149.693
         },
         {
           "id": "w14",
           "text": "That night, the phone is gone. Under the bed.",
-          "start": 134.113,
-          "end": 136.207
+          "start": 151.709,
+          "end": 153.804
         },
         {
           "id": "w15",
           "text": "One line to Hermes. It rings, speaks, vibrates and flashes.",
-          "start": 137.416,
-          "end": 141.164
+          "start": 155.014,
+          "end": 158.761
         }
       ]
     },
     {
       "id": "hood",
       "title": "Under the hood",
-      "start": 146.0,
-      "end": 166.0,
+      "start": 163.6,
+      "end": 183.6,
       "lines": [
         {
           "id": "h1",
           "text": "Follow one real request: what's my battery?",
-          "start": 146.0,
-          "end": 148.475
+          "start": 163.6,
+          "end": 166.075
         },
         {
           "id": "h2",
           "text": "The approval hook checks it first. A read passes.",
-          "start": 148.942,
-          "end": 151.793
+          "start": 166.542,
+          "end": 169.393
         },
         {
           "id": "h3",
           "text": "The request is signed with a secret that's never sent.",
-          "start": 152.26,
-          "end": 155.167
+          "start": 169.86,
+          "end": 172.767
         },
         {
           "id": "h4",
           "text": "A one-time nonce stops anyone replaying it.",
-          "start": 155.478,
-          "end": 158.195
+          "start": 173.078,
+          "end": 175.795
         },
         {
           "id": "h5",
           "text": "In Termux, a tiny helper asks Android directly.",
-          "start": 158.662,
-          "end": 161.81
+          "start": 176.262,
+          "end": 179.41
         },
         {
           "id": "h6",
           "text": "And the answer is back in about a second and a half.",
-          "start": 162.121,
-          "end": 164.755
+          "start": 179.721,
+          "end": 182.355
         }
       ]
     },
     {
       "id": "impact",
       "title": "Impact",
-      "start": 166.0,
-      "end": 186.0,
+      "start": 183.6,
+      "end": 203.6,
       "lines": [
         {
           "id": "i1",
           "text": "Before: hundreds of notifications, and an agent that couldn't see them.",
-          "start": 166.0,
-          "end": 169.829
+          "start": 183.6,
+          "end": 187.429
         },
         {
           "id": "i2",
           "text": "Now: one question, and Hermes knows his whole day.",
-          "start": 170.393,
-          "end": 173.316
+          "start": 187.993,
+          "end": 190.916
         },
         {
           "id": "i3",
           "text": "It reads the phone itself, not pictures of the screen.",
-          "start": 174.067,
-          "end": 176.887
+          "start": 191.667,
+          "end": 194.487
         },
         {
           "id": "i4",
           "text": "Texts, calls, photos and codes: all four ask him first.",
-          "start": 177.45,
-          "end": 180.927
+          "start": 195.05,
+          "end": 198.527
         },
         {
           "id": "i5",
           "text": "Codes stay hidden. The plugin talks only to his phone.",
-          "start": 181.49,
-          "end": 184.498
+          "start": 199.09,
+          "end": 202.098
         }
       ]
     },
     {
       "id": "outro",
       "title": "Outro",
-      "start": 186.0,
-      "end": 201.0,
+      "start": 203.6,
+      "end": 218.6,
       "lines": [
         {
           "id": "o1",
           "text": "Phone Senses. Your phone's senses, for Hermes.",
-          "start": 186.0,
-          "end": 188.63
+          "start": 203.6,
+          "end": 206.23
         },
         {
           "id": "o2",
           "text": "And it still asks before it touches anything.",
-          "start": 189.282,
-          "end": 191.373
+          "start": 206.882,
+          "end": 208.973
         },
         {
           "id": "o3",
           "text": "Built by Arpit Singh, in Hamirpur. Open source, for Hermes Agent.",
-          "start": 192.189,
-          "end": 196.344
+          "start": 209.789,
+          "end": 213.944
         },
         {
           "id": "o4",
           "text": "Try it tonight. Link below.",
-          "start": 196.996,
-          "end": 198.554
+          "start": 214.596,
+          "end": 216.154
         }
       ]
     }
   ],
-  "duration": 201.0
+  "duration": 218.6
 }

@@ -22,8 +22,8 @@ import {
 
 const ID = "impact";
 // From the brief; README/RESEARCH.md may lag (22 tools / 129 tests). Re-count before release.
-const TOOLS = 25;
-const TESTS = 186;
+const TOOLS = 26;
+const TESTS = 210;
 
 /** Before | Now split. */
 const Split: React.FC<{ at: number; nowAt: number; out: number }> = ({

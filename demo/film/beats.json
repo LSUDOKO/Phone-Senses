@@ -498,6 +498,86 @@
    "phone_off": true
   },
   {
+   "id": "b08b-tripwire",
+   "lines": [
+    "w16"
+   ],
+   "scene": "r13-tripwire",
+   "tag": "REAL PHONE · ANYDESK SIGNAL STAGED",
+   "segments": [
+    {
+     "speed": [
+      1.5,
+      6.0
+     ],
+     "rate": 1.0,
+     "mark": "staged"
+    },
+    {
+     "speed": [
+      6.0,
+      18.6
+     ],
+     "rate": 4.0
+    },
+    {
+     "squeeze": [
+      18.6,
+      39.5
+     ],
+     "out": 0.65,
+     "label": "scam guard running"
+    },
+    {
+     "speed": [
+      39.5,
+      45.95
+     ],
+     "rate": 1.0,
+     "mark": "speech"
+    },
+    {
+     "squeeze": [
+      45.95,
+      63.6
+     ],
+     "out": 0.3
+    },
+    {
+     "speed": [
+      63.6,
+      65.0
+     ],
+     "rate": 1.0
+    },
+    {
+     "hold": 65.0
+    }
+   ],
+   "zoom": {
+    "at": 65.0,
+    "find": "This is a scam",
+    "rows": 5,
+    "scale": 1.5,
+    "from": "hold"
+   },
+   "callout": {
+    "text": "Scam call caught in progress",
+    "at": "hold"
+   },
+   "phone_blur": [
+    [
+     0,
+     660,
+     720,
+     640,
+     0,
+     4.6
+    ]
+   ],
+   "speech_text": "Careful. This looks like a scam call. Never share an OTP, PIN or your screen."
+  },
+  {
    "id": "b09-watch",
    "lines": [
     "w12"

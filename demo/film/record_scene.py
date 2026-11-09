@@ -54,6 +54,9 @@ PHONE_ACTIONS = {
                   "-c", "android.intent.category.APP_MESSAGING"]],
     "recents": [["adb", "shell", "am", "start", "-a", "android.intent.action.VIEW", "-t", "vnd.android.cursor.dir/calls"]],
     "maps": [["adb", "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", "geo:0,0?q=Hamirpur"]],
+    # A harmless, clearly labelled stand-in for a scammer's screen-sharing app (nothing is installed).
+    "stage_anydesk": [["adb", "shell", "cmd", "notification", "post", "-t", "'AnyDesk installed'", "ps-staged",
+                       "'STAGED FOR THIS DEMO: session active, your screen is being shared'"]],
     "website": [["adb", "shell", "am", "start", "-a", "android.intent.action.VIEW",
                  "-d", "https://phone-senses.pages.dev"]],
 }

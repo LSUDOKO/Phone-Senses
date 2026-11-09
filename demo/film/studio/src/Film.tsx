@@ -10,13 +10,19 @@ import vo from "./data/vo.json";
 
 const ALL: Record<string, React.FC> = { ...SECTIONS, walk: Walkthrough };
 const LINES = vo.sections.flatMap((s) => s.lines);
+/** Stretches where the real phone speaks in the walkthrough: the music ducks for them too. */
+export const PHONE_SPEECH = beats.beats.flatMap((b) => {
+  const sp = (b as { speech?: { at: number; dur: number } | null }).speech;
+  return sp ? [{ start: b.start + sp.at, end: b.start + sp.at + sp.dur }] : [];
+});
+const DUCK = [...LINES, ...PHONE_SPEECH];
 const END_CARD_AT = LINES.find((l) => l.id === "o3")!.start - 0.1;
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
 export const filmDuration = (fps: number) => Math.round(vo.duration * fps) + fps; // 1 s tail after the last word
 
 /** Music under the voice: 0 → full between lines, ducked under speech, fades in/out at the ends. */
-export const musicVolume = (t: number, lines: { start: number; end: number }[] = LINES, total = vo.duration) => {
+export const musicVolume = (t: number, lines: { start: number; end: number }[] = DUCK, total = vo.duration) => {
   let duck = 0;
   for (const l of lines) {
     const d = Math.min(t - (l.start - 0.25), l.end + 0.35 - t);

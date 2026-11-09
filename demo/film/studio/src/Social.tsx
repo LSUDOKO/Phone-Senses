@@ -1,22 +1,22 @@
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, Field, Grain, Mark, MONO } from "./brand";
-import { Dip, place } from "./Cut";
+import { Dip, L, place, SEC } from "./Cut";
 import { Captions, Film, musicVolume } from "./Film";
 import beats from "./data/beats.json";
 
 /** 9:16 social cut (~54 s): the hook, the brief, scam + text Mom, find my phone, the name. */
 const RANGES: [number, number][] = [
-  [0, 17.5],
-  [70, 79.1],
-  [101.6, 117.0],
-  [133.9, 143.0],
-  [186, 189.2],
+  [0, SEC("title").end - 0.5],
+  [L("w1").start, L("w3").start - 0.15],
+  [L("w16").start - 0.1, L("w12").start - 0.1], // scam tripwire: the phone warns out loud
+  [L("w14").start - 0.2, L("w15").end + 1.8],
+  [SEC("outro").start, L("o1").end + 0.6],
 ];
 // walkthrough crops in to the terminal window so its text stays readable on a phone
 // (window: x 110, 1106 wide with the phone beside it; centered and 1306 wide without)
 const CROP = (t: number) => {
-  if (t < 70 || t >= 146) return { x: 0, w: 1920 };
+  if (t < SEC("walk").start || t >= SEC("walk").end) return { x: 0, w: 1920 };
   const b = beats.beats.find((x) => t >= x.start && t < x.start + x.duration);
   return b && !b.phone ? { x: 290, w: 1340 } : { x: 96, w: 1140 };
 };

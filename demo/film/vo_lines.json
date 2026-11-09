@@ -186,6 +186,12 @@
           "pause": 0.5
         },
         {
+          "id": "w16",
+          "text": "Then a stranger calls about his bank account, and asks him to install AnyDesk. Hermes connects the dots, and the phone warns him out loud.",
+          "pause": 0.0,
+          "hold": 9.5
+        },
+        {
           "id": "w12",
           "text": "A watch rule catches the delivery text, just once.",
           "pause": 0.3
@@ -206,7 +212,7 @@
           "pause": 1.2
         }
       ],
-      "min": 76
+      "min": 93.6
     },
     {
       "id": "hood",

@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, interpolate, OffthreadVideo, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { C, Callout, EASE_IN, EXPO, GlassWindow, PhoneFrame } from "../brand";
 import { clamp, FilmField, mono } from "../motion";
 import beats from "../data/beats.json";
@@ -96,6 +96,50 @@ const PhoneBlur: React.FC<{ boxes: number[][] }> = ({ boxes }) => {
   );
 };
 
+/** The phone's own spoken warning: its real recorded voice, plus a speech bubble with the words. */
+const PhoneSpeech: React.FC<{ id: string; at: number; dur: number; text: string; x: number; y: number }> = ({ id, at, dur, text, x, y }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const from = Math.round(at * fps);
+  const len = Math.round(dur * fps);
+  const p = interpolate(frame, [from, from + 10], [0, 1], { ...clamp, easing: EXPO });
+  const out = interpolate(frame, [from + len, from + len + 12], [1, 0], clamp);
+  const pulse = 0.5 + 0.5 * Math.sin((frame - from) / 3);
+  return (
+    <>
+      <Sequence from={from} durationInFrames={len} layout="none">
+        <Audio src={staticFile(`beats/${id}/speech.wav`)} volume={1} />
+      </Sequence>
+      <div
+        style={{
+          position: "absolute",
+          left: x,
+          top: y,
+          width: 560,
+          padding: "22px 26px",
+          borderRadius: 22,
+          background: "rgba(31,43,255,.94)",
+          color: C.paper,
+          boxShadow: "0 30px 90px rgba(31,43,255,.45), inset 0 1px 0 rgba(255,255,255,.35)",
+          opacity: p * out,
+          translate: `0 ${(1 - p) * 24}px`,
+          scale: `${0.96 + 0.04 * p}`,
+        }}
+      >
+        <div style={{ ...mono(15, { color: "rgba(241,241,238,.85)" }), display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+          <span style={{ display: "inline-flex", gap: 3, alignItems: "flex-end", height: 16 }}>
+            {[0.5, 1, 0.7, 0.9].map((h, i) => (
+              <span key={i} style={{ width: 4, borderRadius: 2, background: C.paper, height: 6 + 10 * h * (i % 2 ? pulse : 1 - pulse) }} />
+            ))}
+          </span>
+          The phone says, out loud
+        </div>
+        <div style={{ fontFamily: "Archivo", fontWeight: 700, fontSize: 34, lineHeight: 1.15, letterSpacing: "-0.01em" }}>“{text}”</div>
+      </div>
+    </>
+  );
+};
+
 const BeatView: React.FC<{ b: Beat; dur: number; first: boolean; last: boolean }> = ({ b, dur, first, last }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -138,6 +182,10 @@ const BeatView: React.FC<{ b: Beat; dur: number; first: boolean; last: boolean }
       ) : (
         <div style={{ position: "absolute", left: winLeft, top: WIN_TOP + WIN_H + 22, ...mono(16, { color: demo ? C.warn : C.mist }) }}>{demo ? `${b.tag} · fixtures, not my real bills` : b.tag}</div>
       )}
+      {(b as { speech?: { at: number; dur: number; text: string } }).speech ? (
+        <PhoneSpeech id={b.id} {...(b as { speech: { at: number; dur: number; text: string } }).speech}
+          x={winLeft + winW - 600} y={WIN_TOP + 400} />
+      ) : null}
       {b.webcam ? (
         <Sequence from={Math.round(webcamAt)} layout="none">
           <div

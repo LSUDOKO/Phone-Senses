@@ -140,10 +140,20 @@ def main(only: list[str]) -> int:
             subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", f"{b['webcam_start']:.3f}",
                             "-i", str(src / "webcam.mp4"), "-t", "24", "-c:v", "libx264", "-crf", "17", "-c:a", "aac", "-b:a", "192k",
                             "-movflags", "+faststart", str(dst / "webcam.mp4")], check=True)
+        speech = next((p for p in pieces if p.get("mark") == "speech"), None)
+        if speech and (src / "phone.mp4").exists():
+            # the phone's own voice for this stretch, cleaned up and made loud enough to hear over the music
+            subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", f"{speech['a']:.3f}", "-t", f"{speech['b'] - speech['a']:.3f}",
+                            "-i", str(src / "phone.mp4"), "-vn", "-af",
+                            "highpass=f=120,lowpass=f=9000,acompressor=threshold=-24dB:ratio=3:attack=5:release=120,"
+                            "loudnorm=I=-15:TP=-1.5:LRA=7,afade=t=in:d=0.05,afade=t=out:st=" + f"{speech['b'] - speech['a'] - 0.15:.3f}" + ":d=0.15",
+                            "-ar", "48000", "-ac", "1", str(dst / "speech.wav")], check=True)
         z = b.get("zoom")
         info = {"id": b["id"], "scene": b["scene"], "tag": b["tag"], "start": round(start, 3), "duration": length,
                 "phone": (dst / "phone.mp4").exists(), "webcam": (dst / "webcam.mp4").exists(),
                 "blur": b.get("phone_blur", []),
+                "speech": ({"at": round(speech["t0"], 3), "dur": round(speech["out"], 3), "text": b.get("speech_text", "")}
+                           if speech and (dst / "speech.wav").exists() else None),
                 "pieces": [{k: round(v, 3) if isinstance(v, float) else v for k, v in p.items()} for p in pieces]}
         marks = {p["mark"]: (p["t0"], p["t0"] + p["out"]) for p in pieces if "mark" in p}
         info["labels"] = [{"text": p["label"], "from": round(p["t0"], 3), "to": round(p["t0"] + p["out"], 3)} for p in pieces if "label" in p]

@@ -5,14 +5,17 @@ import { Film, musicVolume } from "./Film";
 import vo from "./data/vo.json";
 
 /** Ranges of the master film (seconds) that make the <90 s hackathon cut, in order. */
+/** Look up a voice line or section on the film timeline (seconds), so ranges follow the voice-over. */
+export const L = (id: string) => vo.sections.flatMap((s) => s.lines).find((l) => l.id === id)!;
+export const SEC = (id: string) => vo.sections.find((s) => s.id === id)!;
+
+/** Ranges of the master film (seconds) that make the <90 s hackathon cut, in order. */
 const RANGES: [number, number][] = [
-  [0, 17.5], // cold open + title
-  [50, 57.6], // the fix: Phone Senses, a Hermes plugin
-  [65.6, 68.5], // here's his real day
-  [70, 79.1], // morning brief, scam on top
-  [101.6, 126.0], // scam check, text Mom (allow), deny
-  [133.9, 143.0], // phone under the bed: ring + webcam
-  [186, 201], // outro
+  [0, SEC("title").end - 0.5], // cold open + title
+  [L("k1").start, L("k2").end + 0.6], // the fix: Phone Senses, a Hermes plugin
+  [L("w1").start, L("w3").start - 0.15], // morning brief, scam on top
+  [L("w8").start - 0.15, L("w12").start - 0.1], // text Mom (allow), deny, scam tripwire on the real phone
+  [SEC("outro").start, SEC("outro").end], // outro
 ];
 export const FADE = 5; // frames of dip at each join
 

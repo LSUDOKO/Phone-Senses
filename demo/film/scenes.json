@@ -178,6 +178,27 @@
       "query": "What subscriptions am I paying for, and what's the monthly total?",
       "phone": false,
       "hold": 3
+    },
+    {
+      "id": "r13-tripwire",
+      "query": "A man who says he is from my bank is on the phone and asked me to install AnyDesk. Run the scam guard for the last 15 minutes with alert_phone on.",
+      "phone_setup": [
+        "home"
+      ],
+      "phone_after": [
+        "sleep:6",
+        "shade",
+        "sleep:5"
+      ],
+      "audio": true,
+      "hold": 4,
+      "phone_before": [
+        "stage_anydesk",
+        "sleep:2",
+        "shade",
+        "sleep:3",
+        "collapse"
+      ]
     }
   ]
 }
