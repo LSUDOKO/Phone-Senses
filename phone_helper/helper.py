@@ -110,8 +110,12 @@ class RateLimiter:
 class MockRunner:
     """Answers termux-* argv with synthetic fixtures from mock_data/. Never runs anything."""
 
-    def __init__(self, data_dir: Path = MOCK_DIR):
+    def __init__(self, data_dir: Path = MOCK_DIR, scenario: str | None = None):
         self.data_dir = data_dir
+        # Extra fixtures appended to the base ones, e.g. mock_data/scenarios/scam/ (a scam call in progress).
+        self.scenario_dir = data_dir / "scenarios" / scenario if scenario else None
+        if self.scenario_dir and not self.scenario_dir.is_dir():
+            raise ValueError(f"unknown mock scenario: {scenario}")
         self.calls: list[tuple[list[str], str | None]] = []   # recorded for tests
         self.sent_sms: list[dict] = []
         # Pinned at start so fixture timestamps (and transaction ids) are stable across requests.
@@ -128,7 +132,12 @@ class MockRunner:
         """Fixture text with relative dates made absolute: "@2d 14:02:00" (two days ago) for
         timestamps, and inside message bodies {{date+7d}} (15-11-26) or {{date-3d|%d %b %Y}}."""
         text = (self.data_dir / f"{name}.json").read_text(encoding="utf-8")
+        extra = self.scenario_dir / f"{name}.json" if self.scenario_dir else None
+        if extra and extra.is_file():   # scenario items first: they are the newest
+            text = json.dumps(json.loads(extra.read_text(encoding="utf-8")) + json.loads(text))
         now = self.started
+        # "@now-12m": minutes before the helper started (scenario events happening right now)
+        text = re.sub(r'"@now-(\d+)m"', lambda m: f'"{now - datetime.timedelta(minutes=int(m.group(1))):%Y-%m-%d %H:%M:%S}"', text)
         midnight = now.replace(hour=0, minute=0, second=0)
         text = re.sub(r"\{\{date([+-]\d+)d(?:\|([^}]+))?\}\}",
                       lambda m: (now + datetime.timedelta(days=int(m.group(1)))).strftime(m.group(2) or "%d-%m-%y"),
@@ -310,6 +319,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--pair", action="store_true", help="generate a new pairing code and exit")
     ap.add_argument("--mock", action="store_true", help="serve synthetic data (for laptops and demos)")
+    ap.add_argument("--mock-scenario", choices=["scam"], help="with --mock: add a scenario, e.g. 'scam' (a scam call in progress)")
     ap.add_argument("--secret-file", type=Path, default=DEFAULT_SECRET_FILE)
     args = ap.parse_args(argv)
 
@@ -328,7 +338,7 @@ def main(argv: list[str] | None = None) -> int:
               file=sys.stderr)
         return 2
 
-    runner = MockRunner() if args.mock else commands.SubprocessRunner()
+    runner = MockRunner(scenario=args.mock_scenario) if args.mock else commands.SubprocessRunner()
     app = App(secret, runner, mock=args.mock)
     server = ThreadingHTTPServer((args.host, args.port), make_handler(app))
     mode = "MOCK data" if args.mock else "Termux:API"

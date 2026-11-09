@@ -4,14 +4,14 @@
 
 <p align="center">
   <b>Give <a href="https://hermes-agent.nousresearch.com">Hermes Agent</a> the senses of your own Android phone.</b><br>
-  Notifications, SMS, UPI money, scam warnings and find my phone, through Termux:API.<br>
+  Notifications, SMS, UPI money, a live scam tripwire and find my phone, through Termux:API.<br>
   Hermes asks before it sends anything.
 </p>
 
 <p align="center">
   <a href="https://github.com/LSUDOKO/Phone-Senses/actions/workflows/tests.yml"><img alt="tests" src="https://github.com/LSUDOKO/Phone-Senses/actions/workflows/tests.yml/badge.svg"></a>
-  <img alt="186 tests" src="https://img.shields.io/badge/tests-186%20passing-1F2BFF">
-  <img alt="25 tools" src="https://img.shields.io/badge/tools-25-1F2BFF">
+  <img alt="210 tests" src="https://img.shields.io/badge/tests-210%20passing-1F2BFF">
+  <img alt="26 tools" src="https://img.shields.io/badge/tools-26-1F2BFF">
   <img alt="Hermes Agent 0.23+" src="https://img.shields.io/badge/Hermes%20Agent-0.23%2B-050507">
   <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-050507">
   <img alt="stdlib only" src="https://img.shields.io/badge/runtime%20deps-none-050507">
@@ -30,6 +30,8 @@
 - **No screen tapping.** Each question is one Android API call, not 15 screenshots and taps.
 - **Your own phone, your own SIM.** No cloud phone numbers, no third-party services.
 - **Safe by design.** Signed requests, approval for every send, OTPs hidden, no SMS text stored.
+- **Catches a scam while it happens.** The scam tripwire links an unsaved caller, a screen-sharing app,
+  an OTP and money leaving, then warns you out loud on the phone. [How it works ↓](#scam-tripwire)
 
 > *phone-harness gives Hermes hands on your phone. Phone Senses gives it the phone's senses.*
 
@@ -80,6 +82,32 @@ Sending an SMS, placing a call, taking a photo and revealing an OTP always open 
 <td width="50%"><img src="site/media/location.gif" alt="Phone location with a Maps link"><br><sub><b>demo phone</b> · "Where is my phone?"</sub></td>
 </tr></table>
 
+## Scam tripwire
+Indian phone frauds ("KYC update", "digital arrest", fake bank support) follow a sequence, not a single
+message. No single SMS looks bad enough, but the order and timing give the scam away:
+
+```
+unsaved caller (6 min)  →  "AnyDesk installed"  →  screen being shared  →  OTP SMS  →  ₹24,999 debited
+        high                      high                    high              CRITICAL       CRITICAL
+```
+
+`phone_scam_guard` reads the last few minutes of calls, notifications, SMS and bank debits together and
+returns a level (clear, low, high, critical), the timeline and plain advice: hang up, stop sharing,
+decline the collect request, call **1930** (National Cyber Crime Helpline). With `alert_phone` the
+phone shows a warning and says it out loud, right in the middle of the call. The OTP itself never
+leaves the plugin.
+
+- **On demand:** "Someone from my bank is on the phone, is this a scam?" or `/phone guard`.
+- **Always on:** add a `scam_guard` watch rule and run `phone_watch_check` with `notify_phone` from a
+  Hermes cron job every few minutes. Each incident alerts once, and again only if it escalates.
+- **Try it without a scam:** `python phone_helper/helper.py --mock --mock-scenario scam` plays a full
+  scam call in progress with synthetic data.
+
+A screen-tapping agent only sees one screen at a time, and a single-message scam filter only sees one
+SMS. The tripwire needs both history and every sensor at once, which is why it lives here.
+Limits: the call log shows a call only after it ends, so during the call the warning comes from the
+screen-sharing app, the OTP or the debit. Detection is rule-based: a warning, not a guarantee.
+
 ## What you can ask
 | You say | What happens |
 |---|---|
@@ -88,6 +116,7 @@ Sending an SMS, placing a call, taking a photo and revealing an OTP always open 
 | "How much did I receive by UPI today?" | Today's incoming payments: handy for shop owners |
 | "Text Rahul I'm 10 minutes late" | Looks up Rahul. If there are two, it asks which one. Then Hermes shows an approval prompt with the exact number and text. |
 | "Is this SMS a scam?" | A risk level and the reasons: fake KYC, disconnection threats, look-alike links |
+| "A caller from my bank asked me to install AnyDesk" | The scam tripwire: the call, apps, codes and debits of the last minutes together, with a spoken warning on the phone |
 | "Tell me when my order is out for delivery" | A watch rule. Run `phone_watch_check` from a Hermes cron job to get alerts. |
 | "Find my phone" | The phone rings at full volume, speaks, vibrates and flashes. Then the volume is restored. |
 | "What bills are due soon?" | Electricity, broadband, mobile and card bills found in your SMS, overdue ones first |
@@ -119,7 +148,8 @@ Slash command: `/phone`, `/phone ring`, `/phone money week`, `/phone received to
 | `phone_money_summary` | Totals by category, counterparty or day; top transactions; budget use | |
 | `phone_budget_set` | Monthly budget per category | |
 | `phone_scam_check` | Scam score for a message or recent SMS | |
-| `phone_watch_add` / `_list` / `_remove` / `_check` | Watch rules for notifications, SMS, big debits and low battery | |
+| `phone_scam_guard` | Scam tripwire: calls + screen-sharing apps + OTPs + debits of the last minutes, with an optional spoken warning | |
+| `phone_watch_add` / `_list` / `_remove` / `_check` | Watch rules for notifications, SMS, big debits, low battery and scams in progress | |
 | `phone_bills` | Bills due soon and overdue, from biller SMS | |
 | `phone_deliveries` | Parcel status per shipment from courier/shop SMS | |
 | `phone_subscriptions` | Recurring charges with cadence, next date and monthly total | |
@@ -285,7 +315,7 @@ Phone Senses is that API layer for Hermes. It pairs well with screen-driving plu
 
 ## Development
 ```bash
-python -m pytest -q                                  # 186 tests, no phone needed, about 2 seconds
+python -m pytest -q                                  # 210 tests, no phone needed, about 2 seconds
 hermes plugins validate plugin --install-deps        # catalog checks
 ```
 Repository layout: `plugin/` (the Hermes plugin, catalog `subdir`), `phone_helper/` (runs on the phone),

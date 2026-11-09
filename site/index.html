@@ -213,7 +213,7 @@
   .sheet .ask li { color: var(--ink); }
 
   /* ---------- new ---------- */
-  .new-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px dashed var(--rule); border-left: 1px dashed var(--rule); }
+  .new-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px dashed var(--rule); border-left: 1px dashed var(--rule); }
   .new-card { position: relative; display: flex; flex-direction: column; min-height: 280px; padding: 24px 24px 28px; border-right: 1px dashed var(--rule); border-bottom: 1px dashed var(--rule); transition: background-color .5s var(--ease); }
   .new-card:hover { background: rgba(31,43,255,.08); }
   .new-card h3 { margin: 40px 0 10px; font: 700 24px/1.15 var(--display); font-stretch: 106%; letter-spacing: -.02em; }
@@ -563,13 +563,14 @@
     <div class="wrap">
       <div class="sec-top" aria-hidden="true"><span><svg class="spark"><use href="#spark"/></svg>02 — New in this release</span><span>Shipped · tested on a real phone</span></div>
       <div class="head">
-        <h2 id="new-h" class="chrome h2--sm" data-split>Four new senses.</h2>
-        <p class="lede" data-reveal>They read the same SMS and notifications, keep only what they need, and bring the plugin to 25 tools.</p>
+        <h2 id="new-h" class="chrome h2--sm" data-split>Five new senses.</h2>
+        <p class="lede" data-reveal>They read the same SMS and notifications, keep only what they need, and bring the plugin to 26 tools.</p>
       </div>
       <div class="new-grid" data-stagger>
         <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Bills due</h3><p>Upcoming bill, EMI and credit card dues, read from the reminder texts your bank and biller already send.</p><p class="q">What bills are due this week?</p></article>
         <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Deliveries</h3><p>Order and courier status from Amazon, Flipkart, Swiggy and courier messages, in one list.</p><p class="q">Where are my deliveries?</p></article>
         <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Subscriptions</h3><p>Recurring debits grouped by merchant, with what they add up to each month.</p><p class="q">What am I paying for every month?</p></article>
+        <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Scam tripwire</h3><p>An unsaved caller, then AnyDesk, then an OTP? It links the signals and warns you out loud on the phone, mid-call.</p><p class="q">Someone from my bank is on the phone. Is this a scam?</p></article>
         <article class="new-card"><span><span class="tag tag--new">New</span></span><h3>Battery watch</h3><p>An alert in your chat when the phone drops below a battery level you pick.</p><p class="q">Tell me when my phone drops below 20%.</p></article>
       </div>
     </div>
@@ -645,7 +646,7 @@
         </div>
         <div class="facts" data-stagger>
           <div class="fact"><span class="fact__v chrome"><span class="sr-only">25</span><span aria-hidden="true" data-count="25">25</span></span><span class="fact__l">tools Hermes can call on your phone</span></div>
-          <div class="fact"><span class="fact__v chrome"><span class="sr-only">186</span><span aria-hidden="true"><span data-count="186">186</span></span></span><span class="fact__l">automated tests in the repo</span></div>
+          <div class="fact"><span class="fact__v chrome"><span class="sr-only">210</span><span aria-hidden="true"><span data-count="210">210</span></span></span><span class="fact__l">automated tests in the repo</span></div>
           <div class="fact"><span class="fact__v chrome"><span class="sr-only">4</span><span aria-hidden="true" data-count="4">4</span></span><span class="fact__l">actions that always ask first: SMS, call, photo, OTP reveal</span></div>
           <div class="fact"><span class="fact__v chrome"><span class="sr-only">0</span><span aria-hidden="true">0</span></span><span class="fact__l">third-party services, and no telemetry</span></div>
         </div>

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import re
 
-KINDS = ("notification", "sms", "debit_over", "battery_below")
+KINDS = ("notification", "sms", "debit_over", "battery_below", "scam_guard")
 REARM_MARGIN = 5   # battery_below fires again only after the level rose above percent + this
 
 
@@ -21,6 +21,8 @@ def build_rule(args: dict) -> tuple[str, dict]:
         params = {k: str(args[k]).strip()[:80] for k in ("from_number", "contains") if str(args.get(k) or "").strip()}
         if not params:
             raise ValueError("an sms rule needs 'from_number' and/or 'contains'")
+    elif kind == "scam_guard":
+        params = {}
     elif kind == "battery_below":
         try:
             percent = int(args.get("percent"))
@@ -49,6 +51,8 @@ def describe(kind: str, params: dict) -> str:
         return f"debit over Rs {params['amount_paise'] / 100:,.2f}"
     if kind == "battery_below":
         return f"battery below {params['percent']}%"
+    if kind == "scam_guard":
+        return "scam in progress (call + screen sharing + OTP + money)"
     bits = [f"{k.replace('_number', '')} '{v}'" for k, v in params.items() if k != "label"]
     return f"{kind}: " + " and ".join(bits)
 

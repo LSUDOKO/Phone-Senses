@@ -169,13 +169,26 @@ PHONE_SCAM_CHECK = _schema(
     {"text": {"type": "string", "description": "Message to check. Leave empty to check recent SMS."},
      "limit": _int("Recent SMS to check when no text is given", 30, 1, 100)})
 
+PHONE_SCAM_GUARD = _schema(
+    "phone_scam_guard",
+    "Scam tripwire: checks the last few minutes of calls, notifications, SMS and bank debits TOGETHER for "
+    "the sequence of a phone scam in progress (an unsaved caller, then a screen-sharing app like AnyDesk, "
+    "then an OTP, a UPI collect request or a debit). Returns a level (clear, low, high, critical), the "
+    "timeline and what to do. OTP codes are never returned. With alert_phone the phone also shows a "
+    "warning and says it out loud. Use when the user is on a suspicious call or asks 'is this a scam "
+    "call?'; for automatic protection add a watch rule of kind 'scam_guard'.",
+    {"minutes": _int("How far back to look", 30, 5, 180),
+     "alert_phone": {"type": "boolean", "default": False,
+                     "description": "If a scam pattern is found, warn on the phone (notification + spoken)"}})
+
 PHONE_WATCH_ADD = _schema(
     "phone_watch_add",
     "Add a watch rule. phone_watch_check reports new notifications or SMS that match it (each item "
     "once). Kinds: 'notification' (app and/or contains), 'sms' (from_number and/or contains), "
     "'debit_over' (amount_rs), 'battery_below' (percent: alerts once when the battery drops below it "
-    "while not charging, and again only after it charged above percent + 5).",
-    {"kind": _enum("Rule type", ["notification", "sms", "debit_over", "battery_below"], "notification"),
+    "while not charging, and again only after it charged above percent + 5), 'scam_guard' (no options: "
+    "alerts once per incident when phone_scam_guard finds a scam in progress).",
+    {"kind": _enum("Rule type", ["notification", "sms", "debit_over", "battery_below", "scam_guard"], "notification"),
      "app": {"type": "string", "description": "notification: app name or package"},
      "contains": {"type": "string", "description": "notification/sms: text to look for (case-insensitive)"},
      "from_number": {"type": "string", "description": "sms: sender number or id"},
@@ -193,10 +206,10 @@ PHONE_WATCH_REMOVE = _schema(
 
 PHONE_WATCH_CHECK = _schema(
     "phone_watch_check",
-    "Check new notifications, SMS and the battery level since the last check against the watch rules and "
+    "Check new notifications, SMS, the battery level and the scam tripwire since the last check against the watch rules and "
     "return matches. Each item matches only once. Good to run from a scheduled (cron) job." + UNTRUSTED,
     {"notify_phone": {"type": "boolean", "default": False,
-                      "description": "Also show a notification on the phone for each match"}})
+                      "description": "Also show a notification on the phone for each match (scam_guard matches are also spoken aloud)"}})
 
 PHONE_BRIEF = _schema(
     "phone_brief",

@@ -41,6 +41,7 @@ TOOL_SCHEMAS = {
     "phone_bills": schemas.PHONE_BILLS,
     "phone_deliveries": schemas.PHONE_DELIVERIES,
     "phone_scam_check": schemas.PHONE_SCAM_CHECK,
+    "phone_scam_guard": schemas.PHONE_SCAM_GUARD,
     "phone_watch_add": schemas.PHONE_WATCH_ADD,
     "phone_watch_list": schemas.PHONE_WATCH_LIST,
     "phone_watch_remove": schemas.PHONE_WATCH_REMOVE,

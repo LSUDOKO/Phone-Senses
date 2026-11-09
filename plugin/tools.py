@@ -15,7 +15,7 @@ from collections import OrderedDict
 from pathlib import Path
 from typing import Any, Callable
 
-from . import client, storage, subscriptions, watch
+from . import client, storage, subscriptions, tripwire, watch
 from .client import PhoneError
 from .parsers import bills, deliveries, money, otp, scam
 
@@ -776,6 +776,68 @@ def phone_scam_check(args: dict) -> dict:
     return _ok(checked=limit, flagged=len(flagged), messages=flagged[:10])
 
 
+def scam_guard_check(minutes: int = 30) -> dict:
+    """Read calls, notifications, SMS and debits of the last ``minutes`` and assess them together."""
+    now = int(time.time())
+    since = now - minutes * 60
+    c = client.get_client()
+    events: list[dict] = []
+    for call in c.get("/v1/calls", {"limit": 30}) or []:
+        ts = _parse_time(call.get("date"))
+        name = call.get("name")
+        ev = tripwire.call_event({"name": None if name in (None, "", "UNKNOWN_CALLER") else name,
+                                  "number": call.get("phone_number"), "type": call.get("type"),
+                                  "duration": call.get("duration"), "ts": ts})
+        if ev:
+            events.append(ev)
+    for n in fetch_notifications():
+        item = _norm_notification(n)
+        # skip our own alerts ("Phone Senses: ...") so a warning never counts as a new signal
+        if (item["ts"] or 0) >= since and not str(item["title"] or "").startswith("Phone Senses"):
+            events.extend(tripwire.notification_events(item))
+    recent_sms = [m for m in fetch_sms(40, "inbox") if (m["ts"] or 0) >= since]
+    for m in recent_sms:
+        events.extend(tripwire.sms_events(m))
+    for t in _parse_messages(recent_sms):
+        ev = tripwire.debit_event(t)
+        if ev:
+            events.append(ev)
+    result = tripwire.assess(events, now, minutes)
+    for e in result["timeline"]:
+        e["time"] = _fmt_time(e.pop("ts"))
+        if "amount_paise" in e:
+            e["amount_rs"] = _rs(e.pop("amount_paise"))
+    return result
+
+
+def _alert_phone(result: dict) -> list[str]:
+    """Warn on the phone itself: a notification, then the warning spoken aloud. Returns what was done."""
+    c = client.get_client()
+    done = []
+    try:
+        c.post("/v1/notify", {"title": "Phone Senses: possible scam in progress"[:100],
+                              "content": " ".join(result["advice"][:2])[:300]})
+        done.append("notification")
+    except PhoneError:
+        pass
+    try:
+        c.post("/v1/speak", {"text": tripwire.spoken_warning(result)}, timeout=70)
+        done.append("spoken")
+    except PhoneError:
+        pass
+    return done
+
+
+@tool
+def phone_scam_guard(args: dict) -> dict:
+    minutes = _int_arg(args, "minutes", 30, 5, 180)
+    result = scam_guard_check(minutes)
+    if result["alert"] and _bool_arg(args, "alert_phone", False):
+        result["phone_alerted"] = _alert_phone(result)
+    result.pop("incident", None)
+    return _ok(**result)
+
+
 @tool
 def phone_watch_add(args: dict) -> dict:
     kind, params = watch.build_rule(args)
@@ -831,6 +893,20 @@ def phone_watch_check(args: dict) -> dict:
                                 "source": "battery", "percent": level,
                                 "text": f"Phone battery is at {level}%. Plug it in soon.",
                                 "time": _fmt_time(int(time.time()))})
+    if "scam_guard" in kinds:
+        guard = scam_guard_check(30)
+        checked["scam_guard"] = guard["level"]
+        key = f"{guard['incident']}:{guard['level']}" if guard["alert"] else None
+        if key and storage.get_cursor("watch_scam_guard") != key:   # each incident (and escalation) once
+            storage.set_cursor("watch_scam_guard", key)
+            rule = next(r for r in rules if r["kind"] == "scam_guard")
+            match = {"rule_id": rule["id"], "rule": watch.describe(rule["kind"], rule["params"]),
+                     "source": "scam_guard", "level": guard["level"], "signals": guard["signals"],
+                     "text": " ".join(guard["advice"][:2]), "advice": guard["advice"],
+                     "time": _fmt_time(int(time.time()))}
+            if args.get("notify_phone"):
+                match["phone_alerted"] = _alert_phone(guard)
+            matches.append(match)
     if "notification" in kinds:
         since = _cursor_ts("watch_notifications")
         newest = since
@@ -868,7 +944,7 @@ def phone_watch_check(args: dict) -> dict:
         storage.set_cursor("watch_sms", str(newest))
     if matches and args.get("notify_phone"):
         c = client.get_client()
-        for match in matches[:5]:
+        for match in [m for m in matches if m["source"] != "scam_guard"][:5]:
             try:
                 c.post("/v1/notify", {"title": f"Phone Senses: {match['rule']}"[:100],
                                       "content": otp.mask_text(str(match.get("title") or match.get("text")
@@ -997,6 +1073,7 @@ HANDLERS: dict[str, Callable[..., Any]] = {
     "phone_bills": phone_bills,
     "phone_deliveries": phone_deliveries,
     "phone_scam_check": phone_scam_check,
+    "phone_scam_guard": phone_scam_guard,
     "phone_watch_add": phone_watch_add,
     "phone_watch_list": phone_watch_list,
     "phone_watch_remove": phone_watch_remove,

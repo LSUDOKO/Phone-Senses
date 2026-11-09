@@ -1,4 +1,4 @@
-"""``/phone`` slash command: quick status, ring, money, bills, deliveries, brief and pairing help."""
+"""``/phone`` slash command: quick status, ring, money, bills, deliveries, scam guard, brief and pairing help."""
 from __future__ import annotations
 
 import json
@@ -7,7 +7,7 @@ from typing import Any
 from . import tools
 
 USAGE = ("Usage: /phone [status] | ring [seconds] | money [today|yesterday|week|month] | received [today|week] "
-         "| bills [days] | deliveries | brief | pair")
+         "| bills [days] | deliveries | guard | brief | pair")
 
 PAIR_HELP = """Pair Phone Senses with your Android phone:
 1. Install Termux and Termux:API from F-Droid; in Termux run: pkg install -y python termux-api git
@@ -98,6 +98,15 @@ def handle(raw_args: str = "", **kwargs: Any) -> str:
             return _bills(_call("phone_bills", {"days_ahead": days}))
         if cmd == "deliveries":
             return _deliveries(_call("phone_deliveries"))
+        if cmd == "guard":
+            res = _call("phone_scam_guard", {"alert_phone": True})
+            if not res.get("ok"):
+                return _err(res)
+            if not res["alert"]:
+                return f"Scam guard: {res['level']}. No scam pattern in the last {res['window_minutes']} minutes."
+            steps = " → ".join(e["what"] for e in res["timeline"])
+            return (f"⚠ Scam guard: {res['level'].upper()}\n{steps}\n- " + "\n- ".join(res["advice"])
+                    + ("\n(The phone was warned out loud.)" if res.get("phone_alerted") else ""))
         if cmd == "brief":
             res = _call("phone_brief")
             if not res.get("ok"):

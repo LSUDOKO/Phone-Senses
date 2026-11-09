@@ -7,6 +7,13 @@ and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Added
+- **Scam tripwire** (`phone_scam_guard`): reads calls, notifications, SMS and debits of the last few
+  minutes together and spots a phone scam in progress: an unsaved caller, a screen-sharing app
+  (AnyDesk, TeamViewer QuickSupport, RustDesk, AirDroid, screen casting), an OTP, a UPI collect request,
+  money leaving. Levels clear / low / high / critical with plain advice (hang up, stop sharing, call
+  1930). With `alert_phone` the phone shows a warning and says it out loud. OTP codes never leave
+  the plugin. Watch kind `scam_guard` alerts once per incident from a cron job; `/phone guard`.
+- Mock helper scenarios: `--mock --mock-scenario scam` adds a scam call in progress to the fixtures.
 - `phone_bills`: upcoming bills and dues from SMS (electricity, water, gas, broadband, postpaid,
   credit card statements, EMIs, insurance) with amount, due date and days left. A later payment
   confirmation from the same biller clears the due. Nothing is stored.
