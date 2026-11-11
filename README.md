@@ -36,51 +36,58 @@
 > *phone-harness gives Hermes hands on your phone. Phone Senses gives it the phone's senses.*
 
 ## See it work
-Every GIF replays a real Hermes Agent 0.23 session with this plugin.
-- **real phone:** ran on a moto g34 (Android 15) over Termux:API.
-- **demo phone:** uses the built-in mock helper, so no one's private messages, bank SMS or location are published.
+Every clip is a **real Hermes Agent session**, step by step. Left: Hermes exactly as it looked in the
+terminal, in its own colours. Right: the phone, recorded at the same moment. Steps along the top show
+where you are: you ask, Hermes reads the phone, Hermes asks first (when it would act), the answer.
 
-### What did I miss?
-<table><tr>
-<td width="50%"><img src="site/media/digest.gif" alt="Notifications and missed calls digest"><br><sub><b>demo phone</b> · "Anything important on my phone?"</sub></td>
-<td width="50%"><img src="site/media/brief.gif" alt="Morning brief"><br><sub><b>demo phone</b> · "Give me my morning phone brief."</sub></td>
-</tr></table>
+- **REAL PHONE:** a moto g34 (Android 15) over Termux:API. Phone numbers, amounts and other people's
+  names are blurred. Texts marked **RE-CREATED** were sent to my own number for the demo.
+- **DEMO PHONE:** bills and subscriptions ran on the built-in mock helper (I had no real bills that week).
 
-### Money from bank and UPI SMS
-<table><tr>
-<td width="50%"><img src="site/media/money.gif" alt="Spending by category"><br><sub><b>demo phone</b> · "How much did I spend this week?"</sub></td>
-<td width="50%"><img src="site/media/upi.gif" alt="UPI received today"><br><sub><b>demo phone</b> · "How much did I receive by UPI today?"</sub></td>
-</tr><tr>
-<td width="50%"><img src="site/media/budget.gif" alt="Budget set and percent used"><br><sub><b>demo phone</b> · "Set a monthly food budget of 3000 rupees…"</sub></td>
-<td width="50%"><img src="site/media/scam.gif" alt="Scam check"><br><sub><b>demo phone</b> · "Check my recent SMS for scam messages."</sub></td>
-</tr></table>
+### Morning brief
+<img src="site/media/feature-brief.gif" alt="Hermes reads the phone and gives a morning brief with the scam text flagged first; the phone shows the scam SMS on top" width="100%">
+
+### Scam tripwire: a scam call caught while it happens
+The "AnyDesk installed" signal is staged (a labelled test notification); the phone's spoken warning is real.
+<img src="site/media/feature-tripwire.gif" alt="Hermes runs the scam tripwire; the phone shows a warning and says it out loud; Hermes answers STOP, this is a scam" width="100%">
 
 ### It asks before it acts
-Sending an SMS, placing a call, taking a photo and revealing an OTP always open Hermes's approval panel.
-<table><tr>
-<td width="62%"><img src="site/media/sms-allow.gif" alt="SMS approval panel, allowed once"><br><sub><b>real phone</b> · allowed once: sent from the SIM</sub></td>
-<td width="38%"><img src="site/media/phone-sms-arrives.gif" alt="The SMS arriving on the phone"><br><sub><b>real phone</b> · the text arrives</sub></td>
-</tr><tr>
-<td width="62%"><img src="site/media/sms-deny.gif" alt="SMS approval panel, denied"><br><sub><b>real phone</b> · denied: nothing sent, no retry</sub></td>
-<td width="38%"><img src="site/media/phone-helper-log.gif" alt="The phone helper's request log"><br><sub><b>real phone</b> · helper log: paths only, never message text</sub></td>
-</tr><tr>
-<td width="62%"><img src="site/media/call.gif" alt="Call approval panel, allowed once"><br><sub><b>real phone</b> · place a call</sub></td>
-<td width="38%"><img src="site/media/photo.gif" alt="Photo approval panel, allowed once"><br><sub><b>real phone</b> · take a photo</sub></td>
-</tr></table>
-<img src="site/media/unattended.gif" alt="Approval-gated tool refused in unattended mode" width="62%"><br>
-<sub><b>real phone</b> · in unattended mode (cron, or <code>-q</code>) nobody can approve, so the action is refused</sub>
+<img src="site/media/feature-sms-allow.gif" alt="Text Mom: Hermes shows the approval panel with the exact number and words, allowed once, sent from the SIM" width="100%">
+<img src="site/media/feature-sms-deny.gif" alt="A second text: denied in the approval panel, nothing is sent and Hermes does not retry" width="100%">
 
-### Find, speak, copy, watch
+### Money from bank and UPI SMS
+<img src="site/media/feature-money.gif" alt="Spending this week by category, built from bank SMS (amounts blurred)" width="100%">
+<img src="site/media/feature-upi.gif" alt="UPI money received this week (amounts blurred)" width="100%">
+
+### Scam texts and one-time codes
+<img src="site/media/feature-scam.gif" alt="Is this SMS a scam: high risk, with the reasons" width="100%">
+<img src="site/media/feature-otp.gif" alt="The OTP stays hidden: revealing it needs approval, nobody approved, so it stayed hidden" width="100%">
+
+### Bills and subscriptions (demo phone)
+<img src="site/media/feature-bills.gif" alt="Bills due soon, from SMS, on the mock phone" width="100%">
+<img src="site/media/feature-subscriptions.gif" alt="Subscriptions and the monthly total, on the mock phone" width="100%">
+
+### Watch rules, battery and find my phone
+<img src="site/media/feature-watch.gif" alt="A watch rule catches the delivery SMS once" width="100%">
+<img src="site/media/feature-battery.gif" alt="A battery_below watch rule set up and verified" width="100%">
+<img src="site/media/feature-ring.gif" alt="Find my phone: it rings, speaks, vibrates and flashes" width="100%">
+
+<details><summary><b>More real sessions</b>: calls, photos, unattended mode, speak, clipboard, location, the helper log</summary>
+
 <table><tr>
-<td width="50%"><img src="site/media/ring.gif" alt="Find my phone"><br><sub><b>real phone</b> · "Make my phone ring."</sub></td>
-<td width="50%"><img src="site/media/speak.gif" alt="Speak aloud"><br><sub><b>real phone</b> · "Say 'dinner is ready' on my phone."</sub></td>
+<td width="50%"><img src="site/media/call.gif" alt="Call approval panel, allowed once"><br><sub><b>real phone</b> · place a call</sub></td>
+<td width="50%"><img src="site/media/photo.gif" alt="Photo approval panel, allowed once"><br><sub><b>real phone</b> · take a photo</sub></td>
 </tr><tr>
+<td width="50%"><img src="site/media/unattended.gif" alt="Approval-gated tool refused in unattended mode"><br><sub><b>real phone</b> · unattended (cron or <code>-q</code>): refused, nobody can approve</sub></td>
+<td width="50%"><img src="site/media/phone-helper-log.gif" alt="The phone helper's request log"><br><sub><b>real phone</b> · helper log: paths only, never message text</sub></td>
+</tr><tr>
+<td width="50%"><img src="site/media/speak.gif" alt="Speak aloud"><br><sub><b>real phone</b> · "Say 'dinner is ready' on my phone."</sub></td>
 <td width="50%"><img src="site/media/clipboard.gif" alt="Clipboard bridge"><br><sub><b>real phone</b> · "Copy this link to my phone."</sub></td>
-<td width="50%"><img src="site/media/watch.gif" alt="Watch rule match"><br><sub><b>real phone</b> · a watch rule catching a new SMS</sub></td>
 </tr><tr>
 <td width="50%"><img src="site/media/status.gif" alt="Battery status"><br><sub><b>real phone</b> · "What's my phone battery?"</sub></td>
 <td width="50%"><img src="site/media/location.gif" alt="Phone location with a Maps link"><br><sub><b>demo phone</b> · "Where is my phone?"</sub></td>
 </tr></table>
+</details>
 
 ## Scam tripwire
 Indian phone frauds ("KYC update", "digital arrest", fake bank support) follow a sequence, not a single

@@ -201,7 +201,7 @@
   .clip { margin: 0; }
   .clip + .clip { border-top: 1px dashed rgba(255,255,255,.12); }
   .js .clip + .clip { border-top: 0; }
-  .clip img { width: 100%; height: auto; background: #07070B; }
+  .clip img, .clip video { width: 100%; height: auto; display: block; background: #07070B; }
   .clip figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 13px 16px; border-top: 1px dashed rgba(255,255,255,.12); font: 400 12.5px/1.4 var(--mono); color: #B4B9C9; }
   .pair { display: grid; grid-template-columns: minmax(0, 1.514fr) minmax(0, .805fr); gap: 1px; background: rgba(255,255,255,.12); }
   .panel__copy { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px 40px; margin-top: 32px; }
@@ -474,7 +474,7 @@
           <div class="panel" id="p-brief" data-tab="tab-brief">
             <div class="stage">
               <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">01 / 06</span></div>
-              <figure class="clip" data-label="Morning brief"><img src="media/brief.gif" alt="Hermes giving a morning brief with battery, calls, messages and spending" loading="lazy" decoding="async" width="860" height="588"><figcaption><span class="tag tag--demo">Demo phone</span>Morning brief</figcaption></figure>
+              <figure class="clip" data-label="Morning brief"><video class="clip-v" src="media/feature-brief.mp4" poster="media/feature-brief.jpg" muted loop playsinline preload="none" aria-label="Real Hermes session and phone: morning brief with the scam text flagged first" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>Morning brief: Hermes on the left, the phone on the right</figcaption></figure>
               <figure class="clip" data-label="Digest"><img src="media/digest.gif" alt="Hermes summarising notifications and missed calls" loading="lazy" decoding="async" width="860" height="506"><figcaption><span class="tag tag--demo">Demo phone</span>Notifications and missed calls</figcaption></figure>
             </div>
             <div class="panel__copy">
@@ -486,8 +486,10 @@
           <div class="panel" id="p-money" data-tab="tab-money">
             <div class="stage">
               <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">02 / 06</span></div>
-              <figure class="clip" data-label="Spending"><img src="media/money.gif" alt="Weekly spending grouped by category" loading="lazy" decoding="async" width="860" height="506"><figcaption><span class="tag tag--demo">Demo phone</span>Spending by category</figcaption></figure>
-              <figure class="clip" data-label="UPI today"><img src="media/upi.gif" alt="UPI income for today grouped by sender" loading="lazy" decoding="async" width="860" height="341"><figcaption><span class="tag tag--demo">Demo phone</span>UPI received today</figcaption></figure>
+              <figure class="clip" data-label="Spending"><video class="clip-v" src="media/feature-money.mp4" poster="media/feature-money.jpg" muted loop playsinline preload="none" aria-label="Spending by category from bank SMS, amounts blurred" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>Spending by category (amounts blurred)</figcaption></figure>
+              <figure class="clip" data-label="UPI received"><video class="clip-v" src="media/feature-upi.mp4" poster="media/feature-upi.jpg" muted loop playsinline preload="none" aria-label="UPI money received this week, amounts blurred" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>UPI received this week (amounts blurred)</figcaption></figure>
+              <figure class="clip" data-label="Bills"><video class="clip-v" src="media/feature-bills.mp4" poster="media/feature-bills.jpg" muted loop playsinline preload="none" aria-label="Bills due soon on the demo phone" width="1280" height="720"></video><figcaption><span class="tag tag--demo">Demo phone</span>Bills due soon</figcaption></figure>
+              <figure class="clip" data-label="Subscriptions"><video class="clip-v" src="media/feature-subscriptions.mp4" poster="media/feature-subscriptions.jpg" muted loop playsinline preload="none" aria-label="Subscriptions and monthly total on the demo phone" width="1280" height="720"></video><figcaption><span class="tag tag--demo">Demo phone</span>Subscriptions and the monthly total</figcaption></figure>
               <figure class="clip" data-label="Budgets"><img src="media/budget.gif" alt="Hermes setting a food budget and reporting what is left" loading="lazy" decoding="async" width="860" height="361"><figcaption><span class="tag tag--demo">Demo phone</span>Budgets</figcaption></figure>
             </div>
             <div class="panel__copy">
@@ -499,7 +501,9 @@
           <div class="panel" id="p-scam" data-tab="tab-scam">
             <div class="stage">
               <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">03 / 06</span></div>
-              <figure class="clip" data-label="Scam check"><img src="media/scam.gif" alt="Two scam messages flagged with reasons" loading="lazy" decoding="async" width="860" height="402"><figcaption><span class="tag tag--demo">Demo phone</span>Scam check</figcaption></figure>
+              <figure class="clip" data-label="Tripwire"><video class="clip-v" src="media/feature-tripwire.mp4" poster="media/feature-tripwire.jpg" muted loop playsinline preload="none" aria-label="Scam tripwire: the phone warns out loud while a staged AnyDesk signal is active" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>Scam tripwire: the phone warns you out loud (AnyDesk signal staged)</figcaption></figure>
+              <figure class="clip" data-label="Scam check"><video class="clip-v" src="media/feature-scam.mp4" poster="media/feature-scam.jpg" muted loop playsinline preload="none" aria-label="Is this SMS a scam: high risk with reasons" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>Is this SMS a scam?</figcaption></figure>
+              <figure class="clip" data-label="OTP hidden"><video class="clip-v" src="media/feature-otp.mp4" poster="media/feature-otp.jpg" muted loop playsinline preload="none" aria-label="The one-time code stays hidden; revealing it needs approval" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>One-time codes stay hidden</figcaption></figure>
             </div>
             <div class="panel__copy">
               <div><h3>Scam texts get called out</h3><p>Fake KYC warnings, electricity disconnection threats, lottery prizes, parcel fees and refund apps are scored with clear reasons, so Hermes can tell you why a message looks wrong.</p></div>
@@ -510,14 +514,8 @@
           <div class="panel" id="p-ask" data-tab="tab-ask">
             <div class="stage">
               <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">04 / 06</span></div>
-              <figure class="clip" data-label="Allowed">
-                <div class="pair">
-                  <img src="media/sms-allow.gif" alt="Approval panel for sending an SMS, allowed once, SMS sent" loading="lazy" decoding="async" width="860" height="568">
-                  <img src="media/phone-sms-arrives.gif" alt="The phone receiving the SMS that Hermes sent" loading="lazy" decoding="async" width="380" height="472">
-                </div>
-                <figcaption><span class="tag tag--real">Real phone</span>Allowed once, sent from the SIM, and the text arrives</figcaption>
-              </figure>
-              <figure class="clip" data-label="Denied"><img src="media/sms-deny.gif" alt="Approval panel for sending an SMS, denied, nothing sent" loading="lazy" decoding="async" width="860" height="588"><figcaption><span class="tag tag--real">Real phone</span>Denied: nothing sent, and Hermes does not retry</figcaption></figure>
+              <figure class="clip" data-label="Allowed"><video class="clip-v" src="media/feature-sms-allow.mp4" poster="media/feature-sms-allow.jpg" muted loop playsinline preload="none" aria-label="Approval panel with the exact number and words, allowed once, sent from the SIM" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>Allowed once: sent from the SIM</figcaption></figure>
+              <figure class="clip" data-label="Denied"><video class="clip-v" src="media/feature-sms-deny.mp4" poster="media/feature-sms-deny.jpg" muted loop playsinline preload="none" aria-label="Approval panel denied: nothing sent, no retry" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>Denied: nothing sent, and Hermes does not retry</figcaption></figure>
               <figure class="clip" data-label="Call"><img src="media/call.gif" alt="Approval panel for placing a call, allowed once" loading="lazy" decoding="async" width="860" height="506"><figcaption><span class="tag tag--real">Real phone</span>Place a call, allowed once</figcaption></figure>
               <figure class="clip" data-label="Photo"><img src="media/photo.gif" alt="Approval panel for taking a photo, allowed once" loading="lazy" decoding="async" width="860" height="568"><figcaption><span class="tag tag--real">Real phone</span>Take a photo, allowed once</figcaption></figure>
               <figure class="clip" data-label="Nobody there"><img src="media/unattended.gif" alt="A send request refused because nobody was there to approve it" loading="lazy" decoding="async" width="860" height="258"><figcaption><span class="tag tag--real">Real phone</span>Nobody to approve, so the action is refused</figcaption></figure>
@@ -531,7 +529,7 @@
           <div class="panel" id="p-find" data-tab="tab-find">
             <div class="stage">
               <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">05 / 06</span></div>
-              <figure class="clip" data-label="Ring"><img src="media/ring.gif" alt="Hermes making the phone ring" loading="lazy" decoding="async" width="860" height="258"><figcaption><span class="tag tag--real">Real phone</span>Find my phone</figcaption></figure>
+              <figure class="clip" data-label="Ring"><video class="clip-v" src="media/feature-ring.mp4" poster="media/feature-ring.jpg" muted loop playsinline preload="none" aria-label="Find my phone: it rings, speaks, vibrates and flashes" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>Find my phone</figcaption></figure>
               <figure class="clip" data-label="Speak"><img src="media/speak.gif" alt="Hermes making the phone speak aloud" loading="lazy" decoding="async" width="860" height="237"><figcaption><span class="tag tag--real">Real phone</span>Read it aloud</figcaption></figure>
               <figure class="clip" data-label="Clipboard"><img src="media/clipboard.gif" alt="Hermes copying a link to the phone clipboard" loading="lazy" decoding="async" width="860" height="237"><figcaption><span class="tag tag--real">Real phone</span>Clipboard between laptop and phone</figcaption></figure>
               <figure class="clip" data-label="Location"><img src="media/location.gif" alt="Hermes reporting where the phone is" loading="lazy" decoding="async" width="860" height="320"><figcaption><span class="tag tag--demo">Demo phone</span>Where is my phone?</figcaption></figure>
@@ -545,7 +543,8 @@
           <div class="panel" id="p-watch" data-tab="tab-watch">
             <div class="stage">
               <div class="stage__bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Hermes · Phone Senses</span><span class="count" aria-hidden="true">06 / 06</span></div>
-              <figure class="clip" data-label="Watch rule"><img src="media/watch.gif" alt="A watch rule matching a newly received SMS" loading="lazy" decoding="async" width="860" height="361"><figcaption><span class="tag tag--real">Real phone</span>A watch rule catching a new SMS</figcaption></figure>
+              <figure class="clip" data-label="Watch rule"><video class="clip-v" src="media/feature-watch.mp4" poster="media/feature-watch.jpg" muted loop playsinline preload="none" aria-label="A watch rule catches the delivery SMS once" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>A watch rule catches the delivery text, once</figcaption></figure>
+              <figure class="clip" data-label="Battery"><video class="clip-v" src="media/feature-battery.mp4" poster="media/feature-battery.jpg" muted loop playsinline preload="none" aria-label="Battery watch rule set up" width="1280" height="720"></video><figcaption><span class="tag tag--real">Real phone</span>Battery below 20%: a heads-up</figcaption></figure>
             </div>
             <div class="panel__copy">
               <div><h3>Watch for what matters</h3><p>Set rules like “tell me when a notification says delivered” or “warn me about debits over 1,000 rupees”. Run the check from a Hermes cron job and matches reach your chat or Telegram, each one only once.</p></div>
@@ -948,6 +947,18 @@
   });
 
   window.__psReady = true; /* reached the end: the head-script fallback can stand down */
+</script>
+<script>
+  // feature clips: play only while on screen (and only the visible tab's), so the page stays light
+  (() => {
+    const vids = document.querySelectorAll("video.clip-v");
+    if (!("IntersectionObserver" in window)) { vids.forEach((v) => { v.preload = "auto"; v.autoplay = true; }); return; }
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      const v = e.target;
+      if (e.isIntersecting && v.offsetParent !== null) { v.play().catch(() => {}); } else { v.pause(); }
+    }), { threshold: 0.35 });
+    vids.forEach((v) => io.observe(v));
+  })();
 </script>
 </body>
 </html>

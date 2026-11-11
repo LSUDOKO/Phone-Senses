@@ -1,0 +1,461 @@
+{
+  "features": [
+    {
+      "id": "brief",
+      "title": "Morning brief",
+      "ask": "Good morning, give me my phone brief.",
+      "tag": "REAL PHONE · SCAM TEXT RE-CREATED",
+      "duration": 11.537,
+      "phone": true,
+      "blur": [
+        [
+          0,
+          400,
+          720,
+          1160,
+          8.5,
+          1000000.0
+        ]
+      ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 4.0043750000000005
+        },
+        {
+          "label": "The answer",
+          "from": 5.0375
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 23,
+        "rows": 6,
+        "from": 5.438
+      },
+      "real": true
+    },
+    {
+      "id": "otp",
+      "title": "OTP codes stay hidden",
+      "ask": "Read me my latest SMS that has a code in it.",
+      "tag": "REAL PHONE · CODE BLURRED",
+      "duration": 12.3,
+      "phone": true,
+      "blur": [
+        [
+          120,
+          480,
+          580,
+          180,
+          1.6,
+          1000000.0
+        ],
+        [
+          0,
+          670,
+          720,
+          890,
+          1.6,
+          1000000.0
+        ]
+      ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 3.575454545454546
+        },
+        {
+          "label": "Revealing the code needs your OK",
+          "from": 4.3
+        },
+        {
+          "label": "The answer",
+          "from": 7.700000000000034
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 26,
+        "rows": 4,
+        "from": 8.1
+      },
+      "real": true
+    },
+    {
+      "id": "money",
+      "title": "Where did my money go?",
+      "ask": "Where did my money go this week?",
+      "tag": "REAL PHONE · AMOUNTS HIDDEN",
+      "duration": 8.614,
+      "phone": true,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 3.100857142857143
+        },
+        {
+          "label": "The answer",
+          "from": 3.9008571428571432
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 24,
+        "rows": 5,
+        "from": 4.301
+      },
+      "real": true
+    },
+    {
+      "id": "upi",
+      "title": "UPI received",
+      "ask": "How much did I receive by UPI this week?",
+      "tag": "REAL PHONE · AMOUNTS HIDDEN",
+      "duration": 8.111,
+      "phone": true,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 2.711560090702948
+        },
+        {
+          "label": "The answer",
+          "from": 3.5115600907029476
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 30,
+        "rows": 5,
+        "from": 3.912
+      },
+      "real": true
+    },
+    {
+      "id": "bills",
+      "title": "Bills due",
+      "ask": "What bills are due soon?",
+      "tag": "DEMO PHONE · SYNTHETIC DATA",
+      "duration": 6.7,
+      "phone": false,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 2.100221198156682
+        },
+        {
+          "label": "The answer",
+          "from": 2.9002211981566823
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 20,
+        "rows": 7,
+        "from": 3.3
+      },
+      "real": false
+    },
+    {
+      "id": "subscriptions",
+      "title": "Subscriptions",
+      "ask": "What subscriptions am I paying for?",
+      "tag": "DEMO PHONE · SYNTHETIC DATA",
+      "duration": 7.21,
+      "phone": false,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 2.2100704845814976
+        },
+        {
+          "label": "The answer",
+          "from": 3.0100704845814974
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 30,
+        "rows": 5,
+        "from": 3.41
+      },
+      "real": false
+    },
+    {
+      "id": "scam",
+      "title": "Is this SMS a scam?",
+      "ask": "I got a weird SMS about my KYC. Is it a scam?",
+      "tag": "RE-CREATED · SENT TO MY OWN NUMBER",
+      "duration": 9.567,
+      "phone": true,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 3.0667982456140352
+        },
+        {
+          "label": "The answer",
+          "from": 3.866798245614035
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 24,
+        "rows": 5,
+        "from": 4.267
+      },
+      "real": true
+    },
+    {
+      "id": "sms-allow",
+      "title": "Send an SMS: allow once",
+      "ask": "Text Mom: I'll call you after the exam.",
+      "tag": "REAL PHONE · REAL SMS",
+      "duration": 15.021,
+      "phone": false,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 3.731
+        },
+        {
+          "label": "Hermes asks you first",
+          "from": 4.56999999999999
+        },
+        {
+          "label": "Allowed once: sent from your SIM",
+          "from": 8.914705882352942
+        },
+        {
+          "label": "The answer",
+          "from": 10.620588235294118
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 20,
+        "rows": 12,
+        "from": 11.021
+      },
+      "real": true
+    },
+    {
+      "id": "sms-deny",
+      "title": "Send an SMS: deny",
+      "ask": "Also text Mom that I skipped lunch.",
+      "tag": "REAL PHONE · NOTHING SENT",
+      "duration": 9.264,
+      "phone": false,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 2.714982070561018
+        },
+        {
+          "label": "Hermes asks you first",
+          "from": 3.0721156737998845
+        },
+        {
+          "label": "Denied: nothing is sent",
+          "from": 4.641285714285712
+        },
+        {
+          "label": "The answer",
+          "from": 5.441285714285712
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 22,
+        "rows": 12,
+        "from": 5.841
+      },
+      "real": true
+    },
+    {
+      "id": "tripwire",
+      "title": "Scam tripwire",
+      "ask": "A caller from my bank asked me to install AnyDesk.",
+      "tag": "REAL PHONE · ANYDESK SIGNAL STAGED",
+      "duration": 21.55,
+      "phone": true,
+      "blur": [
+        [
+          0,
+          660,
+          720,
+          640,
+          1.6,
+          6.199999999999999
+        ]
+      ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 9.251337320574162
+        },
+        {
+          "label": "The phone warns you out loud",
+          "from": 9.9
+        },
+        {
+          "label": "The answer",
+          "from": 16.650000000000002
+        }
+      ],
+      "speech": {
+        "at": 9.9,
+        "dur": 6.45,
+        "text": "Careful. This looks like a scam call. Never share an OTP, PIN or your screen."
+      },
+      "zoom": {
+        "row": 24,
+        "rows": 5,
+        "from": 17.05
+      },
+      "real": true
+    },
+    {
+      "id": "watch",
+      "title": "Watch rules",
+      "ask": "Any watch alerts on my phone?",
+      "tag": "RE-CREATED · SENT TO MY OWN NUMBER",
+      "duration": 8.033,
+      "phone": true,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 2.633838187702265
+        },
+        {
+          "label": "The answer",
+          "from": 3.433838187702265
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 25,
+        "rows": 4,
+        "from": 3.834
+      },
+      "real": true
+    },
+    {
+      "id": "battery",
+      "title": "Battery watch",
+      "ask": "Tell me when my battery drops below 20%.",
+      "tag": "REAL PHONE · MOTO G34",
+      "duration": 8.267,
+      "phone": true,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 3.0620000000000003
+        },
+        {
+          "label": "The answer",
+          "from": 3.862
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 28,
+        "rows": 4,
+        "from": 4.262
+      },
+      "real": true
+    },
+    {
+      "id": "ring",
+      "title": "Find my phone",
+      "ask": "I can't find my phone, make it ring.",
+      "tag": "REAL PHONE · UNDER THE BED",
+      "duration": 15.5,
+      "phone": true,
+      "blur": [],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 1.3
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 3.994
+        },
+        {
+          "label": "The phone rings, speaks and flashes",
+          "from": 4.600000000000001
+        },
+        {
+          "label": "The answer",
+          "from": 5.400000000000001
+        }
+      ],
+      "speech": null,
+      "zoom": {
+        "row": 14,
+        "rows": 6,
+        "from": 5.8
+      },
+      "real": true
+    }
+  ]
+}

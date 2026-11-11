@@ -30,6 +30,7 @@ FONT_CHAIN = [HERE / ".fonts" / "GeistMono.ttf", Path("/usr/share/fonts/noto/Not
 EMOJI_FONT = Path("/usr/share/fonts/noto/NotoColorEmoji.ttf")
 
 INK, PAPER, TEXT = (5, 5, 7), (241, 241, 238), (230, 230, 234)
+CURSOR = (31, 43, 255)
 NAMED = {
     "black": (91, 95, 110), "red": (255, 138, 138), "green": (124, 242, 177), "brown": (242, 193, 78),
     "yellow": (242, 193, 78), "blue": (139, 147, 255), "magenta": (195, 139, 255), "cyan": (127, 215, 255),
@@ -38,6 +39,24 @@ NAMED = {
     "brightblue": (170, 177, 255), "brightmagenta": (214, 170, 255), "brightcyan": (160, 228, 255),
     "brightwhite": (241, 241, 238),
 }
+
+
+# The author's real terminal (kitty: background #000000, foreground #dddddd) and the standard xterm palette.
+# Hermes itself draws in 24-bit colour (gold banner, blue/green status), which passes through untouched.
+XTERM = {
+    "black": (0, 0, 0), "red": (205, 0, 0), "green": (0, 205, 0), "brown": (205, 205, 0), "yellow": (205, 205, 0),
+    "blue": (0, 0, 238), "magenta": (205, 0, 205), "cyan": (0, 205, 205), "white": (229, 229, 229),
+    "brightblack": (127, 127, 127), "brightred": (255, 0, 0), "brightgreen": (0, 255, 0), "brightbrown": (255, 255, 0),
+    "brightyellow": (255, 255, 0), "brightblue": (92, 92, 255), "brightmagenta": (255, 0, 255),
+    "brightcyan": (0, 255, 255), "brightwhite": (255, 255, 255),
+}
+
+
+def use_terminal_theme() -> None:
+    global INK, TEXT, CURSOR
+    INK, TEXT, CURSOR = (0, 0, 0), (221, 221, 221), (204, 204, 204)
+    NAMED.clear()
+    NAMED.update(XTERM)
 
 
 def color(value: str, default: tuple) -> tuple:
@@ -160,7 +179,7 @@ def draw(screen: pyte.Screen, g: Glyphs, pad: int) -> Image.Image:
             x += 1
     if not screen.cursor.hidden:
         cx, cy = pad + screen.cursor.x * g.cell_w, pad + screen.cursor.y * g.cell_h
-        d.rectangle([cx, cy + 3, cx + g.cell_w - 1, cy + g.cell_h - 3], fill=(31, 43, 255))
+        d.rectangle([cx, cy + 3, cx + g.cell_w - 1, cy + g.cell_h - 3], fill=CURSOR)
     return img
 
 
@@ -212,7 +231,11 @@ def main() -> None:
     ap.add_argument("--from", dest="start", type=float, default=0.0)
     ap.add_argument("--to", dest="end", type=float, default=None)
     ap.add_argument("--redact", action="append", default=[], help="regex to hide (repeatable)")
+    ap.add_argument("--theme", choices=["brand", "hermes"], default="brand",
+                    help="hermes: the terminal exactly as it looked (black background, Hermes's own colours)")
     a = ap.parse_args()
+    if a.theme == "hermes":
+        use_terminal_theme()
     REDACT.extend(re.compile(r) for r in a.redact)
     render(a.cast, a.out, a.fps, a.font_size, a.start, a.end)
 
