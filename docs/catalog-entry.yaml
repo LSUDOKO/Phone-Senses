@@ -1,9 +1,8 @@
-# Draft for the catalog PR: copy to plugin-catalog/phone-senses.yaml in a fork of
-# NousResearch/hermes-agent. Replace <SHA> with the 40-char release commit (git rev-parse HEAD)
-# and set requires_hermes to the Hermes version you tested on (same value as plugin/plugin.yaml).
+# Submitted as NousResearch/hermes-agent#153363 (plugin-catalog/phone-senses.yaml), pinned at v0.1.0.
+# A SHA bump is a new PR: update sha + version here and in that file.
 name: phone-senses
 repo: https://github.com/LSUDOKO/Phone-Senses
-sha: <SHA>
+sha: ebf7004c2d9160670c44a77e415f0c117039cddc
 subdir: plugin
 title: Phone Senses
 description: "Give Hermes your own Android phone's senses through Termux:API: notification and SMS digests, sending SMS from your SIM, a bank and UPI money tracker with bill, subscription and delivery tracking, scam SMS warnings, a scam-in-progress tripwire (unsaved caller + screen-sharing app + OTP or debit, spoken warning on the phone), low-battery alerts and find my phone. Disclosure — needs the separately installed Termux and Termux:API apps (F-Droid) and runs the repo's own stdlib-only helper on the phone, which executes fixed termux-* commands (no shell) and serves an HMAC-signed HTTP API on the address you choose; the plugin talks only to that helper; reads notifications, SMS, call log, contacts, location and battery; sending SMS, calls, photos and OTP reveal always go to Hermes's approval prompt; OTPs are masked by default; parsed transactions (no message text), budgets, watch rules and approved photos are stored in the plugin's data directory; no telemetry."
@@ -13,9 +12,17 @@ category: tools
 version: "0.1.0"
 requires_hermes: ">=0.23.0"
 docs_url: https://github.com/LSUDOKO/Phone-Senses#readme
-image: https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/<SHA>/plugin/assets/banner.png
-screenshots: []
+image: https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/ebf7004c2d9160670c44a77e415f0c117039cddc/plugin/assets/banner.png
+screenshots:
+- https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/ebf7004c2d9160670c44a77e415f0c117039cddc/site/media/feature-brief.jpg
+- https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/ebf7004c2d9160670c44a77e415f0c117039cddc/site/media/feature-tripwire.jpg
+- https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/ebf7004c2d9160670c44a77e415f0c117039cddc/site/media/feature-sms-allow.jpg
+- https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/ebf7004c2d9160670c44a77e415f0c117039cddc/site/media/feature-sms-deny.jpg
+- https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/ebf7004c2d9160670c44a77e415f0c117039cddc/site/media/feature-money.jpg
+- https://raw.githubusercontent.com/LSUDOKO/Phone-Senses/ebf7004c2d9160670c44a77e415f0c117039cddc/site/media/feature-ring.jpg
 platforms: []
+known_issues:
+- "Needs an Android phone with Termux and Termux:API installed from F-Droid; the phone helper runs there (python phone_helper/helper.py)."
 capabilities:
   provides_tools:
   - phone_status
