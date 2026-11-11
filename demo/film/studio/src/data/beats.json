@@ -22,49 +22,71 @@
       "pieces": [
         {
           "a": 4.0,
+          "b": null,
+          "out": 1.3,
+          "t0": 0.0,
+          "mark": "banner"
+        },
+        {
+          "a": 4.0,
           "b": 7.9,
-          "out": 2.438,
-          "t0": 0.0
+          "out": 1.393,
+          "t0": 1.3
         },
         {
           "a": 7.9,
           "b": 38.2,
           "out": 1.0,
-          "t0": 2.438,
+          "t0": 2.693,
           "label": "18 s later"
         },
         {
           "a": 38.2,
           "b": 41.2,
           "out": 3.0,
-          "t0": 3.438
+          "t0": 3.693
         },
         {
           "a": 41.2,
           "b": null,
-          "out": 2.829,
-          "t0": 6.438,
+          "out": 2.574,
+          "t0": 6.693,
           "mark": "hold"
         }
       ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 2.674
+        },
+        {
+          "label": "The answer",
+          "from": 3.693
+        }
+      ],
+      "banner": 1.3,
       "labels": [
         {
           "text": "18 s later",
-          "from": 2.438,
-          "to": 3.438
+          "from": 2.693,
+          "to": 3.693
         }
       ],
       "zoom": {
         "row": 23,
         "rows": 6,
         "scale": 1.55,
-        "from": 6.438,
+        "from": 6.693,
         "to": 9.267,
         "anchor": "center"
       },
       "callout": {
         "text": "Scam text, flagged first",
-        "at": 6.688
+        "at": 6.943
       }
     },
     {
@@ -143,6 +165,24 @@
           "mark": "hold"
         }
       ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 1.975
+        },
+        {
+          "label": "Revealing the code needs your OK",
+          "from": 2.7
+        },
+        {
+          "label": "The answer",
+          "from": 6.1
+        }
+      ],
       "labels": [
         {
           "text": "5 minutes, no answer",
@@ -200,6 +240,20 @@
           "mark": "hold"
         }
       ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 1.501
+        },
+        {
+          "label": "The answer",
+          "from": 2.101
+        }
+      ],
       "labels": [],
       "zoom": {
         "row": 24,
@@ -245,6 +299,20 @@
           "out": 0.856,
           "t0": 3.011,
           "mark": "hold"
+        }
+      ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 1.112
+        },
+        {
+          "label": "The answer",
+          "from": 1.712
         }
       ],
       "labels": [],
@@ -294,6 +362,20 @@
           "mark": "hold"
         }
       ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 0.5
+        },
+        {
+          "label": "The answer",
+          "from": 1.1
+        }
+      ],
       "labels": [],
       "zoom": {
         "row": 20,
@@ -341,6 +423,20 @@
           "mark": "hold"
         }
       ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 0.61
+        },
+        {
+          "label": "The answer",
+          "from": 1.21
+        }
+      ],
       "labels": [],
       "zoom": {
         "row": 30,
@@ -386,6 +482,20 @@
           "out": 1.233,
           "t0": 4.467,
           "mark": "hold"
+        }
+      ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 1.467
+        },
+        {
+          "label": "The answer",
+          "from": 2.067
         }
       ],
       "labels": [],
@@ -459,6 +569,28 @@
           "mark": "hold"
         }
       ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 2.131
+        },
+        {
+          "label": "Hermes asks you first",
+          "from": 2.97
+        },
+        {
+          "label": "Allowed once",
+          "from": 7.315
+        },
+        {
+          "label": "The answer",
+          "from": 9.021
+        }
+      ],
       "labels": [],
       "zoom": {
         "row": 20,
@@ -521,6 +653,28 @@
           "out": 3.436,
           "t0": 4.164,
           "mark": "hold"
+        }
+      ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 1.115
+        },
+        {
+          "label": "Hermes asks you first",
+          "from": 1.472
+        },
+        {
+          "label": "Denied: nothing sent",
+          "from": 3.041
+        },
+        {
+          "label": "The answer",
+          "from": 3.641
         }
       ],
       "labels": [],
@@ -608,6 +762,24 @@
           "mark": "hold"
         }
       ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 7.651
+        },
+        {
+          "label": "The phone warns you out loud",
+          "from": 8.3
+        },
+        {
+          "label": "The answer",
+          "from": 15.05
+        }
+      ],
       "labels": [
         {
           "text": "scam guard running",
@@ -665,6 +837,20 @@
           "mark": "hold"
         }
       ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 1.034
+        },
+        {
+          "label": "The answer",
+          "from": 1.634
+        }
+      ],
       "labels": [],
       "zoom": {
         "row": 25,
@@ -710,6 +896,20 @@
           "out": 0.867,
           "t0": 3.167,
           "mark": "hold"
+        }
+      ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 1.462
+        },
+        {
+          "label": "The answer",
+          "from": 2.062
         }
       ],
       "labels": [],
@@ -758,6 +958,24 @@
           "out": 1.5,
           "t0": 10.4,
           "mark": "hold"
+        }
+      ],
+      "steps": [
+        {
+          "label": "You ask Hermes",
+          "from": 0.0
+        },
+        {
+          "label": "Hermes reads your phone",
+          "from": 2.394
+        },
+        {
+          "label": "The phone rings, speaks and flashes",
+          "from": 3.0
+        },
+        {
+          "label": "The answer",
+          "from": 8.9
         }
       ],
       "labels": [],

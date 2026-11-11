@@ -140,6 +140,47 @@ const PhoneSpeech: React.FC<{ id: string; at: number; dur: number; text: string;
   );
 };
 
+const GOLD = "#FFD700";
+
+/** Step strip in Hermes gold: you ask -> Hermes reads your phone -> (asks first) -> the answer. */
+const Steps: React.FC<{ steps: { label: string; from: number }[]; left: number }> = ({ steps, left }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const t = frame / fps;
+  const active = steps.reduce((acc, s, i) => (t >= s.from ? i : acc), 0);
+  return (
+    <div style={{ position: "absolute", left, top: WIN_TOP - 50, display: "flex", alignItems: "center", gap: 8 }}>
+      {steps.map((s, i) => {
+        const on = i === active;
+        const done = i < active;
+        return (
+          <React.Fragment key={i}>
+            {i > 0 ? <div style={{ width: 14, height: 2, background: done || on ? GOLD : "rgba(255,255,255,.18)" }} /> : null}
+            <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "6px 12px 6px 7px", borderRadius: 999,
+              background: on ? GOLD : "rgba(5,5,7,.55)", border: `1.5px solid ${on || done ? GOLD : "rgba(255,255,255,.18)"}`,
+              color: on ? "#111" : done ? GOLD : C.mist, fontFamily: "Archivo", fontWeight: 700, fontSize: 16, whiteSpace: "nowrap" }}>
+              <span style={{ width: 20, height: 20, borderRadius: 10, display: "grid", placeItems: "center", fontSize: 11,
+                fontFamily: "Geist Mono", background: on ? "#111" : "transparent", color: on ? GOLD : "inherit",
+                border: on ? "none" : "1.5px solid currentColor" }}>{done ? "✓" : i + 1}</span>
+              {s.label}
+            </div>
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+};
+
+/** The Hermes welcome screen (gold caduceus) for the first moments of the walkthrough. */
+const Banner: React.FC<{ id: string; dur: number }> = ({ id, dur }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const o = interpolate(frame, [dur * fps - 6, dur * fps], [1, 0], clamp);
+  if (o <= 0) return null;
+  return <img src={staticFile(`beats/${id}/banner.png`)} style={{ position: "absolute", inset: 0, width: "100%", height: "100%",
+    objectFit: "cover", objectPosition: "left top", opacity: o }} />;
+};
+
 const BeatView: React.FC<{ b: Beat; dur: number; first: boolean; last: boolean }> = ({ b, dur, first, last }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -156,6 +197,7 @@ const BeatView: React.FC<{ b: Beat; dur: number; first: boolean; last: boolean }
   const demo = b.tag.startsWith("DEMO");
   return (
     <AbsoluteFill style={{ opacity: fadeIn * fadeOut }}>
+      <Steps steps={(b as { steps?: { label: string; from: number }[] }).steps ?? []} left={winLeft} />
       <div style={{ position: "absolute", left: winLeft, top: WIN_TOP }}>
         <GlassWindow title={`hermes chat  ·  ${demo ? "mock phone" : "real session"}`} width={winW} height={WIN_H}>
           <div
@@ -168,6 +210,7 @@ const BeatView: React.FC<{ b: Beat; dur: number; first: boolean; last: boolean }
           >
             <OffthreadVideo src={staticFile(`beats/${b.id}/term.mp4`)} muted style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "left top" }} />
           </div>
+          {(b as { banner?: number }).banner ? <Banner id={b.id} dur={(b as { banner: number }).banner} /> : null}
           <SpeedChip b={b} />
         </GlassWindow>
         {b.callout ? <Callout text={b.callout.text} x={Math.round(winW * 0.5)} y={52 + CONTENT_H / 2 + 46} start={Math.round(b.callout.at * fps)} /> : null}
@@ -222,8 +265,8 @@ export const Walkthrough: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: C.ink }}>
       <FilmField sectionId={ID} intensity={0.55} />
-      <div style={{ position: "absolute", left: 110, top: 64, ...mono(16) }}>
-        <span style={{ color: C.blueText }}>04</span>&nbsp;&nbsp;A REAL DAY · REAL PHONE
+      <div style={{ position: "absolute", left: 110, top: 26, ...mono(16) }}>
+        <span style={{ color: C.blueText }}>04</span>&nbsp;&nbsp;A REAL DAY · REAL PHONE · HERMES AS IT LOOKS
       </div>
       {(beats.beats as Beat[]).map((b, i) => {
         const from = Math.round((b.start - WALK_START) * fps);

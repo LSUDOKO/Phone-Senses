@@ -35,6 +35,8 @@ def plan(segments: list[dict], length: float) -> list[dict]:
             out = (b - a) / s["rate"]
         elif "squeeze" in s:
             (a, b), out = s["squeeze"], s["out"]
+        elif "freeze" in s:      # hold one frame mid-beat (e.g. under the Hermes welcome screen)
+            a, b, out = s["freeze"], None, s["out"]
         else:
             continue
         pieces.append({"a": a, "b": b, "out": out, "t0": used, **{k: s[k] for k in ("mark", "label") if k in s}})
@@ -87,6 +89,45 @@ def find_row(scene: str, clip_t: float, needle: str) -> int | None:
             stream.feed(data)
     hits = [i for i, row in enumerate(screen.display) if needle.lower() in row.lower()]
     return hits[-1] if hits else None
+
+
+# Moments with no event in log.json (clip seconds), shown as extra steps
+EXTRA_STEPS = {"r12-ring": [(20.6, "The phone rings, speaks and flashes")],
+               "r02b-otp": [(48.6, "Revealing the code needs your OK")]}
+
+
+# When Hermes's answer appears, for beats whose last real-time stretch starts before it
+ANSWER_AT = {"r12-ring": 26.5}
+
+
+def to_out(pieces: list[dict], t: float) -> float | None:
+    """Map a clip time to beat time through the retimed pieces."""
+    for p in pieces:
+        if p["b"] is not None and p["a"] <= t <= p["b"]:
+            return p["t0"] + (t - p["a"]) * p["out"] / (p["b"] - p["a"])
+    return None
+
+
+def steps_for(scene: str, pieces: list[dict], allow: bool) -> list[dict]:
+    """You ask -> Hermes reads your phone -> (asks first -> verdict) -> answer, from the session's events."""
+    ev = json.loads((FOOT / scene / "clip.json").read_text())["events"]
+    m = lambda k: to_out(pieces, ev[k]) if k in ev else None   # noqa: E731
+    first = next((p["t0"] for p in pieces if p.get("mark") != "banner"), 0.0)
+    steps = [{"label": "You ask Hermes", "from": 0.0}]
+    steps.append({"label": "Hermes reads your phone", "from": m("sent") or first + 1.0})
+    if m("approval_shown") is not None:
+        steps.append({"label": "Hermes asks you first", "from": m("approval_shown")})
+        steps.append({"label": "Allowed once" if allow else "Denied: nothing sent",
+                      "from": (m("approval_answered") or m("approval_shown")) + 0.2})
+    for at, label in EXTRA_STEPS.get(scene, []):
+        if (w := to_out(pieces, at)) is not None:
+            steps.append({"label": label, "from": w})
+    sp = next((p for p in pieces if p.get("mark") == "speech"), None)
+    if sp:
+        steps.append({"label": "The phone warns you out loud", "from": sp["t0"]})
+    answer = to_out(pieces, ANSWER_AT[scene]) if scene in ANSWER_AT else (pieces[-2]["t0"] if len(pieces) > 1 else 0.0)
+    steps.append({"label": "The answer", "from": max(answer, steps[-1]["from"] + 0.6)})
+    return [{**x, "from": round(x["from"], 3)} for x in sorted(steps, key=lambda x: x["from"])]
 
 
 def beat_lengths(beats: list[dict], vo: dict) -> dict[str, tuple[float, float]]:
@@ -156,6 +197,11 @@ def main(only: list[str]) -> int:
                            if speech and (dst / "speech.wav").exists() else None),
                 "pieces": [{k: round(v, 3) if isinstance(v, float) else v for k, v in p.items()} for p in pieces]}
         marks = {p["mark"]: (p["t0"], p["t0"] + p["out"]) for p in pieces if "mark" in p}
+        info["steps"] = steps_for(b["scene"], pieces, "allow" in b["id"] or "mom" in b["id"])
+        if b.get("banner"):   # still of the Hermes welcome screen shown over the first seconds
+            subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", "0.1", "-i", str(HERE / "footage" / b["scene"] / "term-hermes.mp4"),
+                            "-frames:v", "1", str(dst / "banner.png")], check=True)
+            info["banner"] = b["banner"]
         info["labels"] = [{"text": p["label"], "from": round(p["t0"], 3), "to": round(p["t0"] + p["out"], 3)} for p in pieces if "label" in p]
         if z:
             row = find_row(b["scene"], z["at"], z["find"])
