@@ -100,11 +100,11 @@
   [
    "D9",
    "AX-DEMOBK-S",
-   "DEMO Bank Acct XX123 debited for Rs 64.00 on 03-Nov-26; MUSKAN RESTAURA credited. UPI:600000000009. Call 18000000 for dispute. SMS BLOCK 123 to 9000000100.",
+   "DEMO Bank Acct XX123 debited for Rs 64.00 on 03-Nov-26; SAGAR RESTAURA credited. UPI:600000000009. Call 18000000 for dispute. SMS BLOCK 123 to 9000000100.",
    {
     "amount_paise": 6400,
     "account_last4": "123",
-    "counterparty": "MUSKAN RESTAURA",
+    "counterparty": "SAGAR RESTAURA",
     "channel": "upi",
     "ref": "600000000009",
     "bank": "DEMOBK",

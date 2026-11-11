@@ -4,29 +4,7 @@ All notable changes to Phone Senses are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and the project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Added
-- **Scam tripwire** (`phone_scam_guard`): reads calls, notifications, SMS and debits of the last few
-  minutes together and spots a phone scam in progress: an unsaved caller, a screen-sharing app
-  (AnyDesk, TeamViewer QuickSupport, RustDesk, AirDroid, screen casting), an OTP, a UPI collect request,
-  money leaving. Levels clear / low / high / critical with plain advice (hang up, stop sharing, call
-  1930). With `alert_phone` the phone shows a warning and says it out loud. OTP codes never leave
-  the plugin. Watch kind `scam_guard` alerts once per incident from a cron job; `/phone guard`.
-- Mock helper scenarios: `--mock --mock-scenario scam` adds a scam call in progress to the fixtures.
-- `phone_bills`: upcoming bills and dues from SMS (electricity, water, gas, broadband, postpaid,
-  credit card statements, EMIs, insurance) with amount, due date and days left. A later payment
-  confirmation from the same biller clears the due. Nothing is stored.
-- `phone_deliveries`: order and parcel status from SMS and notifications (Amazon, Flipkart, Myntra,
-  Meesho, Swiggy, Zomato, Zepto, Blinkit and major couriers), merged per order.
-- `phone_subscriptions`: recurring debits (streaming, cloud storage, gym, broadband, and any payee
-  charged a similar amount about monthly) with the next expected charge and the monthly total.
-- Battery watch: `phone_watch_add` accepts `battery_below` with a percent; `phone_watch_check`
-  alerts once per drop and can post the alert to the phone.
-- `phone_brief` now includes bills due in the next 7 days and deliveries arriving today.
-- `/phone bills` and `/phone deliveries`.
-
-## [0.1.0] - 2026-11-08
+## [0.1.0] - 2026-11-11
 
 First release.
 
@@ -34,7 +12,7 @@ First release.
 - **Phone helper** (`phone_helper/helper.py`): a standard-library HTTP server for Termux that
   wraps fixed `termux-*` commands behind an HMAC-SHA256 signed JSON API. It has a pairing command
   (`--pair`), rate limits, and a `--mock` mode with synthetic data for laptops and demos.
-- **Hermes plugin** (`plugin/`) with 22 tools:
+- **Hermes plugin** (`plugin/`) with 26 tools:
   - Status and senses: `phone_status`, `phone_notifications` (digest with a noise filter),
     `phone_calls`, `phone_contacts`, `phone_location` (with a Maps link).
   - SMS: `phone_sms_list` (search by text, sender and days, with a scam risk per message) and
@@ -54,7 +32,25 @@ First release.
   messages, ask before acting, treat message text as data.
 - Landing page at [phone-senses.pages.dev](https://phone-senses.pages.dev) with feature GIFs.
 - Brand: logo mark, banner, colours and type.
-- `scripts/try_tool.py` to call tools without Hermes; 129 unit tests that need no phone.
+- `scripts/try_tool.py` to call tools without Hermes; 210 unit tests that need no phone.
+- **Scam tripwire** (`phone_scam_guard`): reads calls, notifications, SMS and debits of the last few
+  minutes together and spots a phone scam in progress: an unsaved caller, a screen-sharing app
+  (AnyDesk, TeamViewer QuickSupport, RustDesk, AirDroid, screen casting), an OTP, a UPI collect request,
+  money leaving. Levels clear / low / high / critical with plain advice (hang up, stop sharing, call
+  1930). With `alert_phone` the phone shows a warning and says it out loud. OTP codes never leave
+  the plugin. Watch kind `scam_guard` alerts once per incident from a cron job; `/phone guard`.
+- Mock helper scenarios: `--mock --mock-scenario scam` adds a scam call in progress to the fixtures.
+- `phone_bills`: upcoming bills and dues from SMS (electricity, water, gas, broadband, postpaid,
+  credit card statements, EMIs, insurance) with amount, due date and days left. A later payment
+  confirmation from the same biller clears the due. Nothing is stored.
+- `phone_deliveries`: order and parcel status from SMS and notifications (Amazon, Flipkart, Myntra,
+  Meesho, Swiggy, Zomato, Zepto, Blinkit and major couriers), merged per order.
+- `phone_subscriptions`: recurring debits (streaming, cloud storage, gym, broadband, and any payee
+  charged a similar amount about monthly) with the next expected charge and the monthly total.
+- Battery watch: `phone_watch_add` accepts `battery_below` with a percent; `phone_watch_check`
+  alerts once per drop and can post the alert to the phone.
+- `phone_brief` now includes bills due in the next 7 days and deliveries arriving today.
+- `/phone bills` and `/phone deliveries`.
 
 ### Security
 - Signed requests: HMAC-SHA256 over method, path, timestamp, nonce and body hash; timestamp
@@ -68,5 +64,4 @@ First release.
 ### Tested on
 - moto g34 5G, Android 15, Termux and Termux:API from F-Droid, Hermes Agent 0.23.0.
 
-[Unreleased]: https://github.com/LSUDOKO/Phone-Senses/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/LSUDOKO/Phone-Senses/releases/tag/v0.1.0

@@ -47,7 +47,7 @@ AMOUNT_AFTER_VERB = re.compile(r"\b(?:debited|credited)\s+(?:by|with|for)\s+([0-
 ACCOUNT = re.compile(r"\b(?:a/c|acct|account|card)(?:\s*no\.?)?(?:\s*ending(?:\s*with)?)?\s*[x*]*\s*(\d{3,6})", I)
 VPA = re.compile(r"\b([a-z0-9][a-z0-9.\-_]{1,60}@[a-z][a-z0-9]{1,30})\b", I)
 REF = re.compile(r"\b(?:upi\s*ref(?:\s*no)?|ref\s*no|refno|ref|txn\s*id|utr(?:\s*no)?|upi)\.?\s*:?\s*([0-9A-Z]{6,22})\b", I)
-# ICICI: "debited for Rs 64.00 on 03-Nov-26; MUSKAN RESTAURA credited."
+# ICICI: "debited for Rs 64.00 on 03-Nov-26; SAGAR RESTAURA credited."
 SEMI_CREDITED = re.compile(r";\s*([a-z][a-z0-9 .&'*\-]{1,40}?)\s+credited\b", I)
 # Card/e-mandate: "debited from ... on 29-Oct-26 VIN*NEBIUS   . Bal"
 TOWARDS = re.compile(r"\btowards\s+([a-z][a-z0-9 .&'\-]{1,40}?)(?=\s+(?:for|via|ref\w*|on)\b|\s*[.,]|\s*$)", I)

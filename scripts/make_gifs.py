@@ -30,8 +30,8 @@ NOISE = re.compile(
     r"Reading tool details|^\s*─|─{6,}|↑/↓ to select|^Query:|^\$ hermes|^Resume|^Session:|^Duration:|"
     r"^Messages:|^Title:|hermes (--resume|-c)|Goodbye|^\s*>\s|Shutting down|^\s*☤ ❯|tip\)")
 MASKS = [(re.compile(r"/home/[^/\s]+"), "~"),
-         (re.compile(r"\+?91[\s-]?6230603202|6230603202"), "+91 62••••3202"),
-         (re.compile(r"\+916\*{4}3202"), "+91 62••••3202")]
+         (re.compile(r"\+?91[\s-]?[6-9]\d{4}[\s-]?\d{5}|(?<!\d)[6-9]\d{9}(?!\d)"), "+91 ••••• •••••"),   # any Indian mobile
+         (re.compile(r"\+91\d\*{4}\d{4}"), "+91 ••••• •••••")]
 
 
 def clean(text: str) -> str:

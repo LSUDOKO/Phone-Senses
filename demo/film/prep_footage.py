@@ -25,7 +25,10 @@ SRC = HERE / "footage"
 DST = HERE / "studio" / "public" / "footage"
 # Hidden in every real-phone scene: full phone numbers, rupee amounts, and names of merchants/people.
 PRIVACY = [r"\+?91[ -]?[6-9]\d{4}[ -]?\d{5}", r"(?<!\d)[6-9]\d{9}(?!\d)", r"₹ ?[\d,]+(?:\.\d+)?",
-           r"Rs\.? ?[\d,]+(?:\.\d+)?", r"\b[A-Z]{2}\d{9}IN\b", r"\b[A-Z]{1,2}\d{6,8}\b", r"DOLLAR FASHION", r"MUSKAN RESTAURA\w*", r"KSHITIZ BIJALWA"]
+           r"Rs\.? ?[\d,]+(?:\.\d+)?", r"\b[A-Z]{2}\d{9}IN\b", r"\b[A-Z]{1,2}\d{6,8}\b"]
+# Names of real people and shops to hide live in footage/private-names.txt (git-ignored, one regex per line).
+_names = HERE / "footage" / "private-names.txt"
+PRIVACY += [line.strip() for line in (_names.read_text(encoding="utf-8").splitlines() if _names.exists() else []) if line.strip()]
 FIX = "setparams=colorspace=bt709:color_trc=bt709:color_primaries=bt709:range=tv"
 
 
